@@ -11,7 +11,13 @@
   "didntReceiveOTP": "لم تستلم رمز التحقق!",
   "enterOTPCode": "أدخل رمز التحقق الذي تلقيته على الهاتف.",
   "verification":"التحقق",
-  "pleaseWait": "يرجى الانتظار..."
+  "pleaseWait": "يرجى الانتظار...",
+  "Home":"الرئيسية",
+  "Orders":"طلباتي",
+  "Offers":"العروض",
+  "Services":"الخدمات",
+  "servicesLookingFor": "أي خدمة تبحث عنها؟",
+  "showAll":"أظهار الكل"
 
 
 }
