@@ -1,0 +1,99 @@
+import React, { useState, useCallback } from "react";
+import {
+  SafeAreaView,
+  StatusBar,
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  BackHandler,
+} from "react-native";
+
+import { Colors, Fonts, Sizes } from "../../constant/styles";
+import { useFocusEffect } from "@react-navigation/native";
+import AppText from "../../component/AppText";
+import AppButton from "../../component/AppButton";
+import PhoneNumberTextField from "../../component/PhoneInput";
+import Logo from "../../component/Logo";
+
+const SigninScreen = ({ navigation }) => {
+
+  const [backClickCount, setBackClickCount] = useState(0);
+  const [state, setState] = useState({
+    phoneNumber: null,
+  });
+
+  const backAction = () => {
+    backClickCount == 1 ? BackHandler.exitApp() : _spring();
+    return true;
+  };
+  const updateState = (data) => {
+    console.log(data);
+    setState((state) => ({ ...state, ...data }));
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      BackHandler.addEventListener("hardwareBackPress", backAction);
+      return () =>
+        BackHandler.removeEventListener("hardwareBackPress", backAction);
+    }, [backAction])
+  );
+
+  function _spring() {
+    setBackClickCount(1);
+    setTimeout(() => {
+      setBackClickCount(0);
+    }, 1000);
+  }
+
+  const { phoneNumber } = state;
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
+      <StatusBar backgroundColor={Colors.primaryColor} />
+      <View style={{ flex: 1 }}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Logo />
+          <AppText text={"Signin with Phone Number"} style={{marginBottom:10}}/>
+          <PhoneNumberTextField
+            phoneNumber={phoneNumber}
+            updateState={updateState}
+          />
+          <AppButton />
+          <AppText
+            text={"We'll send OTP for Verification"}
+            style={{
+              marginTop: Sizes.fixPadding - 5.0,
+              ...Fonts.grayColor18Medium,
+              textAlign: "center",
+            }}
+          />
+        </ScrollView>
+      </View>
+      {backClickCount == 1 ? (
+        <View style={[styles.animatedView]}>
+          <Text style={{ ...Fonts.whiteColor15Regular }}>
+            Press back once again to exit
+          </Text>
+        </View>
+      ) : null}
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  animatedView: {
+    backgroundColor: "#FFF",
+    position: "absolute",
+    bottom: 20,
+    alignSelf: "center",
+    borderRadius: Sizes.fixPadding * 2.0,
+    paddingHorizontal: Sizes.fixPadding + 5.0,
+    paddingVertical: Sizes.fixPadding,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+
+export default SigninScreen;
