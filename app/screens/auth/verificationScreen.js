@@ -1,18 +1,13 @@
 import React, { useState } from "react";
-import {
-  View,
-  SafeAreaView,
-  StatusBar,
-  ScrollView,
-} from "react-native";
+import { View, SafeAreaView, StatusBar, ScrollView } from "react-native";
 
-import { Colors, } from "../../constant/styles";
+import { Colors } from "../../constant/styles";
 import ArrowBack from "../../component/ArrowBack";
 import AppButton from "../../component/AppButton";
 import AppText from "../../component/AppText";
 import LoadingModal from "../../component/Loading";
 import OtpFields from "../../component/OtpFields";
-
+import Timer from "../../component/Timer";
 
 const VerificationScreen = ({ navigation }) => {
   const [isLoading, setisLoading] = useState(false);
@@ -22,7 +17,6 @@ const VerificationScreen = ({ navigation }) => {
       <StatusBar backgroundColor={Colors.primaryColor} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <ArrowBack />
-        {/* {verificationInfo()} */}
         <View>
           <AppText
             text={"verification"}
@@ -35,21 +29,21 @@ const VerificationScreen = ({ navigation }) => {
             }}
           />
           <AppText text={"enterOTPCode"} />
-
-          <OtpFields setisLoading={setisLoading}  />
+          <OtpFields setisLoading={setisLoading} />
           <AppButton title={"Continue"} path={"Register"} />
 
           <AppText
             text={"didntReceiveOTP"}
-            // style={styles.resendInfoWrapStyle}
+            style={{
+              margin: 18,
+            }}
           />
+          <Timer />
         </View>
       </ScrollView>
       <LoadingModal visible={isLoading} />
     </SafeAreaView>
   );
 };
-
-
 
 export default VerificationScreen;

@@ -40,7 +40,7 @@ const RegisterScreen = ({ navigation }) => {
           />
           {fullNameTextField()}
           {emailAddressTextField()}
-          <AppButton path={"BottomTabBar"} title={"Continue"} />
+          <AppButton path={"App"} title={"Continue"} />
         </ScrollView>
       </View>
     </SafeAreaView>
