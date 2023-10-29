@@ -1,4 +1,3 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import { Image } from 'react-native'
 import { StyleSheet } from 'react-native'
@@ -7,7 +6,7 @@ import { Sizes } from '../constant/styles'
 export default function Logo() {
     return (
         <Image
-            source={require('.././assets/images/transparent-icon.png')}
+            source={{uri:'https://th.bing.com/th/id/OIP.L9k7FElhv2O5Ar52LyyFpAHaHa?pid=ImgDet&rs=1'}}
             style={styles.appLogoStyle}
             resizeMode="contain"
         />
@@ -15,10 +14,10 @@ export default function Logo() {
 }
 const styles = StyleSheet.create({
     appLogoStyle: {
-        width: 200.0,
-        height: 200.0,
+        width: 150,
+        height: 150,
         alignSelf: 'center',
-        marginBottom: Sizes.fixPadding * 4.0,
-        marginTop: Sizes.fixPadding * 8.0
+        marginBottom: Sizes.fixPadding * 4,
+        marginTop: Sizes.fixPadding * 8
     },
 })

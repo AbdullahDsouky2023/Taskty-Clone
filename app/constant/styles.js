@@ -1,4 +1,3 @@
-import { color } from "@rneui/themed/dist/config";
 
 export const Colors = {
     whiteColor: "#FFF",
@@ -16,232 +15,237 @@ export const Colors = {
     
 }
 
-const MainFonts = {
-    Ember:"Ember"
+const mainFont ={
+        light:'Janna-Lt',
+        medium:'Janna-Lt',
+        bold:'Janna-Lt',
+        regular:'Janna-Lt'
+    
 }
+
 export const Fonts = {
 
     blackColor14Medium: {
         color: Colors.blackColor,
         fontSize: 14.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     blackColor16Medium: {
         color: Colors.blackColor,
         fontSize: 16.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily:mainFont.medium,
     },
 
     blackColor17Medium: {
         color: Colors.blackColor,
         fontSize: 17.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     blackColor18Medium: {
         color: Colors.blackColor,
         fontSize: 18.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     blackColor19Medium: {
         color: Colors.blackColor,
         fontSize: 19.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     blackColor20Medium: {
         color: Colors.blackColor,
         fontSize: 20.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     whiteColor15Light: {
         color: Colors.whiteColor,
         fontSize: 15.0,
-        fontFamily: 'Ember_Light',
+        fontFamily: mainFont.light,
     },
 
     whiteColor15Regular: {
         color: Colors.whiteColor,
         fontSize: 15.0,
-        fontFamily: 'Ember_Regular',
+        fontFamily: mainFont.regular,
     },
 
     whiteColor16Regular: {
         color: Colors.whiteColor,
         fontSize: 16.0,
-        fontFamily: 'Ember_Regular',
+        fontFamily: mainFont.regular,
     },
 
     whiteColor18Regular: {
         color: Colors.whiteColor,
         fontSize: 18.0,
-        fontFamily: 'Ember_Regular',
+        fontFamily:  mainFont.regular,
     },
 
     whiteColor16Medium: {
         color: Colors.whiteColor,
         fontSize: 16.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     whiteColor18Medium: {
         color: Colors.whiteColor,
         fontSize: 18.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily:mainFont.medium,
     },
 
     whiteColor19Medium: {
         color: Colors.whiteColor,
         fontSize: 19.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     whiteColor20Medium: {
         color: Colors.whiteColor,
         fontSize: 20.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     primaryColor15Light: {
         color: Colors.primaryColor,
         fontSize: 15.0,
-        fontFamily: 'Ember_Light',
+        fontFamily: mainFont.light,
     },
 
     primaryColor16Light: {
         color: Colors.primaryColor,
         fontSize: 16.0,
-        fontFamily: 'Ember_Light',
+        fontFamily:mainFont.light,
     },
 
     primaryColor17Light: {
         color: Colors.primaryColor,
         fontSize: 17.0,
-        fontFamily: 'Ember_Light',
+        fontFamily: mainFont.light,
     },
 
     primaryColor18Light: {
         color: Colors.primaryColor,
         fontSize: 18.0,
-        fontFamily: 'Ember_Light',
+        fontFamily: mainFont.light,
     },
 
     primaryColor18Regular: {
         color: Colors.primaryColor,
         fontSize: 18.0,
-        fontFamily: 'Ember_Regular',
+        fontFamily: mainFont.regular,
     },
 
     primaryColor15Regular: {
         color: Colors.primaryColor,
         fontSize: 15.0,
-        fontFamily: 'Ember_Regular',
+        fontFamily: mainFont.regular,
     },
 
     primaryColor16Regular: {
         color: Colors.primaryColor,
         fontSize: 16.0,
-        fontFamily: 'Ember_Regular',
+        fontFamily: mainFont.regular,
     },
 
     primaryColor17Regular: {
         color: Colors.primaryColor,
         fontSize: 17.0,
-        fontFamily: 'Ember_Regular',
+        fontFamily: mainFont.regular,
     },
 
     primaryColor15Medium: {
         color: Colors.primaryColor,
         fontSize: 15.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     primaryColor16Medium: {
         color: Colors.primaryColor,
         fontSize: 16.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     primaryColor17Medium: {
         color: Colors.primaryColor,
         fontSize: 17.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     primaryColor17Bold: {
         color: Colors.primaryColor,
         fontSize: 17.0,
-        fontFamily: 'Ember_Regular',
+        fontFamily: mainFont.regular,
         fontWeight: 'bold',
     },
 
     primaryColor18Medium: {
         color: Colors.primaryColor,
         fontSize: 18.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     primaryColor19Medium: {
         color: Colors.primaryColor,
         fontSize: 19.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     primaryColor20Medium: {
         color: Colors.primaryColor,
         fontSize: 20.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     primaryColor22Medium: {
         color: Colors.primaryColor,
         fontSize: 22.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     primaryColor25Medium: {
         color: Colors.primaryColor,
         fontSize: 25.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     grayColor17Regular: {
         color: Colors.grayColor,
         fontSize: 17.0,
-        fontFamily: 'Ember_Regular',
+        fontFamily: mainFont.regular,
     },
 
     grayColor18Regular: {
         color: Colors.grayColor,
         fontSize: 18.0,
-        fontFamily: 'Ember_Regular',
+        fontFamily: mainFont.regular,
     },
 
     grayColor15Medium: {
         color: Colors.grayColor,
         fontSize: 15.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     grayColor18Medium: {
         color: Colors.grayColor,
         fontSize: 18.0,
-        fontFamily: 'Ember_Medium',
+        fontFamily: mainFont.medium,
     },
 
     redColor14Regular: {
         color: Colors.redColor,
         fontSize: 14.0,
-        fontFamily: 'Ember_Regular',
+        fontFamily: mainFont.regular,
     },
 
     orangeColor18Regular: {
         color: Colors.orangeColor,
         fontSize: 18.0,
-        fontFamily: 'Ember_Regular',
+        fontFamily: mainFont.regular,
     }
 
 }

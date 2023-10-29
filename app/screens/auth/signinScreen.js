@@ -60,7 +60,7 @@ const SigninScreen = ({ navigation }) => {
             phoneNumber={phoneNumber}
             updateState={updateState}
           />
-          <AppButton />
+          <AppButton path={'Verification'} title={'Continue'}/>
           <AppText
             text={"We'll send OTP for Verification"}
             style={{

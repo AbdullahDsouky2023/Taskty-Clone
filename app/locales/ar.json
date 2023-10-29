@@ -3,5 +3,15 @@
   "goodbye": "وداعا",
   "Signin with Phone Number":"تسجيل الدخول باستخدام رقم الهاتف",
   "We'll send OTP for Verification":"سنقوم بإرسال رمز التحقق (OTP)",
-  "Continue":"استمرار"
+  "Continue":"استمرار",
+  "Register Your Account": "سجّل حسابك",
+  "fullName": "الاسم الكامل",
+  "emailAddress": "عنوان البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "didntReceiveOTP": "لم تستلم رمز التحقق!",
+  "enterOTPCode": "أدخل رمز التحقق الذي تلقيته على الهاتف.",
+  "verification":"التحقق",
+  "pleaseWait": "يرجى الانتظار..."
+
+
 }

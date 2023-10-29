@@ -3,6 +3,7 @@ import { SafeAreaView, View, StatusBar, Image, StyleSheet, BackHandler } from "r
 import { Colors, Sizes } from "../constant/styles";
 import { CircleFade } from 'react-native-animated-spinkit';
 import { useFocusEffect } from "@react-navigation/native";
+import Logo from "../component/Logo";
 
 const SplashScreen = ({ navigation }) => {
 
@@ -26,7 +27,7 @@ const SplashScreen = ({ navigation }) => {
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
             <StatusBar backgroundColor={Colors.primaryColor} />
             <View style={{ flex: 1, justifyContent: 'center' }}>
-                {appLogo()}
+                <Logo/>
                 <CircleFade
                     size={45}
                     color={Colors.primaryColor}
@@ -36,15 +37,7 @@ const SplashScreen = ({ navigation }) => {
         </SafeAreaView>
     )
 
-    function appLogo() {
-        return (
-            <Image
-                source={require('../assets/images/transparent-icon.png')}
-                style={styles.appLogoStyle}
-                resizeMode="contain"
-            />
-        )
-    }
+    
 }
 
 const styles = StyleSheet.create({

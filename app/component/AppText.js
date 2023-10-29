@@ -33,6 +33,6 @@ const styles = StyleSheet.create({
   text: {
     ...Fonts.grayColor18Medium,
     textAlign: "center",
-    fontFamily: "Ember_Medium",
+    fontFamily: "Janna-Lt",
   },
 });

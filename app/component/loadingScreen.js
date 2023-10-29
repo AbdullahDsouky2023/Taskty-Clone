@@ -13,12 +13,13 @@ const LoadingScreen = ({ navigation }) => {
         "Ember_Light": require("../assets/fonts/Ember/Amazon-Ember-Light.ttf"),
         "Ember_Medium": require("../assets/fonts/Ember/Amazon-Ember-Medium.ttf"),
         "Ember_Regular": require("../assets/fonts/Ember/Amazon-Ember.ttf"),
+        "Janna-Lt": require("../assets/fonts/Janna-LT-Bold.ttf"),
+
       });
       navigation.navigate('Splash');
     }
     loadFont();
-  }, []); // Empty dependency array to run the effect only once
-
+  }, []); 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.whiteColor }} />
   );
