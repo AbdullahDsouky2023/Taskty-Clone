@@ -1,12 +1,11 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import { StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
-import {useFonts}  from "expo-font";
 
 import ar from "../locales/ar.json";
-import { StyleSheet, View } from "react-native";
 import { Text } from "react-native";
-import { Sizes, Fonts } from "../constant/styles";
+import { Fonts } from "../constant/styles";
 
 i18n.use(initReactI18next).init({
   resources: {

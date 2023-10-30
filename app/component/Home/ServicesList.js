@@ -1,49 +1,31 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { StyleSheet } from 'react-native'
-import { Colors, Sizes,Fonts } from '../../constant/styles'
-import AppText from '../AppText'
-import ServiceCard from './ServiceCard'
+import React from "react";
+import { FlatList, StyleSheet } from "react-native";
+
+import ServiceCard from "./ServiceCard";
+import { servicesList } from "../../data/home";
+import HeaderTextComponent from "./HeaderTextComponent";
 
 export default function ServicesList() {
   return (
-    <View style={styles.Container}>
-        <View style={styles.headerTextContainer} >
-        <AppText text={'servicesLookingFor'} style={styles.text}/>
-        <AppText text={'showAll'} style={{...Fonts.primaryColor15Light}}/>
-        </View>
-        <ServiceCard name={'نظافه منزليه'} image={require('../../assets/images/ServiesIcons/cleaning.png')}/>
-       
-    </View>
-  )
+    <HeaderTextComponent name={'servicesLookingFor'}>
+
+      <FlatList
+          data={servicesList}
+          style={styles.listContainer}
+          renderItem={({ item }) => {
+            return <ServiceCard name={item.name} image={item.image} />;
+          }}
+          keyExtractor={(item) => item.name}
+        />
+          </HeaderTextComponent>
+  );
 }
 const styles = StyleSheet.create({
-    Container :{
-        margin: Sizes.fixPadding * 1.0,
-        padding: Sizes.fixPadding * 1.0,
-    },
-    headerTextContainer:{
-        display:'flex',
-        flexDirection:'row',
-        justifyContent:'space-between',
-        gap:18
-    },
-    card :{
-        height:100,
-        width:100,
-        backgroundColor:'#FCF1EA',
-        borderRadius:10,
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center',
-        gap:4
-    },
-    text:{
-        color:Colors.blackColor,
-        ...Fonts.blackColor14Medium
-    },
-    imageCard :{
-        height:40,
-        width:40
-    }
-})
+  listContainer :{
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+    padding: 16,
+  }
+});

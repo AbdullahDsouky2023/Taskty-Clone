@@ -205,10 +205,54 @@ const topCategoriesList = [
         image: require('../assets/images/top_categories/top_category_4.png')
     }
 ];
+
+const servicesList = [
+    {
+      name: "Home Cleaning",
+      image: require('../assets/images/ServiesIcons/cleaning.png'),
+    },
+    {
+      name: "Upholstery Cleaning",
+      image: require('../assets/images/ServiesIcons/cleaning.png'),
+    },
+    {
+      name: "Pest Control",
+      image: require('../assets/images/ServiesIcons/cleaning.png'),
+    },
+    {
+      name: "Air Conditioning",
+      image: require('../assets/images/ServiesIcons/cleaning.png'),
+    },
+    {
+      name: "Plumbing",
+      image: require('../assets/images/ServiesIcons/paint-roller.png'),
+    },
+    {
+      name: "Carpentry",
+      image: require('../assets/images/ServiesIcons/paint-roller.png'),
+
+    },
+    {
+      name: "Aluminum Works",
+      image: require('../assets/images/ServiesIcons/washing-machine.png'),
+
+    },
+    {
+      name: "Marble Works",
+      image: require('../assets/images/ServiesIcons/washing-machine.png'),
+
+    },
+    {
+      name: "Parquet Flooring",
+      image: require('../assets/images/ServiesIcons/washing-machine.png'),
+    },
+  ];
+  
 export  {
     offersBannerList,
     handPickedItemsList,
     featuredBrandsList,
     dealsOfTheDaysList,
-    topCategoriesList
+    topCategoriesList,
+    servicesList
 }

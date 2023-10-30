@@ -8,11 +8,12 @@ import NotificationScreen from "../screens/notifications/notificationScreen";
 import AccountScreen from "../screens/account/accountScreen";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFocusEffect } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabBar = () => {
-
+    const { t } = useTranslation()
     const backAction = () => {
         backClickCount == 1 ? BackHandler.exitApp() : _spring();
         return true;
@@ -49,7 +50,7 @@ const BottomTabBar = () => {
                 }}
             >
                 <Tab.Screen
-                    name={'Home'}
+                    name={t('Home')}
                     component={HomeScreen}
                     options={{
                         tabBarIcon: ({ color }) => <MaterialIcons name="home" size={27} color={color} />
@@ -63,14 +64,14 @@ const BottomTabBar = () => {
                     }}
                 />
                 <Tab.Screen
-                    name={'Notifications'}
+                     name={t('Orders')}
                     component={NotificationScreen}
                     options={{
                         tabBarIcon: ({ color }) => <MaterialIcons name="notifications" size={27} color={color} />
                     }}
                 />
                 <Tab.Screen
-                    name={'Account'}
+                    name={t('Account')}
                     component={AccountScreen}
                     options={{
                         tabBarIcon: ({ color, }) => (
