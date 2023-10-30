@@ -18,20 +18,26 @@ i18n.use(initReactI18next).init({
   },
 });
 
-export default function AppText({ style, text }) {
+export default function AppText({ style, text, centered = true }) {
   const { t } = useTranslation();
 
- 
   return (
     <View>
-      <Text style={[styles.text, style]}>{t(text)}</Text>
+      <Text
+        style={[
+          styles.text,
+          style,
+          { textAlign: centered ? "center" : "auto" },
+        ]}
+      >
+        {t(text)}
+      </Text>
     </View>
   );
 }
 const styles = StyleSheet.create({
   text: {
     ...Fonts.grayColor18Medium,
-    textAlign: "center",
     fontFamily: "Janna-Lt",
   },
 });

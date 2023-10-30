@@ -5,7 +5,7 @@ import AppCard from './AppCard'
 import { FlatList } from 'react-native'
 import { LowOffersList } from '../../data/home'
 
-export default function LowOffers() {
+export default function OtherServicesList() {
   return (
     <HeaderTextComponent name={'Low Offers'} >
         <FlatList

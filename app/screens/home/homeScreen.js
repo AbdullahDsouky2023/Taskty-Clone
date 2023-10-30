@@ -25,6 +25,7 @@ import {
 import OffersBanner from "../../component/Home/OffersBanner";
 import ServicesList from "../../component/Home/ServicesList";
 import LowOffers from "../../component/Home/LowOffers";
+import OtherServicesList from "../../component/Home/OtherServicesList";
 const { width } = Dimensions.get("window");
 
 const HomeScreen = ({ navigation }) => {
@@ -71,6 +72,7 @@ const HomeScreen = ({ navigation }) => {
               <OffersBanner />
               <ServicesList />
               <LowOffers/>
+              <OtherServicesList/>
             </>
           }
           data={topCategoriesList}
