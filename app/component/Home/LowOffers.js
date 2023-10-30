@@ -4,8 +4,11 @@ import HeaderTextComponent from './HeaderTextComponent'
 import AppCard from './AppCard'
 import { FlatList } from 'react-native'
 import { LowOffersList } from '../../data/home'
+import { useNavigation } from '@react-navigation/native'
+import { ITEM_DETAILS } from '../../navigation/routes'
 
 export default function LowOffers() {
+  const navigation = useNavigation()
   return (
     <HeaderTextComponent name={'Low Offers'}  showAll={true} >
         <FlatList
@@ -22,6 +25,7 @@ export default function LowOffers() {
             <AppCard
             name={item.name}
             price={item.price}
+            onPress={()=>navigation.navigate(ITEM_DETAILS,{item})}
             image={item.image}
             />
 

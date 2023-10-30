@@ -80,7 +80,7 @@ const HomeScreen = ({ navigation }) => {
               <OtherServicesList/>
               <CleaningServices/>
               <AskWorker/>
-              <UsersReviews/>
+            
             </>
           }
           data={topCategoriesList}
@@ -88,7 +88,7 @@ const HomeScreen = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
           keyExtractor={(item) => `${item.id}`}
           renderItem={renderItem}
-          ListFooterComponent={<>{rateNowButton()}</>}
+          ListFooterComponent={ <UsersReviews/>}
         />
       </View>
     </SafeAreaView>

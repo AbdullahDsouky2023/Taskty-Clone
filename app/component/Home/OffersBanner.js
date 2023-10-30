@@ -29,12 +29,12 @@ export default   function OffersBanner() {
                 sliderWidth={width}
                 autoplay={true}
                 loop={true}
-                autoplayInterval={4000}
+                autoplayInterval={10000}
                 itemWidth={width}
                 renderItem={_renderItem}
                 onSnapToItem={(index) => updateState({ activeSlide: index })}
             />
-           <PaginationComponent activeSlide={activeSlide}/>
+           <PaginationComponent activeSlide={activeSlide} length={offers.length}/>
         </View>
     )
 }

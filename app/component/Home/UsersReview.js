@@ -1,6 +1,6 @@
 import { View, Text, Dimensions } from 'react-native'
 import React from 'react'
-import { offersBannerList } from '../../data/home'
+import { offersBannerList, userReviews } from '../../data/home'
 import Carousel from 'react-native-snap-carousel-v4';
 import { useState } from 'react';
 import PaginationComponent from './Pagination';
@@ -11,31 +11,33 @@ const { width } = Dimensions.get("window");
 export default   function UsersReviews() {
 
     const [state, setState] = useState({
-        offers: offersBannerList,
+        reviews: userReviews,
         activeSlide: 0,
         days: 694,
     })
 
-    const updateState = (data) => setState((state) => ({ ...state, ...data }))
+    const updateState = (data) => {
+        setState((state) => ({ ...state, ...data }))
+    }
 
     const {
-        offers,
+        reviews,
         activeSlide,
         days,
     } = state;
     return (
         <View>
             <Carousel
-                data={offersBannerList}
+                data={reviews}
                 sliderWidth={width}
                 autoplay={true}
                 loop={true}
                 autoplayInterval={4000}
                 itemWidth={width}
-                renderItem={ReviewCard}
+                renderItem={({item})=><ReviewCard  username={item.userName}  review={item.review } userImage={item.userImage} />}
                 onSnapToItem={(index) => updateState({ activeSlide: index })}
             />
-           <PaginationComponent activeSlide={activeSlide}/>
+           <PaginationComponent activeSlide={activeSlide} length={reviews.length}/>
         </View>
     )
 }

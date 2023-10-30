@@ -4,10 +4,10 @@ import { offersBannerList } from '../../data/home';
 import { StyleSheet } from 'react-native';
 import { Colors, Sizes } from '../../constant/styles';
 
-export default function PaginationComponent({activeSlide}) {
+export default function PaginationComponent({length,activeSlide}) {
     return (
         <Pagination
-            dotsLength={offersBannerList.length}
+            dotsLength={length}
             activeDotIndex={activeSlide}
             containerStyle={styles.sliderPaginationWrapStyle}
             dotStyle={styles.sliderActiveDotStyle}

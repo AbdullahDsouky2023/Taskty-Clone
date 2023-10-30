@@ -3,9 +3,12 @@ import React from 'react'
 
 import AppText from '../AppText'
 import { Colors } from '../../constant/styles'
-export default function AppCard({image,name,price}) {
+import { TouchableWithoutFeedback } from 'react-native';
+export default function AppCard({image,name,price,onPress}) {
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={styles.container} >
+
       <View style={styles.card}>
         <Image
           style={styles.cardImage}
@@ -26,7 +29,8 @@ export default function AppCard({image,name,price}) {
           centered={false}
         />
       </View>
-    </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 

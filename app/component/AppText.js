@@ -1,6 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import ar from "../locales/ar.json";
@@ -17,7 +17,7 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
   },
 });
-
+const { width } = Dimensions.get('screen')
 export default function AppText({ style, text, centered = true }) {
   const { t } = useTranslation();
 
@@ -39,5 +39,6 @@ const styles = StyleSheet.create({
   text: {
     ...Fonts.grayColor18Medium,
     fontFamily: "Janna-Lt",
+    maxWidth: width*0.74,
   },
 });

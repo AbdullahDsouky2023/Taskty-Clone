@@ -364,6 +364,29 @@ const workerList = [
     },
 
 ]
+const userReviews = [
+  {
+    userName: "محمد",
+    userImage:"https://images.pexels.com/photos/8088685/pexels-photo-8088685.jpeg?auto=compress&cs=tinysrgb&w=600",
+    review:"اليوم أول مرة أتعامل مع شركتكم لأعمال السباكة في منزلي. أشكركم على مستوى الخدمة الرائع. حيث زارني سباك ولأول مرة أجد عامل محترف وسريع جدا في أنجاز العمل المطلوب.",
+    },
+    {
+      userName: "ليلى",
+      review:
+      "تجربة رائعة مع خدمات السباكة. الفني كان محترفًا وأنهى العمل بسرعة. سأوصي بهم للأصدقاء والعائلة.",
+    },
+    {
+      userName: "عبد الله",
+      review: "خدمة ممتازة وأسعار معقولة. سأعود لطلب المزيد من الخدمات في المستقبل.",
+      userImage:"https://images.pexels.com/photos/8113893/pexels-photo-8113893.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    userName: "فاطمة",
+    review:
+      "ممتاز جداً. سباك محترف وودود. قام بإصلاح مشكلتي بشكل سريع وفعال. أنصح بشدة بهم.",
+  },
+];
+
 export {
   offersBannerList,
   handPickedItemsList,
@@ -373,5 +396,6 @@ export {
   servicesList,
   LowOffersList,
   ReadyPackages,
-  workerList
+  workerList,
+  userReviews
 };

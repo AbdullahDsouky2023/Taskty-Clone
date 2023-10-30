@@ -9,6 +9,7 @@ import AccountScreen from "../screens/account/accountScreen";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFocusEffect } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import HomeNavigator from "../navigation/HomeNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -51,7 +52,7 @@ const BottomTabBar = () => {
             >
                 <Tab.Screen
                     name={t('Home')}
-                    component={HomeScreen}
+                    component={HomeNavigator}
                     options={{
                         tabBarIcon: ({ color }) => <MaterialIcons name="home" size={27} color={color} />
                     }}
