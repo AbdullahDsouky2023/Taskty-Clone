@@ -7,7 +7,7 @@ import { LowOffersList } from '../../data/home'
 
 export default function LowOffers() {
   return (
-    <HeaderTextComponent name={'Low Offers'} >
+    <HeaderTextComponent name={'Low Offers'}  showAll={true} >
         <FlatList
         horizontal
         data={LowOffersList}

@@ -1,19 +1,19 @@
 import React from "react";
-import { View ,StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import AppText from "../AppText";
 import { Colors, Sizes, Fonts } from "../../constant/styles";
 
-export default function HeaderTextComponent({name,children}) {
+export default function HeaderTextComponent({ name, showAll, children }) {
   return (
     <View style={styles.Container}>
       <View style={styles.headerTextContainer}>
         <AppText text={name} style={styles.text} />
-        <AppText text={"showAll"} style={{ ...Fonts.primaryColor15Light }} />
+        {showAll && (
+          <AppText text={"showAll"} style={{ ...Fonts.primaryColor15Light }} />
+        )}
       </View>
-      <View style={styles.cardContainer}>
-     {children}
-      </View>
+      <View style={styles.cardContainer}>{children}</View>
     </View>
   );
 }

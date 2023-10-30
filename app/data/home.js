@@ -245,6 +245,50 @@ const servicesList = [
   },
 ];
 
+const ReadyPackages = [
+  {
+    name: "One-Time Home Cleaning - Price per Square Meter (Up to 170m)",
+    price: "275 Egyptian Pounds",
+    category:'pestControl',
+    image:
+      "https://media.istockphoto.com/id/1218311009/photo/cleaning-home-table-sanitizing-kitchen-table-surface-with-disinfectant-spray-bottle-washing.jpg?b=1&s=612x612&w=0&k=20&c=V0kgSBomo_pVttMiwBz3tPWC-2pn1nFBb3-TKKD_w_M=",
+  },
+  {
+    name: "One-Time Home Cleaning - Price per Square Meter (Up to 170m)",
+    price: "275 Egyptian Pounds",
+    category:'pestControl',
+    image:
+      "https://media.istockphoto.com/id/1316473356/photo/an-employee-pulls-a-trolley-for-cleaning-offices-woman-cleaner-is-engaged-in-work.jpg?b=1&s=612x612&w=0&k=20&c=2rHH-22Jl2LFplgyoAEdncXVSTnYzcOTgZ2B3gaEMBM=",
+  },
+  {
+    name: "One-Time Home Cleaning - Price per Square Meter (Up to 170m)",
+    price: "275 Egyptian Pounds",
+    category:'pestControl',
+    image:
+      "https://images.pexels.com/photos/4239031/pexels-photo-4239031.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+  {
+    name: "One-Time Home Cleaning - Price per Square Meter (Up to 170m)",
+    price: "275 Egyptian Pounds",
+    category:'pestControl',
+    image:
+      "https://images.pexels.com/photos/4099471/pexels-photo-4099471.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+  {
+    name: "One-Time Home Cleaning - Price per Square Meter (Up to 170m)",
+    price: "275 Egyptian Pounds",
+    category:'pestControl',
+    image:
+      "https://images.pexels.com/photos/4239031/pexels-photo-4239031.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+  {
+    name: "One-Time Home Cleaning - Price per Square Meter (Up to 170m)",
+    price: "275 Egyptian Pounds",
+    category:'pestControl',
+    image:
+      "https://images.pexels.com/photos/4099471/pexels-photo-4099471.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
+];
 const LowOffersList = [
   {
     name: "One-Time Home Cleaning - Price per Square Meter (Up to 170m)",
@@ -284,6 +328,42 @@ const LowOffersList = [
   },
 ];
 
+
+const workerList = [
+    {
+        name:"Electricty",
+        image:'https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=600'
+    },
+    {
+        name:"Plumbing",
+        image:'https://media.istockphoto.com/id/1204813771/photo/male-worker-inspecting-valve.jpg?b=1&s=612x612&w=0&k=20&c=-Qc9czzynqy_laGthgdtI9brX1hdj5ff0k2eVX7ekqk='
+    },
+    {
+        name:"Electricty",
+        image:'https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=600'
+    },
+    {
+        name:"Plumbing",
+        image:'https://media.istockphoto.com/id/1204813771/photo/male-worker-inspecting-valve.jpg?b=1&s=612x612&w=0&k=20&c=-Qc9czzynqy_laGthgdtI9brX1hdj5ff0k2eVX7ekqk='
+    },
+    {
+        name:"Carpentry",
+        image:'https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg?auto=compress&cs=tinysrgb&w=600'
+    },
+    {
+        name:"Carpentry",
+        image:'https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg?auto=compress&cs=tinysrgb&w=600'
+    },
+    {
+        name:"Plumbing",
+        image:'https://media.istockphoto.com/id/1204813771/photo/male-worker-inspecting-valve.jpg?b=1&s=612x612&w=0&k=20&c=-Qc9czzynqy_laGthgdtI9brX1hdj5ff0k2eVX7ekqk='
+    },
+    {
+        name:"Carpentry",
+        image:'https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg?auto=compress&cs=tinysrgb&w=600'
+    },
+
+]
 export {
   offersBannerList,
   handPickedItemsList,
@@ -291,5 +371,7 @@ export {
   dealsOfTheDaysList,
   topCategoriesList,
   servicesList,
-  LowOffersList
+  LowOffersList,
+  ReadyPackages,
+  workerList
 };

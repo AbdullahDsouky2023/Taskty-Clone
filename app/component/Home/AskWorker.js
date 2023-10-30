@@ -1,29 +1,31 @@
 import React from 'react'
-
 import HeaderTextComponent from './HeaderTextComponent'
-import AppCard from './AppCard'
-import { FlatList } from 'react-native'
-import { LowOffersList } from '../../data/home'
+import { workerList } from '../../data/home'
+import { FlatList, Text } from 'react-native'
+import HelpCard from './HelpCard'
 
-export default function OtherServicesList() {
+export default function AskWorker() {
   return (
-    <HeaderTextComponent name={'otherServices'} >
-        <FlatList
-        horizontal
-        data={LowOffersList}
+    <HeaderTextComponent name={'AskWorkerToHelp'}>
+       <FlatList
+        
+        data={workerList}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item)=>item.name}
         style={{
             display:'flex',
             flexDirection:'row',
+            direction:'rtl',
+            flexWrap:'wrap',
+            marginTop:15,
             gap:15
         }}
         renderItem={({item})=>(
-            <AppCard
+            <HelpCard
             name={item.name}
-            price={item.price}
             image={item.image}
             />
+           
 
         )}
         />

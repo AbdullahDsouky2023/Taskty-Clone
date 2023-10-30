@@ -1,16 +1,15 @@
+import {  FlatList } from 'react-native'
 import React from 'react'
-
 import HeaderTextComponent from './HeaderTextComponent'
-import AppCard from './AppCard'
-import { FlatList } from 'react-native'
-import { LowOffersList } from '../../data/home'
+import AppBigCard from './AppBigCard'
+import { LowOffersList, ReadyPackages } from '../../data/home'
 
-export default function OtherServicesList() {
+export default function CleaningServices() {
   return (
-    <HeaderTextComponent name={'otherServices'} >
+    <HeaderTextComponent name={'homeCleaningServices'}  showAll={true}>
         <FlatList
         horizontal
-        data={LowOffersList}
+        data={ReadyPackages}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item)=>item.name}
         style={{
@@ -19,10 +18,11 @@ export default function OtherServicesList() {
             gap:15
         }}
         renderItem={({item})=>(
-            <AppCard
+            <AppBigCard
             name={item.name}
             price={item.price}
             image={item.image}
+            
             />
 
         )}

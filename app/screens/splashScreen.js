@@ -20,7 +20,7 @@ const SplashScreen = ({ navigation }) => {
     );
 
     setTimeout(() => {
-        navigation.push('Auth');
+        navigation.push('App');
     }, 2000);
 
     return (

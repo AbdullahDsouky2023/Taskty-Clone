@@ -7,7 +7,7 @@ import HeaderTextComponent from "./HeaderTextComponent";
 
 export default function ServicesList() {
   return (
-    <HeaderTextComponent name={'servicesLookingFor'}>
+    <HeaderTextComponent name={'servicesLookingFor'} showAll={true}>
 
       <FlatList
           data={servicesList}

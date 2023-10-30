@@ -26,6 +26,10 @@ import OffersBanner from "../../component/Home/OffersBanner";
 import ServicesList from "../../component/Home/ServicesList";
 import LowOffers from "../../component/Home/LowOffers";
 import OtherServicesList from "../../component/Home/OtherServicesList";
+import ReadyPackages from "../../component/Home/ReadyPackages";
+import CleaningServices from "../../component/Home/CleaningServices";
+import AskWorker from "../../component/Home/AskWorker";
+import UsersReviews from "../../component/Home/UsersReview";
 const { width } = Dimensions.get("window");
 
 const HomeScreen = ({ navigation }) => {
@@ -72,7 +76,11 @@ const HomeScreen = ({ navigation }) => {
               <OffersBanner />
               <ServicesList />
               <LowOffers/>
+              <ReadyPackages/>
               <OtherServicesList/>
+              <CleaningServices/>
+              <AskWorker/>
+              <UsersReviews/>
             </>
           }
           data={topCategoriesList}
