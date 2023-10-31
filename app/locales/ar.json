@@ -42,5 +42,8 @@
   "clientReviews":"اراء العملاء",
   "reserveAppointment":"حجز موعد",
   "CurrentOrders":"طلبات جاري تنفيذها",
-  "PreviousOrders":"طلبات سابقه"
+  "PreviousOrders":"طلبات سابقه",
+  "GeneralSettings":"الاعدادت العامة",
+  "Wallet":"محفظة",
+  "yourwalletDetails":"تفاصيل محفظتك الخاصه "
 }

@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native'
 import { Colors, Sizes ,Fonts} from '../constant/styles'
 import { useNavigation } from '@react-navigation/native'
 
-export default function AppButton({path,title,style}) {
+export default function AppButton({path,title,style,textStyle}) {
     const navigation = useNavigation()
   return (
     <TouchableOpacity
@@ -13,7 +13,7 @@ export default function AppButton({path,title,style}) {
     
     onPress={() => navigation.push(path)}
     style={[styles.continueButtonStyle,style]}>
-        <AppText text={title} style={{ ...Fonts.whiteColor19Medium }} />
+        <AppText text={title} style={{ ...Fonts.whiteColor19Medium ,...textStyle}} />
 </TouchableOpacity>
   )
 }

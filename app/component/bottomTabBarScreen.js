@@ -9,9 +9,9 @@ import AccountScreen from "../screens/account/accountScreen";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFocusEffect } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
-import HomeNavigator from "../navigation/HomeNavigator";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { Feather } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons'; 
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +47,9 @@ const BottomTabBar = () => {
                     tabBarInactiveTintColor: Colors.grayColor,
                     tabBarLabelStyle: {
                         fontSize: 14.0,
-                        fontFamily: 'Mukta_Regular',
+                        fontFamily: 'Janna-Lt',
+                        fontWeight:700
+
                     },
                     tabBarStyle: { ...styles.tabBarStyle, },
                 }}
@@ -78,7 +80,7 @@ const BottomTabBar = () => {
                     component={AccountScreen}
                     options={{
                         tabBarIcon: ({ color, }) => (
-                            <MaterialIcons name="person" size={27} color={color} />
+                            <AntDesign name="user" size={27} color={color} />
                         ),
                     }}
                 />
