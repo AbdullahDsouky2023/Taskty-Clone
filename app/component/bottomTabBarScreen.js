@@ -2,7 +2,6 @@ import React, { useState, useCallback } from "react";
 import { BackHandler, View, Text, StyleSheet } from 'react-native'
 import { Colors, Sizes, Fonts } from "../constant/styles";
 import HomeScreen from "../screens/home/homeScreen";
-import HealthcareScreen from "../screens/healthcare/healthcareScreen";
 import OrderScreen from "../screens/Orders/OrderScreen.js";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFocusEffect } from "@react-navigation/native";
@@ -12,6 +11,7 @@ import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'; 
 import AccountNavigator from "../navigation/AccountNavigator";
 import { Octicons } from '@expo/vector-icons'; 
+import CurrentOffersScreen from "../screens/CurrentOffersScreen/CurrentOffersScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -65,7 +65,7 @@ const BottomTabBar = () => {
                 />
                 <Tab.Screen
                     name={t('Offers')}
-                    component={HealthcareScreen}
+                    component={CurrentOffersScreen}
                     options={{
                         tabBarIcon: ({ color }) => <MaterialCommunityIcons name="gift-open-outline" size={27} color={color} />
                     }}

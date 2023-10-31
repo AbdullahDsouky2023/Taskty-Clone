@@ -3,10 +3,12 @@ import React from "react";
 import AppText from "./AppText";
 import { StyleSheet } from "react-native";
 import { Colors } from "../constant/styles";
+import AppHeader from "./AppHeader";
 const { width, height } = Dimensions.get("screen");
 export default function ItemDetails({ item }) {
   return (
       <View style={styles.container}>
+        <AppHeader subPage={true}/>
     <ScrollView >
         <Image source={{ uri: item.image }} style={styles.image} />
         <View style={styles.overlay}>

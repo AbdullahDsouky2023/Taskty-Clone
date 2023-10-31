@@ -4,18 +4,20 @@ import { Colors, Sizes } from "../../constant/styles";
 import AppText from "../../component/AppText";
 import { homeServices } from "../../data/home";
 import OfferCard from "../../component/OfferCard";
+import AppHeader from "../../component/AppHeader";
 
 const { width } = Dimensions.get('screen');
 
 
 
-const HealthcareScreen = ({ navigation }) => {
+const CurrentOffersScreen = ({ navigation }) => {
     const [slectedItem,setSelectedItem] = useState('مكيفات')
     const selectedItemsData = homeServices.find((category) => category.category === slectedItem);
     
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
             <StatusBar backgroundColor={Colors.primaryColor} />
+            <AppHeader/>
             <View style={styles.container}>
                 <FlatList
                 horizontal
@@ -99,4 +101,4 @@ const styles = StyleSheet.create({
    
 });
 
-export default HealthcareScreen;
+export default CurrentOffersScreen;

@@ -30,6 +30,7 @@ import ReadyPackages from "../../component/Home/ReadyPackages";
 import CleaningServices from "../../component/Home/CleaningServices";
 import AskWorker from "../../component/Home/AskWorker";
 import UsersReviews from "../../component/Home/UsersReview";
+import AppHeader from "../../component/AppHeader";
 const { width } = Dimensions.get("window");
 
 const HomeScreen = ({ navigation }) => {
@@ -69,7 +70,7 @@ const HomeScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
-        {/* {headerWithDetail()} */}
+<AppHeader/>
         <FlatList
           ListHeaderComponent={
             <>

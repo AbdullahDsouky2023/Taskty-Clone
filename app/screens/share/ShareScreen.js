@@ -5,11 +5,14 @@ import AppButton from "../../component/AppButton";
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 import { useTranslation } from "react-i18next";
+import AppHeader from "../../component/AppHeader";
 const { width } = Dimensions.get("screen");
 export default function ShareScreen() {
     const { t } = useTranslation()
   return (
     <View style={styles.container}>
+            <AppHeader subPage={true}/>
+
       <View style={styles.imageContainer}>
         <Image source={require("../../assets/images/account/icon.png")} />
         <AppText
