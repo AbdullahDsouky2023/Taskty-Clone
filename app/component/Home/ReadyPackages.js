@@ -12,7 +12,8 @@ export default function ReadyPackages() {
         horizontal
         data={data}
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(item)=>item.name}
+        keyExtractor={(item,index) => item.name+index}
+
         style={{
             display:'flex',
             flexDirection:'row',

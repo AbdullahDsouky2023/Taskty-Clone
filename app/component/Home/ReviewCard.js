@@ -1,40 +1,35 @@
-import { View, Text, Dimensions, Image } from "react-native";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { View, Dimensions, Image ,StyleSheet} from "react-native";
+
 import { Colors } from "../../constant/styles";
 import AppText from "../AppText";
 const { width } = Dimensions.get("screen");
-const defaultImage ='https://media.istockphoto.com/id/904172104/photo/weve-made-it-all-this-way-i-am-proud.jpg?b=1&s=612x612&w=0&k=20&c=JRmndTMyz627jxKiUjgXSJXrxwuAiHkHjefiRsyY2jc="'
-export default function ReviewCard({username,review,userImage}) {
+
+export default function ReviewCard({ username, review, userImage }) {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.reviewContainer}>
         <View style={styles.header}>
-
-        <AppText text={"SercureOrder"} style={{ color: Colors.blackColor }} />
-        <AppText text={"clientReviews"} style={{ fontSize: 13 }} />
+          <AppText text={"SercureOrder"} style={{ color: Colors.blackColor }} />
+          <AppText text={"clientReviews"} style={{ fontSize: 13 }} />
         </View>
         <View style={styles.contentContainer}>
           <View style={styles.userImageContainer}>
             <Image
               style={styles.image}
               source={{
-                uri: userImage ? userImage : defaultImage,
+                uri: userImage 
               }}
             />
             <AppText
               text={username}
-              style={{ color: Colors.blackColor, fontSize: 12 }}
+              style={styles.name}
             />
           </View>
           <AppText
-            style={{
-              fontSize: 14,
-              color: Colors.blackColor,
-              width: width * 0.8,
-            }}
+          style={styles.review}
             centered={false}
-            text={review }
+            text={review}
           />
         </View>
       </View>
@@ -44,31 +39,47 @@ export default function ReviewCard({username,review,userImage}) {
 const styles = StyleSheet.create({
   cardContainer: {
     height: 250,
-    width: width * 1,
-    paddingHorizontal: 20,
+    width: width * 0.91,
+    padding: 20,
+    marginBottom: 10,
     backgroundColor: Colors.whiteColor,
-  },
-  reviewContainer: {
-    elevation: 1,
+    elevation: 2,
+    borderColor: Colors.grayColor,
+    borderTopWidth: 1,
+    borderRadius: 10,
   },
   text: {},
   userImageContainer: {
     display: "flex",
     flexDirection: "column",
     gap: 4,
+    alignItems: "center",
+    justifyContent: "center",
   },
   contentContainer: {
     display: "flex",
     flexDirection: "row",
+    marginTop: 10,
     gap: 10,
   },
   image: {
-    height: 70,
-    width: 70,
-    borderRadius: 35,
+    height: 50,
+    width: 50,
+    borderRadius: 25,
   },
-  header :{
-    display:'flex',
-    alignItems:'center'
+  header: {
+    display: "flex",
+    alignItems: "center",
+  },
+  name :{
+     color: Colors.blackColor, 
+     fontSize: 12 
+  },
+  review :{
+    
+      fontSize: 14,
+      color: Colors.blackColor,
+      width: width * 0.68,
+    
   }
 });

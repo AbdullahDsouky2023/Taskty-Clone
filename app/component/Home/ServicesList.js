@@ -15,7 +15,7 @@ export default function ServicesList() {
           renderItem={({ item }) => {
             return <ServiceCard name={item.name} image={item.image} />;
           }}
-          keyExtractor={(item) => item.name}
+          keyExtractor={(item,index) => item.name+index}
         />
           </HeaderTextComponent>
   );

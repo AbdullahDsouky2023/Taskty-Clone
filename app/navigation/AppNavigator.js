@@ -36,7 +36,7 @@ export default function AppNavigator() {
     component={BottomTabBar}
     options={{ ...TransitionPresets.DefaultTransition }}
   />
-  <Stack.Screen name="Search" component={SearchScreen} />
+  {/* <Stack.Screen name="Search" component={SearchScreen} />
   <Stack.Screen name="ChooseLocation" component={ChooseLocationScreen} />
   <Stack.Screen name="AddAddress" component={AddAddressScreen} />
   <Stack.Screen name="Offers" component={OffersScreen} />
@@ -74,7 +74,7 @@ export default function AppNavigator() {
   <Stack.Screen
     name="TermsAndConditions"
     component={TermsAndConditionsScreen}
-    />
+    /> */}
     </Stack.Navigator>
   )
 }

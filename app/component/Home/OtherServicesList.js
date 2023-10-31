@@ -12,7 +12,8 @@ export default function OtherServicesList() {
         horizontal
         data={LowOffersList}
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(item)=>item.name}
+        keyExtractor={(item,index) => item.name+index}
+
         style={{
             display:'flex',
             flexDirection:'row',

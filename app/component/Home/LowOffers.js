@@ -15,7 +15,7 @@ export default function LowOffers() {
         horizontal
         data={LowOffersList}
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(item)=>item.name}
+        keyExtractor={(item,index)=>item.name+index}
         style={{
             display:'flex',
             flexDirection:'row',

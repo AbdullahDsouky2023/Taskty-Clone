@@ -1,11 +1,12 @@
-import { View, Text, Dimensions } from 'react-native'
-import React from 'react'
-import { offersBannerList, userReviews } from '../../data/home'
-import Carousel from 'react-native-snap-carousel-v4';
+import { View, Dimensions, StyleSheet } from 'react-native'
 import { useState } from 'react';
+import React from 'react'
+
+import Carousel from 'react-native-snap-carousel-v4';
+import { userReviews } from '../../data/home'
 import PaginationComponent from './Pagination';
-import { Image } from 'react-native';
 import ReviewCard from './ReviewCard';
+
 const { width } = Dimensions.get("window");
 
 export default   function UsersReviews() {
@@ -26,12 +27,13 @@ export default   function UsersReviews() {
         days,
     } = state;
     return (
-        <View>
+        <View style={styles.container}>
             <Carousel
                 data={reviews}
                 sliderWidth={width}
                 autoplay={true}
                 loop={true}
+                
                 autoplayInterval={4000}
                 itemWidth={width}
                 renderItem={({item})=><ReviewCard  username={item.userName}  review={item.review } userImage={item.userImage} />}
@@ -42,3 +44,8 @@ export default   function UsersReviews() {
     )
 }
 
+const styles = StyleSheet.create({
+    container :{
+        padding:20
+    }
+})

@@ -11,7 +11,9 @@ export const Colors = {
     blueColor:'#3F8CFF',
     success:'#4FBF67',
     warning:"#FF6628",
-    error:'#FF3D00'
+    error:'#FF3D00',
+    overlayColor: 'rgba(0, 0, 0, 0.2)',
+
     
 }
 

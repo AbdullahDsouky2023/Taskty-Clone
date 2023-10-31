@@ -22,11 +22,8 @@ export default function HomeNavigator() {
         <Stack.Screen
                     name={t('Home')}
                     component={HomeScreen}
-                    options={{
-                        tabBarIcon: ({ color }) => <MaterialIcons name="home" size={27} color={color} />
-                    }}
+                   
                 />
-       <Stack.Screen name={ITEM_DETAILS} component={ItemDetails} options={{headerShown:true}} />
     </Stack.Navigator>
   )
 }

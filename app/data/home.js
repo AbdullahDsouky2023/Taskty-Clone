@@ -295,6 +295,19 @@ const LowOffersList = [
     price: "275 Egyptian Pounds",
     image:
       "https://images.pexels.com/photos/4239031/pexels-photo-4239031.jpeg?auto=compress&cs=tinysrgb&w=600",
+      description:`
+      تأسيس 1 حمام + 1 بانيو + 1 مطبخ صرف وتغذية) ،
+      ويشمل الآتي:
+      الحمام :
+      - تأسيس حوض الوجه
+      - تأسيس خلاط الدش
+      - تأسيس الكومبينيشن صرف حوض الوجه
+      - صرف بانيو
+      - بلاعة الصرف (البيبة ) المطبخ
+      - تأسيس حوض المطبخ - تأسيس فلتر صرف حوض المطبخ
+      العرض لا يشمل:
+      - الخامات
+      - عملية التأسيس تتم من داخل الشقة فقط `
   },
   {
     name: "One-Time Home Cleaning - Price per Square Meter (Up to 170m)",
@@ -369,19 +382,21 @@ const userReviews = [
     userName: "محمد",
     userImage:"https://images.pexels.com/photos/8088685/pexels-photo-8088685.jpeg?auto=compress&cs=tinysrgb&w=600",
     review:"اليوم أول مرة أتعامل مع شركتكم لأعمال السباكة في منزلي. أشكركم على مستوى الخدمة الرائع. حيث زارني سباك ولأول مرة أجد عامل محترف وسريع جدا في أنجاز العمل المطلوب.",
-    },
-    {
-      userName: "ليلى",
-      review:
-      "تجربة رائعة مع خدمات السباكة. الفني كان محترفًا وأنهى العمل بسرعة. سأوصي بهم للأصدقاء والعائلة.",
-    },
-    {
-      userName: "عبد الله",
-      review: "خدمة ممتازة وأسعار معقولة. سأعود لطلب المزيد من الخدمات في المستقبل.",
-      userImage:"https://images.pexels.com/photos/8113893/pexels-photo-8113893.jpeg?auto=compress&cs=tinysrgb&w=600"
   },
   {
-    userName: "فاطمة",
+    userName: " علي ليلى",
+    userImage:"https://images.pexels.com/photos/8088685/pexels-photo-8088685.jpeg?auto=compress&cs=tinysrgb&w=600",
+    review:
+    "تجربة رائعة مع خدمات السباكة. الفني كان محترفًا وأنهى العمل بسرعة. سأوصي بهم للأصدقاء والعائلة.",
+  },
+  {
+  userName: "  محمود عبد الله",
+  review: "خدمة ممتازة وأسعار معقولة. سأعود لطلب المزيد من الخدمات في المستقبل.",
+  userImage:"https://images.pexels.com/photos/8113893/pexels-photo-8113893.jpeg?auto=compress&cs=tinysrgb&w=600"
+},
+{
+  userName: "احمد علي ",
+  userImage:"https://images.pexels.com/photos/8088685/pexels-photo-8088685.jpeg?auto=compress&cs=tinysrgb&w=600",
     review:
       "ممتاز جداً. سباك محترف وودود. قام بإصلاح مشكلتي بشكل سريع وفعال. أنصح بشدة بهم.",
   },

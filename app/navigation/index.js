@@ -8,6 +8,8 @@ import LoadingScreen from "../component/loadingScreen";
 import SplashScreen from "../screens/splashScreen";
 import AuthNavigator from "./AuthNavigator";
 import AppNavigator from "./AppNavigator";
+import { ITEM_DETAILS } from "./routes";
+import ItemScreen from "../screens/ItemScreen";
 
 LogBox.ignoreAllLogs();
 
@@ -15,10 +17,12 @@ const Stack = createSharedElementStackNavigator();
 
 const RootNavigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer >
       <Stack.Navigator
+      
         screenOptions={{
           headerShown: false,
+          
           ...TransitionPresets.SlideFromRightIOS,
         }}
       >
@@ -26,7 +30,7 @@ const RootNavigator = () => {
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Auth" component={AuthNavigator} />
         <Stack.Screen name="App" component={AppNavigator} />
-        
+        <Stack.Screen name={ITEM_DETAILS} component={ItemScreen} options={{headerShown:false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

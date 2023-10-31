@@ -1,6 +1,5 @@
 import React from 'react'
 import { Pagination } from 'react-native-snap-carousel-v4';
-import { offersBannerList } from '../../data/home';
 import { StyleSheet } from 'react-native';
 import { Colors, Sizes } from '../../constant/styles';
 
@@ -34,5 +33,7 @@ const styles = StyleSheet.create({
         bottom: -20.0,
         left: 0.0,
         right: 0.0,
+
+
     },
 })
