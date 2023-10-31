@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native'
 import { Colors, Sizes ,Fonts} from '../constant/styles'
 import { useNavigation } from '@react-navigation/native'
 
-export default function AppButton({path,title,style,textStyle}) {
+export default function AppButton({path,title,style,textStyle,onPress}) {
     const navigation = useNavigation()
   return (
     <TouchableOpacity

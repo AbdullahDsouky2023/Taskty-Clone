@@ -3,26 +3,32 @@ import { Colors } from "../../constant/styles";
 import AppText from "../AppText";
 import { MaterialIcons } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 
 
 export default function SettingItem({item }) {
     const { icon, name, desc } = item
+    const navigation = useNavigation()
     return (
-      <View style={styles.item}>
+      <TouchableWithoutFeedback style={styles.item} onPress={()=>navigation.navigate(icon)}>
         <View style={styles.itemHeader}>
           <SimpleLineIcons name={icon} size={24} color={Colors.primaryColor} />
-          <View>
+          <View style={{
+            display:'flex',
+            justifyContent:'center'
+          }}>
             <AppText text={name} centered={false} style={styles.textHeader} />
-            <AppText
+            {desc && <AppText
               text={desc}
               centered={false}
               style={styles.headerDescription}
-            />
+            />}
           </View>
         </View>
         <MaterialIcons name="arrow-back-ios" size={24} color={Colors.grayColor} />
-      </View>)
+      </TouchableWithoutFeedback>)
 }
 
 const styles = StyleSheet.create({

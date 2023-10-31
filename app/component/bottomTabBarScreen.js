@@ -1,17 +1,17 @@
 import React, { useState, useCallback } from "react";
 import { BackHandler, View, Text, StyleSheet } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons';
 import { Colors, Sizes, Fonts } from "../constant/styles";
 import HomeScreen from "../screens/home/homeScreen";
 import HealthcareScreen from "../screens/healthcare/healthcareScreen";
 import OrderScreen from "../screens/Orders/OrderScreen.js";
-import AccountScreen from "../screens/account/accountScreen";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFocusEffect } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { Feather } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons'; 
+import AccountNavigator from "../navigation/AccountNavigator";
+import { Octicons } from '@expo/vector-icons'; 
 
 const Tab = createBottomTabNavigator();
 
@@ -58,7 +58,9 @@ const BottomTabBar = () => {
                     name={t('Home')}
                     component={HomeScreen}
                     options={{
-                        tabBarIcon: ({ color }) => <MaterialIcons name="home" size={27} color={color} />
+                        tabBarIcon: ({ color }) => 
+                        <Octicons name="home" size={27} color={color}/>
+
                     }}
                 />
                 <Tab.Screen
@@ -77,7 +79,7 @@ const BottomTabBar = () => {
                 />
                 <Tab.Screen
                     name={t('Account')}
-                    component={AccountScreen}
+                    component={AccountNavigator}
                     options={{
                         tabBarIcon: ({ color, }) => (
                             <AntDesign name="user" size={27} color={color} />
