@@ -17,8 +17,8 @@ export default function WalletScreen() {
       </View>
       <AppButton title={'أدخل كود شحن المحفظه '} style={styles.button} textStyle={{color:Colors.primaryColor}}/>
       <View style={styles.buttonsContainer}>
-        <AppButton onPress={setOperation('سحب')} title={'سحب'} style={ operation === 'سحب' ? styles.button : '' } textStyle={ operation === 'سحب' ? {color:Colors.primaryColor}: ''}/>
-        <AppButton onPress={setOperation('ايداع')} title={'سحب'} style={ operation === 'ايداع' ? styles.button : '' } textStyle={ operation === 'ايداع' ? {color:Colors.primaryColor}: ''}/>
+        {/* <AppButton onPress={setOperation('سحب')} title={'سحب'} style={ operation === 'سحب' ? styles.button : '' } textStyle={ operation === 'سحب' ? {color:Colors.primaryColor}: ''}/>
+        <AppButton onPress={setOperation('ايداع')} title={'سحب'} style={ operation === 'ايداع' ? styles.button : '' } textStyle={ operation === 'ايداع' ? {color:Colors.primaryColor}: ''}/> */}
       </View>
       <View style={styles.operation}>
         <AppText text={'لا يوجد عمليات اخيرة'}/>

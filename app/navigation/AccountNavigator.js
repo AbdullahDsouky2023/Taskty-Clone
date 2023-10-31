@@ -1,11 +1,11 @@
 import React from 'react'
 import {Stack, createStackNavigator} from '@react-navigation/stack'
-import SigninScreen from "../screens/auth/signinScreen";
-import RegisterScreen from "../screens/auth/registerScreen";
-import VerificationScreen from "../screens/auth/verificationScreen";
+
 import { TransitionPresets } from "@react-navigation/stack";
 import AccountScreen from '../screens/account/accountScreen';
 import WalletScreen from '../screens/wallet/walletScreen';
+import ShareScreen from '../screens/share/ShareScreen';
+import CallUsScreen from '../screens/Call/CallUsScreen';
 
 export default function AccountNavigator() {
     const Stack = createStackNavigator()
@@ -19,7 +19,8 @@ export default function AccountNavigator() {
     >
        <Stack.Screen name="Account" component={AccountScreen} options={{ ...TransitionPresets.DefaultTransition }} />
         <Stack.Screen name="wallet" component={WalletScreen} />
-        <Stack.Screen name="Verification" component={VerificationScreen} />
+        <Stack.Screen name="share" component={ShareScreen} />
+        <Stack.Screen name="call-end" component={CallUsScreen} />
     </Stack.Navigator>
   )
 }

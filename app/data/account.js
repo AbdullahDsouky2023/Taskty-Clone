@@ -1,5 +1,10 @@
 
 export const settingsItemArray = [ 
+     {
+    name:"الملف الشخصي",
+    icon:"user",
+    desc:""
+},
     {
     name:"المحفظه",
     icon:"wallet",
@@ -20,9 +25,5 @@ export const settingsItemArray = [
     icon:"speech",
     desc:""
 },
-    {
-    name:"الملف الشخصي",
-    icon:"user",
-    desc:""
-},
+   
 ]
