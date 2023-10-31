@@ -10,7 +10,7 @@ import { ITEM_DETAILS } from '../../navigation/routes'
 export default function LowOffers() {
   const navigation = useNavigation()
   return (
-    <HeaderTextComponent name={'Low Offers'}  showAll={true} >
+    <HeaderTextComponent name={'Low Offers'}  showAll={true}  >
         <FlatList
         horizontal
         data={LowOffersList}

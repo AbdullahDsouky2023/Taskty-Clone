@@ -3,14 +3,22 @@ import { View, StyleSheet } from "react-native";
 
 import AppText from "../AppText";
 import { Colors, Sizes, Fonts } from "../../constant/styles";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 
 export default function HeaderTextComponent({ name, showAll, children }) {
+  const navigation = useNavigation()
+  const { t } = useTranslation()
   return (
     <View style={styles.Container}>
       <View style={styles.headerTextContainer}>
         <AppText text={name} style={styles.text} />
         {showAll && (
+          <TouchableWithoutFeedback onPress={()=>navigation.navigate(t('Offers'))}>
+
           <AppText text={"showAll"} style={{ ...Fonts.primaryColor15Light }} />
+          </TouchableWithoutFeedback>
         )}
       </View>
       <View style={styles.cardContainer}>{children}</View>

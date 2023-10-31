@@ -40,5 +40,7 @@
   "Carpentry": "نقاشة",
   "SercureOrder":"اطلب بثقة وأمان",
   "clientReviews":"اراء العملاء",
-  "reserveAppointment":"حجز موعد"
+  "reserveAppointment":"حجز موعد",
+  "CurrentOrders":"طلبات جاري تنفيذها",
+  "PreviousOrders":"طلبات سابقه"
 }

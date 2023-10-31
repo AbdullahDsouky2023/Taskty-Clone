@@ -401,6 +401,60 @@ const userReviews = [
       "ممتاز جداً. سباك محترف وودود. قام بإصلاح مشكلتي بشكل سريع وفعال. أنصح بشدة بهم.",
   },
 ];
+const homeServices = [
+
+  {
+    category: "مكيفات",
+    services: [
+      { service: "  و مكافحه الحضرات الضارة مع ازالتها بالكامل تركيب المكيف مكافحه الحضرات الضارة مع ازالتها بالكامل تركيب المكيف"   , price: 150 },
+      { service: "صيانة المكيف", price: 100 },
+      { service: "تعبئة الغاز", price: 80 },
+    ],
+  },
+
+  {
+    category: "دهان",
+    services: [
+      { service: "دهان الجدران", price: 120 },
+      { service: "دهان الأثاث", price: 80 },
+      { service: "دهان السقف", price: 100 },
+    ],
+  },
+  {
+    category: "حدادة",
+    services: [
+      { service: "تصليح الحديد", price: 120 },
+      { service: "تصنيع الأسوار", price: 250 },
+      { service: "تركيب الشبابيك", price: 180 },
+    ],
+  },
+  {
+    category: "زجاج",
+    services: [
+      { service: "تركيب الزجاج", price: 200 },
+      { service: "استبدال الزجاج المكسور", price: 80 },
+      { service: "تلميع الزجاج", price: 60 },
+    ],
+  },
+  {
+    category: "بناء",
+    services: [
+      { service: "بناء منازل", price: 500 },
+      { service: "بناء أسواق تجارية", price: 800 },
+      { service: "بناء مباني سكنية", price: 400 },
+    ],
+  },
+  {
+    category: "فني تكييف",
+    services: [
+      { service: "تصليح أجهزة التكييف", price: 90 },
+      { service: "صيانة وتنظيف التكييف", price: 70 },
+      { service: "تمديد مخارج التكييف", price: 110 },
+    ],
+  },];
+
+
+
 
 export {
   offersBannerList,
@@ -412,5 +466,6 @@ export {
   LowOffersList,
   ReadyPackages,
   workerList,
-  userReviews
+  userReviews,
+  homeServices
 };

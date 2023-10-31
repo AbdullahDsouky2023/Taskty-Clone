@@ -4,12 +4,14 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Colors, Sizes, Fonts } from "../constant/styles";
 import HomeScreen from "../screens/home/homeScreen";
 import HealthcareScreen from "../screens/healthcare/healthcareScreen";
-import NotificationScreen from "../screens/notifications/notificationScreen";
+import OrderScreen from "../screens/Orders/OrderScreen.js";
 import AccountScreen from "../screens/account/accountScreen";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFocusEffect } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import HomeNavigator from "../navigation/HomeNavigator";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { Feather } from '@expo/vector-icons'; 
 
 const Tab = createBottomTabNavigator();
 
@@ -52,23 +54,23 @@ const BottomTabBar = () => {
             >
                 <Tab.Screen
                     name={t('Home')}
-                    component={HomeNavigator}
+                    component={HomeScreen}
                     options={{
                         tabBarIcon: ({ color }) => <MaterialIcons name="home" size={27} color={color} />
                     }}
                 />
                 <Tab.Screen
-                    name={'HealthCare'}
+                    name={t('Offers')}
                     component={HealthcareScreen}
                     options={{
-                        tabBarIcon: ({ color }) => <MaterialIcons name="tag-faces" size={27} color={color} />
+                        tabBarIcon: ({ color }) => <MaterialCommunityIcons name="gift-open-outline" size={27} color={color} />
                     }}
                 />
                 <Tab.Screen
                      name={t('Orders')}
-                    component={NotificationScreen}
+                    component={OrderScreen}
                     options={{
-                        tabBarIcon: ({ color }) => <MaterialIcons name="notifications" size={27} color={color} />
+                        tabBarIcon: ({ color }) => <Feather name="shopping-bag" size={27} color={color} />
                     }}
                 />
                 <Tab.Screen
