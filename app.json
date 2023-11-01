@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RN HealthMeds User App",
-    "slug": "rn-HealthMedsUser",
+    "name": "RN HomeService User App",
+    "slug": "rn-HomeService",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.svg",
@@ -15,12 +15,12 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.render.rnhealthmedsuser",
+      "bundleIdentifier": "com.render.rnhomeserviceuser",
       "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.render.rnhealthmedsuser",
+      "package": "com.render.rnhomeserviceuser",
       "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/images/icon.svg",
@@ -29,6 +29,18 @@
     },
     "web": {
       "favicon": "./app/assets/favicon.svg"
-    }
+    },
+    "plugins":[
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+
+          "ios":{
+            "useFrameworks":"static"
+          }
+        }
+      ]
+    ]
   }
 }

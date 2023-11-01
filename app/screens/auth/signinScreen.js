@@ -13,6 +13,8 @@ import { Colors, Fonts, Sizes } from "../../constant/styles";
 import { useFocusEffect } from "@react-navigation/native";
 import AppText from "../../component/AppText";
 import AppButton from "../../component/AppButton";
+import * as firebase from 'firebase';
+// import 'firebase/auth';
 import PhoneNumberTextField from "../../component/PhoneInput";
 import Logo from "../../component/Logo";
 
@@ -28,9 +30,13 @@ const SigninScreen = ({ navigation }) => {
     return true;
   };
   const updateState = (data) => {
-    console.log(data);
     setState((state) => ({ ...state, ...data }));
   };
+
+
+ 
+ 
+
 
   useFocusEffect(
     useCallback(() => {
@@ -60,7 +66,7 @@ const SigninScreen = ({ navigation }) => {
             phoneNumber={phoneNumber}
             updateState={updateState}
           />
-          <AppButton path={'Verification'} title={'Continue'}/>
+          <AppButton path={'Verification'} title={'Continue'} onPress={()=>handleSendVerificationCode()}/>
           <AppText
             text={"We'll send OTP for Verification"}
             style={{

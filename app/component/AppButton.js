@@ -10,9 +10,7 @@ export default function AppButton({ path, title, style, textStyle, onPress }) {
   return (
     <TouchableOpacity
       activeOpacity={0.6}
-      onPress={() => {
-        navigation.push(path);
-      }}
+      onPress={onPress}
       style={[styles.continueButtonStyle, style]}
     >
       <AppText
