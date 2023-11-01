@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -13,17 +13,20 @@ import { Colors, Fonts, Sizes } from "../../constant/styles";
 import { useFocusEffect } from "@react-navigation/native";
 import AppText from "../../component/AppText";
 import AppButton from "../../component/AppButton";
-import * as firebase from 'firebase';
-// import 'firebase/auth';
 import PhoneNumberTextField from "../../component/PhoneInput";
 import Logo from "../../component/Logo";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+
+import { auth, firebaseConfig } from "../../../firebaseConfig";
 
 const SigninScreen = ({ navigation }) => {
-
   const [backClickCount, setBackClickCount] = useState(0);
   const [state, setState] = useState({
     phoneNumber: null,
   });
+  const recaptchaVerifier = useRef(null);
 
   const backAction = () => {
     backClickCount == 1 ? BackHandler.exitApp() : _spring();
@@ -33,10 +36,21 @@ const SigninScreen = ({ navigation }) => {
     setState((state) => ({ ...state, ...data }));
   };
 
-
- 
- 
-
+  const handleSendVerificationCode = async () => {
+    try {
+      const validPhone = `+20${phoneNumber}`;
+      const result = await signInWithPhoneNumber(
+        auth,
+        validPhone,
+        recaptchaVerifier.current
+      );
+      if (result.verificationId)
+        navigation.navigate("Verification", { result });
+      console.log(result);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -61,18 +75,34 @@ const SigninScreen = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Logo />
-          <AppText text={"Signin with Phone Number"} style={{marginBottom:10}}/>
+
+          <AppText
+          centered={true}
+            text={"Signin with Phone Number"}
+            style={{ marginBottom: 10,      
+            }}
+          />
           <PhoneNumberTextField
             phoneNumber={phoneNumber}
             updateState={updateState}
           />
-          <AppButton path={'Verification'} title={'Continue'} onPress={()=>handleSendVerificationCode()}/>
+          <View style={{ backgroundColor: "red" }}>
+            <FirebaseRecaptchaVerifierModal
+              ref={recaptchaVerifier}
+              firebaseConfig={firebaseConfig}
+            />
+          </View>
+          <AppButton
+            path={"Verification"}
+            title={"Continue"}
+            disabled={phoneNumber < 10}
+            onPress={() => handleSendVerificationCode()}
+          />
           <AppText
             text={"We'll send OTP for Verification"}
             style={{
               marginTop: Sizes.fixPadding - 5.0,
               ...Fonts.grayColor18Medium,
-              textAlign: "center",
             }}
           />
         </ScrollView>

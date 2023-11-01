@@ -4,10 +4,10 @@
     "slug": "rn-HomeService",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.svg",
+    "icon": "./app/assets/images/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./app/assets/images/icon.svg",
+      "image": "./app/assets/images/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,12 +23,12 @@
       "package": "com.render.rnhomeserviceuser",
       "versionCode": 3,
       "adaptiveIcon": {
-        "foregroundImage": "./app/assets/images/icon.svg",
+        "foregroundImage": "./app/assets/images/icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./app/assets/favicon.svg"
+      "favicon": "./app/assets/favicon.png"
     },
     "plugins":[
       "@react-native-firebase/app",

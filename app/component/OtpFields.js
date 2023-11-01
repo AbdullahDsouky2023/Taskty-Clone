@@ -5,9 +5,8 @@ import { Sizes ,Colors,Fonts,} from "../constant/styles";
 import { StyleSheet } from "react-native";
 import { useState } from "react";
 
-export default function OtpFields({setisLoading}) {
+export default function OtpFields({setisLoading,otpInput,setOtpInput,confirmVerificationCode}) {
     const navigation = useNavigation()
-    const [otpInput, setotpInput] = useState("");
 
     return (
       <OTPTextView
@@ -16,18 +15,18 @@ export default function OtpFields({setisLoading}) {
           marginHorizontal: Sizes.fixPadding * 2.0,
         }}
         handleTextChange={(text) => {
-          setotpInput(text);
+          setOtpInput(text);
           console.log(text)
-          if (otpInput.length == 3) {
-            setisLoading(true);
-            setTimeout(() => {
-              setisLoading(false);
-              console.log(otpInput)
-              navigation.push("Register");
-            }, 2000);
-          }
+          // if (otpInput.length == 6) {
+          //   setisLoading(true);
+          //   setTimeout(() => {
+          //     setisLoading(false);
+          //     console.log(otpInput)
+          //     confirmVerificationCode(otpInput)
+          //   }, 2000);
+          // }
         }}
-        inputCount={4}
+        inputCount={6}
         keyboardType="numeric"
         tintColor={Colors.primaryColor}
         offTintColor={Colors.bgColor}
@@ -45,7 +44,7 @@ export default function OtpFields({setisLoading}) {
         borderWidth: 1.0,
         // ...Fonts.primaryColor18Medium,
         // padding:34,
-        width:65,
+        width:50,
         height:65,
         fontSize:22
     

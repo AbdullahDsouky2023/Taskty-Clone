@@ -22,12 +22,12 @@ export default function AppText({ style, text, centered = true }) {
   const { t } = useTranslation();
 
   return (
-    <View>
+    <View style={{width:width}}>
       <Text
         style={[
           styles.text,
           style,
-          { textAlign: centered ? "center" : "auto" },
+          { textAlign: centered ? "center" : "right" },
         ]}
       >
         {t(text)}
@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
   text: {
     ...Fonts.grayColor18Medium,
     fontFamily: "Janna-Lt",
+    backgroundColor:'red',
+    width:width*10,
     maxWidth: width*0.74,
   },
 });

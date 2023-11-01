@@ -5,13 +5,14 @@ import { StyleSheet } from "react-native";
 import { Colors, Sizes, Fonts } from "../constant/styles";
 import { useNavigation } from "@react-navigation/native";
 
-export default function AppButton({ path, title, style, textStyle, onPress }) {
+export default function AppButton({ path, title, style, textStyle, onPress ,disabled = false}) {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       activeOpacity={0.6}
       onPress={onPress}
-      style={[styles.continueButtonStyle, style]}
+disabled={disabled}     
+ style={[styles.continueButtonStyle, style]}
     >
       <AppText
         text={title}
