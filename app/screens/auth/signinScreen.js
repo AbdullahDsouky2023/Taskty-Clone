@@ -23,6 +23,7 @@ import { auth, firebaseConfig } from "../../../firebaseConfig";
 
 const SigninScreen = ({ navigation }) => {
   const [backClickCount, setBackClickCount] = useState(0);
+  const [disabled,setDisabled]= useState(true)
   const [state, setState] = useState({
     phoneNumber: null,
   });
@@ -34,21 +35,31 @@ const SigninScreen = ({ navigation }) => {
   };
   const updateState = (data) => {
     setState((state) => ({ ...state, ...data }));
+    console.log(data.phoneNumber.length)
+    if(data.phoneNumber.length === 12) setDisabled(false)
+    else setDisabled(true)
   };
 
   const handleSendVerificationCode = async () => {
     try {
+      setDisabled(true)
       const validPhone = `+20${phoneNumber}`;
       const result = await signInWithPhoneNumber(
         auth,
         validPhone,
         recaptchaVerifier.current
       );
-      if (result.verificationId)
+      if (result.verificationId){
+
         navigation.navigate("Verification", { result });
+        setDisabled(false)
+      }
       console.log(result);
+
     } catch (error) {
       console.error("Error:", error);
+      setDisabled(false)
+
     }
   };
 
@@ -88,6 +99,7 @@ const SigninScreen = ({ navigation }) => {
           />
           <View style={{ backgroundColor: "red" }}>
             <FirebaseRecaptchaVerifierModal
+            style={{backgroundColor:'red'}}
               ref={recaptchaVerifier}
               firebaseConfig={firebaseConfig}
             />
@@ -95,7 +107,7 @@ const SigninScreen = ({ navigation }) => {
           <AppButton
             path={"Verification"}
             title={"Continue"}
-            disabled={phoneNumber < 10}
+            disabled={disabled}
             onPress={() => handleSendVerificationCode()}
           />
           <AppText

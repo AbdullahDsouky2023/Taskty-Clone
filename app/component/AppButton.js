@@ -12,7 +12,7 @@ export default function AppButton({ path, title, style, textStyle, onPress ,disa
       activeOpacity={0.6}
       onPress={onPress}
 disabled={disabled}     
- style={[styles.continueButtonStyle, style]}
+ style={[disabled ? styles.disabledStyle : styles.continueButtonStyle, style]}
     >
       <AppText
         text={title}
@@ -27,7 +27,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "auto",
+    paddingVertical: Sizes.fixPadding,
+    marginHorizontal: Sizes.fixPadding,
+    borderRadius: Sizes.fixPadding - 5.0,
+    marginTop: Sizes.fixPadding * 4.0,
+    paddingHorizontal: Sizes.fixPadding * 2.5,
+    borderRadius: 40,
     backgroundColor: Colors.primaryColor,
+  },
+  disabledStyle:{
+    backgroundColor:Colors.grayColor,
+    borderWidth:1,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "auto",
     paddingVertical: Sizes.fixPadding,
     marginHorizontal: Sizes.fixPadding,
     borderRadius: Sizes.fixPadding - 5.0,
@@ -35,4 +48,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: Sizes.fixPadding * 2.5,
     borderRadius: 40,
   },
+  
 });

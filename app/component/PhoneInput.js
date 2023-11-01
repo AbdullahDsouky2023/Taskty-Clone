@@ -10,6 +10,7 @@ export default function PhoneNumberTextField({ phoneNumber, updateState }) {
       onChangeText={({ phoneNumber }) => {
         updateState({ phoneNumber: phoneNumber });
       }}
+      
       defaultCountry="EG"
       
       containerStyle={styles.phoneNumberTextFieldStyle}
@@ -22,6 +23,7 @@ export default function PhoneNumberTextField({ phoneNumber, updateState }) {
         paddingRight: Sizes.fixPadding,
         ...Fonts.blackColor17Medium,
         flexDirection: "column",
+        length:9,
         textAlign: "left",  // Set text alignment to left
         direction: "ltr",  // Set text direction to left-to-right (ltr)
       }}
