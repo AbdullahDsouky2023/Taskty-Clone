@@ -34,44 +34,20 @@ const RegisterScreen = ({ navigation }) => {
         <ArrowBack />
         <ScrollView showsVerticalScrollIndicator={false}>
           <Logo />
+          <View style={{flex:1,alignItems:'center'}}>
+
           <AppText
             text={"Register Your Account"}
             style={{ color: Colors.primaryColor, marginBottom: 10 }}
-          />
-          {fullNameTextField()}
-          {emailAddressTextField()}
+            />
+            </View>
           <AppButton path={"App"} title={"Continue"} />
         </ScrollView>
       </View>
     </SafeAreaView>
   );
 
-  function emailAddressTextField() {
-    return (
-      <TextInput
-        placeholder={t("emailAddress")}
-        placeholderTextColor={Colors.primaryColor}
-        value={emailAddress}
-        onChangeText={(text) => updateState({ emailAddress: text })}
-        selectionColor={Colors.primaryColor}
-        style={styles.textFieldStyle}
-        keyboardType="email-address"
-      />
-    );
-  }
-
-  function fullNameTextField() {
-    return (
-      <TextInput
-        placeholder={t("fullName")}
-        placeholderTextColor={Colors.primaryColor}
-        value={fullName}
-        onChangeText={(text) => updateState({ fullName: text })}
-        selectionColor={Colors.primaryColor}
-        style={styles.textFieldStyle}
-      />
-    );
-  }
+  
 };
 
 const styles = StyleSheet.create({

@@ -10,21 +10,23 @@ export default function OtpFields({setisLoading,otpInput,setOtpInput,confirmVeri
 
     return (
       <OTPTextView
+      
         containerStyle={{
           marginTop: Sizes.fixPadding * 2.0,
           marginHorizontal: Sizes.fixPadding * 2.0,
+          flexDirection:'row-reverse',
         }}
         handleTextChange={(text) => {
           setOtpInput(text);
           console.log(text)
-          // if (otpInput.length == 6) {
-          //   setisLoading(true);
-          //   setTimeout(() => {
-          //     setisLoading(false);
-          //     console.log(otpInput)
-          //     confirmVerificationCode(otpInput)
-          //   }, 2000);
-          // }
+          if (otpInput.length == 6) {
+            setisLoading(true);
+            setTimeout(() => {
+              setisLoading(false);
+              console.log(otpInput)
+              confirmVerificationCode(otpInput)
+            }, 2000);
+          }
         }}
         inputCount={6}
         keyboardType="numeric"
@@ -40,8 +42,9 @@ export default function OtpFields({setisLoading,otpInput,setOtpInput,confirmVeri
         borderBottomWidth: null,
         borderRadius: Sizes.fixPadding - 5.0,
         backgroundColor: Colors.whiteColor,
-        borderColor: Colors.primaryColor,
+        borderColor: Colors.blackColor,
         borderWidth: 1.0,
+        direction:'ltr',
         // ...Fonts.primaryColor18Medium,
         // padding:34,
         width:50,

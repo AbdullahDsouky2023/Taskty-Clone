@@ -6,7 +6,10 @@ import { useTranslation } from "react-i18next";
 import ar from "../locales/ar.json";
 import { Text } from "react-native";
 import { Fonts } from "../constant/styles";
+import { I18nManager } from "react-native";
 
+
+I18nManager.forceRTL(true);
 i18n.use(initReactI18next).init({
   resources: {
     ar: { translation: ar },

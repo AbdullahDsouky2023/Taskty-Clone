@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   BackHandler,
+  Alert,
 } from "react-native";
 
 import { Colors, Fonts, Sizes } from "../../constant/styles";
@@ -20,10 +21,16 @@ import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 import { auth, firebaseConfig } from "../../../firebaseConfig";
+import AppModal from "../../component/AppModel";
+import { errorMessages } from "../../data/signin";
 
 const SigninScreen = ({ navigation }) => {
   const [backClickCount, setBackClickCount] = useState(0);
   const [disabled,setDisabled]= useState(true)
+  const [ errmessage,setErrMessage]= useState('')
+  const [ visibleModal,setVisibleModel]=useState(false)
+
+  
   const [state, setState] = useState({
     phoneNumber: null,
   });
@@ -50,16 +57,17 @@ const SigninScreen = ({ navigation }) => {
         recaptchaVerifier.current
       );
       if (result.verificationId){
-
-        navigation.navigate("Verification", { result });
+        navigation.navigate("Verification", { result ,handleSendVerificationCode});
         setDisabled(false)
       }
       console.log(result);
 
-    } catch (error) {
-      console.error("Error:", error);
-      setDisabled(false)
-
+    }  catch (error) {
+      console.log(error.code);
+      const errorMessage = errorMessages[error.message] || "حصلت مشكلة غير معروفة.";
+      Alert.alert(errorMessage);
+    } finally {
+      setDisabled(false);
     }
   };
 
@@ -86,13 +94,15 @@ const SigninScreen = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Logo />
-
+          <View style={{flex:1,alignItems:'center'}}>
+            
           <AppText
           centered={true}
-            text={"Signin with Phone Number"}
-            style={{ marginBottom: 10,      
-            }}
+          text={"Signin with Phone Number"}
+          style={{ marginBottom: 10,      
+          }}
           />
+          </View>
           <PhoneNumberTextField
             phoneNumber={phoneNumber}
             updateState={updateState}
@@ -110,13 +120,16 @@ const SigninScreen = ({ navigation }) => {
             disabled={disabled}
             onPress={() => handleSendVerificationCode()}
           />
+          <View style={{flex:1,alignItems:'center',marginTop:20}}>
           <AppText
             text={"We'll send OTP for Verification"}
             style={{
               marginTop: Sizes.fixPadding - 5.0,
               ...Fonts.grayColor18Medium,
             }}
-          />
+            />
+            </View>
+            {/* <AppModal message={errmessage} visible={true}/> */}
         </ScrollView>
       </View>
       {backClickCount == 1 ? (
