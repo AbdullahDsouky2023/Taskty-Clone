@@ -39,9 +39,11 @@ const VerificationScreen = ({ navigation, route }) => {
       console.log(otpInput, "this is the confiramtion sent ")
       setResendDisabled(true);
       setSecondsRemaining(60);
-       dispatch(userRegisterSuccess(auth?.currentUser));
-      await setItem("userData", auth?.currentUser);
-      
+      //  dispatch(userRegisterSuccess(auth?.currentUser));
+      // await setItem("userData", auth?.currentUser);
+        console.log('******************************** user verfication **************')
+        console.log(auth.currentUser)
+        console.log('******************************** user verfication **************')
       navigation.navigate("App");
     } catch (error) {
       const errorMessage = errorMessages[error.message] 

@@ -10,7 +10,7 @@ import { I18nManager } from "react-native";
 
 import 'intl-pluralrules';
 // import 'intl-pluralrules/locale-data/ar';
-I18nManager.forceRTL(true);
+I18nManager.forceRTL(false);
 // const customPluralRules = {
 //   getRule: function (count) {
 //     // Implement custom pluralization logic for Arabic here
@@ -48,7 +48,7 @@ export default function AppText({ style, text, centered = true ,...otherProps}) 
         style={[
           styles.text,
           style,
-          { textAlign: centered ? "center" : "right" },
+          { alignSelf: centered ? "center" : "flex-start" },
         ]}
         {...otherProps}
       >
@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
     fontFamily: "Janna-Lt",
     maxWidth: width*0.74,
     writingDirection:'rtl',
-    // alignSelf:'flex-start'
+    alignSelf:'flex-start'
   },
 });
