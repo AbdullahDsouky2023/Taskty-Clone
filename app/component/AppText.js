@@ -8,16 +8,34 @@ import { Text } from "react-native";
 import { Fonts } from "../constant/styles";
 import { I18nManager } from "react-native";
 
-
+import 'intl-pluralrules';
+// import 'intl-pluralrules/locale-data/ar';
 I18nManager.forceRTL(true);
+// const customPluralRules = {
+//   getRule: function (count) {
+//     // Implement custom pluralization logic for Arabic here
+//     // You can return the appropriate form based on the count
+//     // For example, you can use a library like 'make-plural' to handle this.
+//     // Replace this logic with your actual pluralization rules.
+//     if (count === 0) return 'zero';
+//     if (count === 1) return 'one';
+//     if (count === 2) return 'two';
+//     if (count >= 3 && count <= 10) return 'few';
+//     return 'other';
+//   },
+// };
 i18n.use(initReactI18next).init({
   resources: {
     ar: { translation: ar },
   },
-  lng: "ar", // Set the default language to English
-  fallbackLng: "en", // Fallback language if a translation is missing
+  lng: 'ar', // Set the default language to Arabic
+  fallbackLng: 'en', // Fallback language if a translation is missing
   interpolation: {
     escapeValue: false,
+    // format: (value, format) => {
+    //   // Use the custom pluralization function here
+    //   return customPluralRules.getRule(value);
+    // },
   },
 });
 const { width } = Dimensions.get('screen')

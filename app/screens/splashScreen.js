@@ -22,10 +22,11 @@ const SplashScreen = ({ navigation }) => {
     useEffect(() => {
         if(auth.currentUser !== null) dispatch(userRegisterSuccess(auth?.currentUser));
         if(getItem('userData') !== null) dispatch(userRegisterSuccess(getItem('userData')));
-        console.log("Now user data is redux " , user)
-        console.log("Now user data is storage " , getItem('userData'))
+        // console.log("Now user data is redux " , user)
+        // console.log("Now user data is storage " , getItem('userData'))
+        // console.log('uuuuuuuuuuuuuuuuuuuuuuu from splasggh ')
         
-    }, [dispatch]);
+    }, [auth.currentUser]);
 
 
     useFocusEffect(

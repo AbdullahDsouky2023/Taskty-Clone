@@ -5,14 +5,24 @@ import { StyleSheet } from "react-native";
 import { Colors, Sizes, Fonts } from "../constant/styles";
 import { useNavigation } from "@react-navigation/native";
 
-export default function AppButton({ path, title, style, textStyle, onPress ,disabled = false}) {
+export default function AppButton({
+  path,
+  title,
+  style,
+  textStyle,
+  onPress,
+  disabled = false,
+}) {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       activeOpacity={0.6}
       onPress={onPress}
-disabled={disabled}     
- style={[disabled ? styles.disabledStyle : styles.continueButtonStyle, style]}
+      disabled={disabled}
+      style={[
+        disabled ? styles.disabledStyle : styles.continueButtonStyle,
+        style,
+      ]}
     >
       <AppText
         text={title}
@@ -35,9 +45,9 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     backgroundColor: Colors.primaryColor,
   },
-  disabledStyle:{
-    backgroundColor:Colors.grayColor,
-    borderWidth:1,
+  disabledStyle: {
+    backgroundColor: Colors.grayColor,
+    borderWidth: 1,
     alignItems: "center",
     justifyContent: "center",
     width: "auto",
@@ -48,5 +58,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: Sizes.fixPadding * 2.5,
     borderRadius: 40,
   },
-  
 });

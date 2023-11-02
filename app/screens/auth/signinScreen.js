@@ -60,7 +60,9 @@ const SigninScreen = ({ navigation }) => {
       }
 
     }  catch (error) {
-      const errorMessage = errorMessages[error.message] || "حصلت مشكلة غير معروفة.";
+      const errorMessage = errorMessages[error.message] 
+
+      console.log('the error is ',errorMessage ,error.message)
       Alert.alert(errorMessage);
     } finally {
       setDisabled(false);

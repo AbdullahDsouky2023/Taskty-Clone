@@ -11,7 +11,7 @@ export default function UserImageAndName() {
   return (
     <View style={styles.container}> 
       <Image style={styles.userImage} source={{uri:'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=600'}}/>
-        <AppText text={user} style={styles.name}/>
+        <AppText text={user.phoneNumber} style={styles.name}/>
         <AppButton title={'تعديل'} style={styles.button} textStyle={{color:Colors.primaryColor}}/>
     </View>
   )

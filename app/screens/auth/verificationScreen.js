@@ -26,29 +26,30 @@ const VerificationScreen = ({ navigation, route }) => {
   
   const [isLoading, setisLoading] = useState(false);
   const { result ,handleSendVerificationCode} = route.params;
-  const [otpInput, setOtpInput] = useState("");
+  const [otpInput, setOtpInput] = useState("454545");
   const [resendDisabled, setResendDisabled] = useState(true);
   const [secondsRemaining, setSecondsRemaining] = useState(60);
 
     const dispatch = useDispatch()
 
-  const confirmVerificationCode = async (otpInput) => {
+  const confirmVerificationCode = async () => {
     try {
-      const res = await result?.confirm(otpInput);
-  
+      console.log("helllllllo",otpInput)
+      const res = await result.confirm(otpInput);
+      console.log(otpInput, "this is the confiramtion sent ")
       setResendDisabled(true);
       setSecondsRemaining(60);
        dispatch(userRegisterSuccess(auth?.currentUser));
       await setItem("userData", auth?.currentUser);
-  
-      setOtpInput("")
-      navigation.navigate("Register");
+      
+      navigation.navigate("App");
     } catch (error) {
-      const errorMessage =
-        errorMessages[error.message] || "حصلت مشكلة غير معروفة.";
-      Alert.alert(error.message);
-      setOtpInput("")
+      const errorMessage = errorMessages[error.message] 
+
+      console.log('the error is ',errorMessage ,error.message)
+      Alert.alert(errorMessage);
     }finally {
+      setOtpInput("")
 
     }
   };
@@ -94,13 +95,13 @@ const VerificationScreen = ({ navigation, route }) => {
             setisLoading={setisLoading}
             setOtpInput={setOtpInput}
             otpInput={otpInput}
-            confirmVerificationCode={confirmVerificationCode}
+            confirmVerificationCode={(otpInput)=>confirmVerificationCode(otpInput)}
           />
           <AppButton
             title={"Continue"}
             path={"Register"}
-            disabled={otpInput.length === 6 }
-            onPress={() => confirmVerificationCode(otpInput)}
+            // disabled={otpInput.length === 6 }
+            onPress={ confirmVerificationCode}
           />
           <View style={styles.sendMessasesContainer}>
             <AppText
@@ -119,7 +120,10 @@ const VerificationScreen = ({ navigation, route }) => {
                   : "ارسال SMS"
               }
               disabled={resendDisabled}
-              onPress={() => handleSendVerificationCode()}
+              onPress={() => {
+                setResendDisabled(true);
+                setSecondsRemaining(60);
+                handleSendVerificationCode()}}
             />
           </View>
         </View>

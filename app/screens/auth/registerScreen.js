@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
+  Alert,
 } from "react-native";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
@@ -17,11 +18,27 @@ import AppForm from "../../component/Form/Form";
 import ErrorMessage from "../../component/Form/ErrorMessage";
 import FormField from "../../component/Form/FormField";
 import SubmitButton from "../../component/Form/FormSubmitButton";
-
+import { auth, db, fireStore } from "../../../firebaseConfig";
+import {
+  doc,
+  setDoc,
+  addDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
+import LoadingModal from "../../component/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { storeUserInfo } from "../../utils/firebase/user";
+import { setItem } from "../../utils/secureStore";
 const RegisterScreen = ({ navigation }) => {
   const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
-
+  const dispatch = useDispatch()
+  const user = useSelector((state)=>state.user.user)
+  
   const validationSchema = yup.object().shape({
     fullName: yup
       .string()
@@ -34,8 +51,33 @@ const RegisterScreen = ({ navigation }) => {
       .required(t("Email is required")),
   });
 
-  const handleFormSubmit = (values) => {
-    console.log("Form submitted with values:", values);
+  const handleFormSubmit = async (values) => {
+    try {
+      setIsLoading(true);
+      const emailExistsQuery = query(
+        collection(db, "users"),
+        where("emailAddress", "==", values.emailAddress)
+      );
+
+      const emailExistsSnapshot = await getDocs(emailExistsQuery);
+
+      if (!emailExistsSnapshot.empty) {
+        // Email already exists, handle the case (e.g., show an error message)
+        Alert.alert(" عنوان البردي الالكتروني  مستخدم من قبل ");
+      } else {
+        // Email is unique, proceed to insert the document
+        const userUID = auth.currentUser.uid
+        storeUserInfo(userUID,values)
+      dispatch(userRegisterSuccess(auth?.currentUser));
+       setItem('userData',auth?.currentUser)
+        navigation.navigate("App");
+        // const docRef = await addDoc(collection(db, "users"), {...,...user});
+      }
+    } catch (err) {
+      console.log("error creating the resi", err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
@@ -51,7 +93,7 @@ const RegisterScreen = ({ navigation }) => {
             />
             <AppForm
               initialValues={{ fullName: "", emailAddress: "" }}
-              onSubmit={(data) =>handleFormSubmit(data)}
+              // onSubmit={(data) => handleFormSubmit(data)}
               validationSchema={validationSchema}
             >
               <ErrorMessage error={error} visible={error} />
@@ -74,6 +116,7 @@ const RegisterScreen = ({ navigation }) => {
             </AppForm>
           </View>
         </ScrollView>
+        <LoadingModal visible={isLoading} />
       </View>
     </SafeAreaView>
   );

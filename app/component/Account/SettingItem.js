@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
   textHeader: {
     color: Colors.blackColor,
     fontSize: 16,
+    alignSelf:"left"
   },
   headerDescription: {
     color: Colors.grayColor,
