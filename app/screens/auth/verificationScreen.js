@@ -16,31 +16,39 @@ import AppText from "../../component/AppText";
 import LoadingModal from "../../component/Loading";
 import OtpFields from "../../component/OtpFields";
 import { errorMessages } from "../../data/signin";
+import { useDispatch } from "react-redux";
+import { userRegisterSuccess } from "../../store/features/userSlice";
+import { auth } from "../../../firebaseConfig";
+import { getItem, setItem } from "../../utils/secureStore";
 const { width } = Dimensions.get("screen");
 
 const VerificationScreen = ({ navigation, route }) => {
+  
   const [isLoading, setisLoading] = useState(false);
   const { result ,handleSendVerificationCode} = route.params;
   const [otpInput, setOtpInput] = useState("");
   const [resendDisabled, setResendDisabled] = useState(true);
   const [secondsRemaining, setSecondsRemaining] = useState(60);
+
+    const dispatch = useDispatch()
+
   const confirmVerificationCode = async (otpInput) => {
     try {
       const res = await result?.confirm(otpInput);
-
-      // Store the confirmation result in the state
-      console.log("confirmationresult", res);
+  
       setResendDisabled(true);
       setSecondsRemaining(60);
-      // Show an alert message to indicate the sign in was successful
+       dispatch(userRegisterSuccess(auth?.currentUser));
+      await setItem("userData", auth?.currentUser);
+  
       navigation.navigate("Register");
     } catch (error) {
-      console.log(error.code);
       const errorMessage =
         errorMessages[error.message] || "حصلت مشكلة غير معروفة.";
       Alert.alert(errorMessage);
     }
   };
+  
   useEffect(() => {
     if (resendDisabled) {
       const timer = setInterval(() => {

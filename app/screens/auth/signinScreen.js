@@ -42,11 +42,9 @@ const SigninScreen = ({ navigation }) => {
   };
   const updateState = (data) => {
     setState((state) => ({ ...state, ...data }));
-    console.log(data.phoneNumber.length)
     if(data.phoneNumber.length === 12) setDisabled(false)
     else setDisabled(true)
   };
-
   const handleSendVerificationCode = async () => {
     try {
       setDisabled(true)
@@ -60,10 +58,8 @@ const SigninScreen = ({ navigation }) => {
         navigation.navigate("Verification", { result ,handleSendVerificationCode});
         setDisabled(false)
       }
-      console.log(result);
 
     }  catch (error) {
-      console.log(error.code);
       const errorMessage = errorMessages[error.message] || "حصلت مشكلة غير معروفة.";
       Alert.alert(errorMessage);
     } finally {

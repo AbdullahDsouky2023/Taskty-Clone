@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { TransitionPresets } from "@react-navigation/stack";
+import { useSelector } from "react-redux";
 import { LogBox } from "react-native";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 
@@ -14,8 +15,9 @@ import ItemScreen from "../screens/ItemScreen";
 LogBox.ignoreAllLogs();
 
 const Stack = createSharedElementStackNavigator();
-
 const RootNavigator = () => {
+  const user = useSelector((state) => state.user.user);
+
   return (
     <NavigationContainer >
       <Stack.Navigator
@@ -28,8 +30,11 @@ const RootNavigator = () => {
       >
         <Stack.Screen name="Loading" component={LoadingScreen} />
         <Stack.Screen name="Splash" component={SplashScreen} />
-        <Stack.Screen name="Auth" component={AuthNavigator} />
-        <Stack.Screen name="App" component={AppNavigator} />
+        {
+          user ? 
+          <Stack.Screen name="App" component={AppNavigator} />:
+          <Stack.Screen name="Auth" component={AuthNavigator} />
+        }
         <Stack.Screen name={ITEM_DETAILS} component={ItemScreen} options={{headerShown:false}} />
       </Stack.Navigator>
     </NavigationContainer>

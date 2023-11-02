@@ -4,12 +4,14 @@ import { Image } from 'react-native'
 import { Colors } from '../../constant/styles'
 import AppText from '../AppText'
 import AppButton from '../AppButton'
+import { useSelector } from 'react-redux'
 
 export default function UserImageAndName() {
+  const user = useSelector((state)=>state.user.user)
   return (
     <View style={styles.container}> 
       <Image style={styles.userImage} source={{uri:'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=600'}}/>
-        <AppText text={' عبدالله دسوقي'} style={styles.name}/>
+        <AppText text={user} style={styles.name}/>
         <AppButton title={'تعديل'} style={styles.button} textStyle={{color:Colors.primaryColor}}/>
     </View>
   )

@@ -17,16 +17,13 @@ export default function OtpFields({setisLoading,otpInput,setOtpInput,confirmVeri
           flexDirection:'row-reverse',
         }}
         handleTextChange={(text) => {
-          setOtpInput(text);
-          console.log(text)
-          if (otpInput.length == 6) {
-            setisLoading(true);
-            setTimeout(() => {
-              setisLoading(false);
-              console.log(otpInput)
-              confirmVerificationCode(otpInput)
-            }, 2000);
-          }
+          // if (otpInput.length == 6) {
+          //   setisLoading(true);
+          //   setTimeout(() => {
+          //     setisLoading(false);
+          //     confirmVerificationCode(otpInput)
+          //   }, 2000);
+          // }
         }}
         inputCount={6}
         keyboardType="numeric"

@@ -1,16 +1,31 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { SafeAreaView, View, StatusBar, Image, StyleSheet, BackHandler } from "react-native";
 import { Colors, Sizes } from "../constant/styles";
 import { CircleFade } from 'react-native-animated-spinkit';
 import { useFocusEffect } from "@react-navigation/native";
 import Logo from "../component/Logo";
+import { useDispatch, useSelector } from "react-redux";
+import { userRegisterSuccess } from "../store/features/userSlice";
+import { auth } from "../../firebaseConfig";
+import { getItem, setItem } from "../utils/secureStore";
 
 const SplashScreen = ({ navigation }) => {
+    const dispatch = useDispatch();
+    let user = useSelector((state) => state.user.user);
 
     const backAction = () => {
         BackHandler.exitApp();
         return true;
     }
+
+    // Dispatch the userRegisterSuccess action inside a useEffect hook
+    useEffect(() => {
+        dispatch(userRegisterSuccess(auth.currentUser));
+        dispatch(userRegisterSuccess( getItem('userData')));
+        console.log("Now user data is redux " , user)
+        
+    }, [dispatch]);
+
 
     useFocusEffect(
         useCallback(() => {
@@ -19,9 +34,11 @@ const SplashScreen = ({ navigation }) => {
         }, [backAction])
     );
 
-    setTimeout(() => {
-        navigation.push('Auth');
-    }, 2000);
+    useEffect(() => {
+        setTimeout(() => {
+            navigation.push(user ? "App" : "Auth");
+        }, 2000);
+    }, [user, navigation]);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
@@ -36,8 +53,6 @@ const SplashScreen = ({ navigation }) => {
             </View>
         </SafeAreaView>
     )
-
-    
 }
 
 const styles = StyleSheet.create({
