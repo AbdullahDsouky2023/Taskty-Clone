@@ -15,9 +15,9 @@ export default function AuthNavigator() {
         ...TransitionPresets.SlideFromRightIOS,
       }}
     >
-       <Stack.Screen name="SignIn" component={SigninScreen} options={{ ...TransitionPresets.DefaultTransition }} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="Verification" component={VerificationScreen} />
+       <Stack.Screen name="SignIn" component={SigninScreen} options={{ ...TransitionPresets.DefaultTransition }} />
     </Stack.Navigator>
   )
 }

@@ -21,16 +21,18 @@ i18n.use(initReactI18next).init({
   },
 });
 const { width } = Dimensions.get('screen')
-export default function AppText({ style, text, centered = true }) {
+export default function AppText({ style, text, centered = true ,...otherProps}) {
   const { t } = useTranslation();
 
   return (
       <Text
+      
         style={[
           styles.text,
           style,
           { textAlign: centered ? "center" : "right" },
         ]}
+        {...otherProps}
       >
         {t(text)}
       </Text>
@@ -41,5 +43,7 @@ const styles = StyleSheet.create({
     ...Fonts.grayColor18Medium,
     fontFamily: "Janna-Lt",
     maxWidth: width*0.74,
+    writingDirection:'rtl',
+    // alignSelf:'flex-start'
   },
 });

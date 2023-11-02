@@ -11,7 +11,7 @@ import { getItem, setItem } from "../utils/secureStore";
 
 const SplashScreen = ({ navigation }) => {
     const dispatch = useDispatch();
-    let user = useSelector((state) => state.user.user);
+    let user = useSelector((state) => state.user?.user?.phoneNumber);
 
     const backAction = () => {
         BackHandler.exitApp();
@@ -20,9 +20,10 @@ const SplashScreen = ({ navigation }) => {
 
     // Dispatch the userRegisterSuccess action inside a useEffect hook
     useEffect(() => {
-        dispatch(userRegisterSuccess(auth.currentUser));
-        dispatch(userRegisterSuccess( getItem('userData')));
+        if(auth.currentUser !== null) dispatch(userRegisterSuccess(auth?.currentUser));
+        if(getItem('userData') !== null) dispatch(userRegisterSuccess(getItem('userData')));
         console.log("Now user data is redux " , user)
+        console.log("Now user data is storage " , getItem('userData'))
         
     }, [dispatch]);
 

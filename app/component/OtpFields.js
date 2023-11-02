@@ -17,6 +17,7 @@ export default function OtpFields({setisLoading,otpInput,setOtpInput,confirmVeri
           flexDirection:'row-reverse',
         }}
         handleTextChange={(text) => {
+          console.log(text)
           // if (otpInput.length == 6) {
           //   setisLoading(true);
           //   setTimeout(() => {

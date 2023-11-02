@@ -5,6 +5,7 @@
   "We'll send OTP for Verification": "سنقوم بإرسال رمز التحقق (OTP)",
   "Continue": "استمرار",
   "Register Your Account": "سجّل حسابك",
+  "Register":"تسجيل",
   "fullName": "الاسم الكامل",
   "emailAddress": "عنوان البريد الإلكتروني",
   "password": "كلمة المرور",
@@ -45,5 +46,11 @@
   "PreviousOrders":"طلبات سابقه",
   "GeneralSettings":"الاعدادت العامة",
   "Wallet":"محفظة",
-  "yourwalletDetails":"تفاصيل محفظتك الخاصه "
+  "yourwalletDetails":"تفاصيل محفظتك الخاصه ",
+  "Full name is required":" من فضلك ادخل الاسم بالكامل",
+  "Invalid email address":"الايميل المدخل غير صحيح",
+  "Email is required":"من فضلك ادخل الايميل ",
+  "FullName":"الاسم",
+  "Full Name is too short":"الاسم قصير جدا",
+  "Full Name is too long":"الاسم اطول من المطلوب"
 }

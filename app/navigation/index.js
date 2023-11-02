@@ -16,26 +16,27 @@ LogBox.ignoreAllLogs();
 
 const Stack = createSharedElementStackNavigator();
 const RootNavigator = () => {
-  const user = useSelector((state) => state.user.user);
-
   return (
-    <NavigationContainer >
+    <NavigationContainer>
       <Stack.Navigator
-      
         screenOptions={{
           headerShown: false,
-          
+
           ...TransitionPresets.SlideFromRightIOS,
         }}
       >
         <Stack.Screen name="Loading" component={LoadingScreen} />
         <Stack.Screen name="Splash" component={SplashScreen} />
-        {
-          user ? 
-          <Stack.Screen name="App" component={AppNavigator} />:
-          <Stack.Screen name="Auth" component={AuthNavigator} />
-        }
-        <Stack.Screen name={ITEM_DETAILS} component={ItemScreen} options={{headerShown:false}} />
+
+        <Stack.Screen name="App" component={AppNavigator} />
+
+        <Stack.Screen name="Auth" component={AuthNavigator} />
+
+        <Stack.Screen
+          name={ITEM_DETAILS}
+          component={ItemScreen}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -4,29 +4,39 @@ import {
   StatusBar,
   View,
   StyleSheet,
-  TextInput,
   ScrollView,
 } from "react-native";
-import { Colors, Fonts, Sizes } from "../../constant/styles";
-import Logo from "../../component/Logo";
-import AppButton from "../../component/AppButton";
-import ArrowBack from "../../component/ArrowBack";
-import AppText from "../../component/AppText";
+import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 
+import ArrowBack from "../../component/ArrowBack";
+import { Colors } from "../../constant/styles";
+import AppText from "../../component/AppText";
+import Logo from "../../component/Logo";
+import AppForm from "../../component/Form/Form";
+import ErrorMessage from "../../component/Form/ErrorMessage";
+import FormField from "../../component/Form/FormField";
+import SubmitButton from "../../component/Form/FormSubmitButton";
+
 const RegisterScreen = ({ navigation }) => {
+  const [error, setError] = useState();
   const { t } = useTranslation();
 
-  const [state, setState] = useState({
-    fullName: "",
-    password: "",
-    emailAddress: "",
+  const validationSchema = yup.object().shape({
+    fullName: yup
+      .string()
+      .required(t("Full name is required"))
+      .min(2, "Full Name is too short")
+      .max(50, "Full Name is too long"),
+    emailAddress: yup
+      .string()
+      .email(t("Invalid email address"))
+      .required(t("Email is required")),
   });
 
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-
-  const { fullName, emailAddress } = state;
-
+  const handleFormSubmit = (values) => {
+    console.log("Form submitted with values:", values);
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
@@ -34,56 +44,43 @@ const RegisterScreen = ({ navigation }) => {
         <ArrowBack />
         <ScrollView showsVerticalScrollIndicator={false}>
           <Logo />
-          <View style={{flex:1,alignItems:'center'}}>
-
-          <AppText
-            text={"Register Your Account"}
-            style={{ color: Colors.primaryColor, marginBottom: 10 }}
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <AppText
+              text={"Register Your Account"}
+              style={{ color: Colors.primaryColor, marginBottom: 10 }}
             />
-            </View>
-          <AppButton path={"App"} title={"Continue"} />
+            <AppForm
+              initialValues={{ fullName: "", emailAddress: "" }}
+              onSubmit={(data) =>handleFormSubmit(data)}
+              validationSchema={validationSchema}
+            >
+              <ErrorMessage error={error} visible={error} />
+              <FormField
+                autoCorrect={false}
+                icon="account"
+                name="fullName"
+                placeholder="fullName"
+              />
+              <FormField
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="email-address"
+                name="emailAddress"
+                placeholder="emailAddress"
+                textContentType="emailAddress"
+              />
+
+              <SubmitButton title="Register" />
+            </AppForm>
+          </View>
         </ScrollView>
       </View>
     </SafeAreaView>
   );
-
-  
 };
 
 const styles = StyleSheet.create({
-  continueButtonStyle: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: Colors.primaryColor,
-    paddingVertical: Sizes.fixPadding,
-    marginHorizontal: Sizes.fixPadding,
-    borderRadius: Sizes.fixPadding - 5.0,
-    marginTop: Sizes.fixPadding * 4.0,
-  },
-  appLogoStyle: {
-    width: 200.0,
-    height: 200.0,
-    alignSelf: "center",
-    marginBottom: Sizes.fixPadding,
-    marginTop: Sizes.fixPadding * 3.0,
-  },
-  phoneNumberTextFieldStyle: {
-    borderColor: Colors.primaryColor,
-    borderWidth: 1.0,
-    borderRadius: Sizes.fixPadding - 5.0,
-    marginHorizontal: Sizes.fixPadding,
-  },
-  textFieldStyle: {
-    borderColor: Colors.primaryColor,
-    borderWidth: 1.0,
-    borderRadius: Sizes.fixPadding - 5.0,
-    paddingHorizontal: Sizes.fixPadding * 2.0,
-    height: 55.0,
-    ...Fonts.primaryColor18Medium,
-    marginHorizontal: Sizes.fixPadding,
-    backgroundColor: Colors.whiteColor,
-    marginBottom: 15,
-  },
+  // Your styles remain the same
 });
 
 export default RegisterScreen;

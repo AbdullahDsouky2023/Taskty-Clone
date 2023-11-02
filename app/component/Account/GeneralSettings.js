@@ -1,15 +1,38 @@
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
 import React from "react";
+import { useDispatch } from "react-redux";
+
+
 import AppText from "../AppText";
+import AppButton from "../AppButton";
 import { Colors } from "../../constant/styles";
 import SettingItem from "./SettingItem";
 import { FlatList } from "react-native-gesture-handler";
 import { settingsItemArray } from "../../data/account";
+import { auth } from '../../../firebaseConfig'
+import { userRegisterSuccess } from "../../store/features/userSlice";
+import { useNavigation } from "@react-navigation/native";
 const { width } = Dimensions.get("screen");
 export default function GeneralSettings() {
+  const dispatch = useDispatch()
+  const navigation = useNavigation()
+  const handleSignOut=async()=>{
+    try {
+      await auth.signOut()
+       setItem('userData',null)
+      dispatch(userRegisterSuccess(null))
+      navigation.navigate('Loading')
+    } catch (error) {
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
+    }
+  }
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <AppText text="GeneralSettings" centered={false} style={styles.header} />
+      <View>
+
       <FlatList
         data={settingsItemArray}
         renderItem={({ item }) => {
@@ -18,8 +41,10 @@ export default function GeneralSettings() {
           )
         }}
         keyExtractor={(item, index) => item.name + index}
-      />
-    </View>
+        />
+        </View>
+      <AppButton title={'تسجيل الخروج'} style={{marginVertical:20}} onPress={handleSignOut}/>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({

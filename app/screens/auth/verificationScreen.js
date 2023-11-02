@@ -41,11 +41,15 @@ const VerificationScreen = ({ navigation, route }) => {
        dispatch(userRegisterSuccess(auth?.currentUser));
       await setItem("userData", auth?.currentUser);
   
+      setOtpInput("")
       navigation.navigate("Register");
     } catch (error) {
       const errorMessage =
         errorMessages[error.message] || "حصلت مشكلة غير معروفة.";
-      Alert.alert(errorMessage);
+      Alert.alert(error.message);
+      setOtpInput("")
+    }finally {
+
     }
   };
   
@@ -95,6 +99,7 @@ const VerificationScreen = ({ navigation, route }) => {
           <AppButton
             title={"Continue"}
             path={"Register"}
+            disabled={otpInput.length === 6 }
             onPress={() => confirmVerificationCode(otpInput)}
           />
           <View style={styles.sendMessasesContainer}>
@@ -102,7 +107,8 @@ const VerificationScreen = ({ navigation, route }) => {
               text={"didntReceiveOTP"}
               style={{
                 fontSize: 18,
-                paddingTop:30
+                paddingTop:30,
+                paddingRight:20
               }}
               centered={false}
             />
@@ -135,7 +141,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     marginTop: 10,
-    paddingRight: 25,
+    // marginRight: 25,
     justifyContent:'space-between',
     flexDirection:'row'
   },

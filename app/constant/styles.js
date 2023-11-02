@@ -17,7 +17,7 @@ export const Colors = {
     
 }
 
-const mainFont ={
+export const mainFont ={
         light:'Janna-Lt',
         medium:'Janna-Lt',
         bold:'Janna-Lt',
