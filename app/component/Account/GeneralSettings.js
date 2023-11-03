@@ -12,6 +12,7 @@ import { settingsItemArray } from "../../data/account";
 import { auth } from '../../../firebaseConfig'
 import { userRegisterSuccess } from "../../store/features/userSlice";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const { width } = Dimensions.get("screen");
 export default function GeneralSettings() {
   const dispatch = useDispatch()
@@ -19,8 +20,8 @@ export default function GeneralSettings() {
   const handleSignOut=async()=>{
     try {
       await auth.signOut()
-       setItem('userData',null)
-      dispatch(userRegisterSuccess(null))
+     await   AsyncStorage.removeItem('userData')
+      // dispatch(userRegisterSuccess(null))
       navigation.navigate('Loading')
     } catch (error) {
       console.log('====================================');

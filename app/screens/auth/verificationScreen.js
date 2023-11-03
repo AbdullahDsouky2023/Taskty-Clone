@@ -21,6 +21,7 @@ import { userRegisterSuccess } from "../../store/features/userSlice";
 import { auth } from "../../../firebaseConfig";
 import { getItem, setItem } from "../../utils/secureStore";
 const { width } = Dimensions.get("screen");
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const VerificationScreen = ({ navigation, route }) => {
   
@@ -39,8 +40,9 @@ const VerificationScreen = ({ navigation, route }) => {
       console.log(otpInput, "this is the confiramtion sent ")
       setResendDisabled(true);
       setSecondsRemaining(60);
-      //  dispatch(userRegisterSuccess(auth?.currentUser));
-      // await setItem("userData", auth?.currentUser);
+       dispatch(userRegisterSuccess(auth?.currentUser));
+       await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
+
         console.log('******************************** user verfication **************')
         console.log(auth.currentUser)
         console.log('******************************** user verfication **************')

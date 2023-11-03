@@ -7,7 +7,8 @@ import Logo from "../component/Logo";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegisterSuccess } from "../store/features/userSlice";
 import { auth } from "../../firebaseConfig";
-import { getItem, setItem } from "../utils/secureStore";
+import { getItem, getUserData, setItem } from "../utils/secureStore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SplashScreen = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -18,15 +19,23 @@ const SplashScreen = ({ navigation }) => {
         return true;
     }
 
-    // Dispatch the userRegisterSuccess action inside a useEffect hook
     useEffect(() => {
-        if(auth.currentUser !== null) dispatch(userRegisterSuccess(auth?.currentUser));
-        if(getItem('userData') !== null) dispatch(userRegisterSuccess(getItem('userData')));
-        console.log("Now user data is redux " , user)
-        console.log("Now user data is storage " , getItem('userData'))
-        // console.log('uuuuuuuuuuuuuuuuuuuuuuu from splasggh ')
-        
-    }, [auth.currentUser]);
+        async function checkUserAndNavigate() {
+          const userDataString = await AsyncStorage.getItem("userData");
+          if (userDataString) {
+            const userData = JSON.parse(userDataString);
+            dispatch(userRegisterSuccess(userData));
+            console.log("Now user data is storage ", userData);
+          } else {
+            console.log("No user data found in AsyncStorage");
+          }
+      
+          navigation.push(user ? "App" : "Auth");
+        }
+      
+        checkUserAndNavigate();
+      }, [user, navigation]);
+      
 
 
     useFocusEffect(
@@ -36,12 +45,12 @@ const SplashScreen = ({ navigation }) => {
         }, [backAction])
     );
 
-    useEffect(() => {
-        setTimeout(() => {
-            navigation.push(user ? "App" : "App");
-        }, 2000);
-    }, [user, navigation]);
-
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //       navigation.push(user ? "App" : "Auth");
+    //     }, 5000);
+    //   }, [user, navigation]);
+      
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
             <StatusBar backgroundColor={Colors.primaryColor} />

@@ -51,34 +51,34 @@ const RegisterScreen = ({ navigation }) => {
       .required(t("Email is required")),
   });
 
-  // const handleFormSubmit = async (values) => {
-  //   try {
-  //     setIsLoading(true);
-  //     const emailExistsQuery = query(
-  //       collection(db, "users"),
-  //       where("emailAddress", "==", values.emailAddress)
-  //     );
+  const handleFormSubmit = async (values) => {
+    try {
+      setIsLoading(true);
+      const emailExistsQuery = query(
+        collection(db, "users"),
+        where("emailAddress", "==", values.emailAddress)
+      );
 
-  //     const emailExistsSnapshot = await getDocs(emailExistsQuery);
+      const emailExistsSnapshot = await getDocs(emailExistsQuery);
 
-  //     if (!emailExistsSnapshot.empty) {
-  //       // Email already exists, handle the case (e.g., show an error message)
-  //       Alert.alert(" عنوان البردي الالكتروني  مستخدم من قبل ");
-  //     } else {
-  //       // Email is unique, proceed to insert the document
-  //       const userUID = auth.currentUser.uid
-  //       storeUserInfo(userUID,values)
-  //     dispatch(userRegisterSuccess(auth?.currentUser));
-  //      setItem('userData',auth?.currentUser)
-  //       navigation.navigate("App");
-  //       // const docRef = await addDoc(collection(db, "users"), {...,...user});
-  //     }
-  //   } catch (err) {
-  //     console.log("error creating the resi", err.message);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+      if (!emailExistsSnapshot.empty) {
+        // Email already exists, handle the case (e.g., show an error message)
+        Alert.alert(" عنوان البردي الالكتروني  مستخدم من قبل ");
+      } else {
+        // Email is unique, proceed to insert the document
+        const userUID = auth.currentUser.uid
+        storeUserInfo(userUID,values)
+      dispatch(userRegisterSuccess(auth?.currentUser));
+       setItem('userData',auth?.currentUser)
+        navigation.navigate("App");
+        // const docRef = await addDoc(collection(db, "users"), {...,...user});
+      }
+    } catch (err) {
+      console.log("error creating the resi", err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
@@ -93,7 +93,7 @@ const RegisterScreen = ({ navigation }) => {
             />
             <AppForm
               initialValues={{ fullName: "", emailAddress: "" }}
-              onSubmit={(data) => navigation.navigate('App')}
+              onSubmit={(data) => handleFormSubmit(data)}
               validationSchema={validationSchema}
             >
               <ErrorMessage error={error} visible={error} />
