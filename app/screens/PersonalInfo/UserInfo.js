@@ -32,7 +32,7 @@ import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { storeUserInfo } from "../../utils/firebase/user";
 import { setItem } from "../../utils/secureStore";
-const RegisterScreen = ({ navigation }) => {
+const UserInfo = ({ navigation }) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
@@ -84,7 +84,6 @@ const RegisterScreen = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <ArrowBack />
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Logo />
           <View style={{ flex: 1, alignItems: "center" }}>
             <AppText
               text={"Register Your Account"}
@@ -98,9 +97,18 @@ const RegisterScreen = ({ navigation }) => {
               <ErrorMessage error={error} visible={error} />
               <FormField
                 autoCorrect={false}
-                icon="account"
                 name="fullName"
                 placeholder="fullName"
+              />
+              <FormField
+                autoCorrect={false}
+                name="phoneNumber"
+                placeholder="phoneNumber"
+              />
+              <FormField
+                autoCorrect={false}
+                name="address"
+                placeholder="address"
               />
               <FormField
                 autoCapitalize="none"
@@ -111,7 +119,7 @@ const RegisterScreen = ({ navigation }) => {
                 textContentType="emailAddress"
               />
 
-              <SubmitButton title="Register" />
+              <SubmitButton title="Save" />
             </AppForm>
           </View>
         </ScrollView>
@@ -125,4 +133,4 @@ const styles = StyleSheet.create({
   // Your styles remain the same
 });
 
-export default RegisterScreen;
+export default UserInfo;

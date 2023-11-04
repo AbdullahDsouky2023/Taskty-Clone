@@ -16,6 +16,7 @@ export default function OtpFields({setisLoading,otpInput,setOtpInput,confirmVeri
           marginHorizontal: Sizes.fixPadding * 2.0,
           flexDirection:'row-reverse',
         }}
+        
         handleTextChange={(text) => {
           setOtpInput(text)
           // if (otpInput.length == 6) {

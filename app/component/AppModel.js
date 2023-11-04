@@ -1,16 +1,16 @@
-import React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Button, Dimensions, StyleSheet, Text, View } from "react-native";
 import { Colors, Sizes, Fonts } from "../constant/styles";
 import Dialog from "react-native-dialog";
-import { CircleFade } from "react-native-animated-spinkit";
 import AppText from "./AppText";
 
 const { width } = Dimensions.get("screen");
 
 export default function AppModal({visible,message}) {
+  connst [isvisible,setVisible]=useState(visible || false)
   return (
     <Dialog.Container
-      visible={visible}
+      visible={isvisible}
       contentStyle={styles.dialogContainerStyle}
     >
       <View style={{ backgroundColor: "white", alignItems: "center" }}>
@@ -23,6 +23,7 @@ export default function AppModal({visible,message}) {
         >
          <AppText text={{message}}/>
         </Text>
+        <Button title="Ok" onPress={()=>setVisible(false)}/>
       </View>
     </Dialog.Container>
   );

@@ -6,83 +6,58 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  BackHandler,
   Alert,
 } from "react-native";
 
-import { Colors, Fonts, Sizes } from "../../constant/styles";
-import { useFocusEffect } from "@react-navigation/native";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+import { signInWithPhoneNumber } from "firebase/auth";
+
 import AppText from "../../component/AppText";
 import AppButton from "../../component/AppButton";
 import PhoneNumberTextField from "../../component/PhoneInput";
+import { Colors, Fonts, Sizes } from "../../constant/styles";
 import Logo from "../../component/Logo";
-import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
-
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-
 import { auth, firebaseConfig } from "../../../firebaseConfig";
-import AppModal from "../../component/AppModel";
 import { errorMessages } from "../../data/signin";
 
 const SigninScreen = ({ navigation }) => {
-  const [backClickCount, setBackClickCount] = useState(0);
-  const [disabled,setDisabled]= useState(true)
-  const [ errmessage,setErrMessage]= useState('')
-  const [ visibleModal,setVisibleModel]=useState(false)
-
-  
-  const [state, setState] = useState({
-    phoneNumber: null,
-  });
+  const [disabled, setDisabled] = useState(true);
+  const [state, setState] = useState({ phoneNumber: null });
   const recaptchaVerifier = useRef(null);
 
-  const backAction = () => {
-    backClickCount == 1 ? BackHandler.exitApp() : _spring();
-    return true;
-  };
   const updateState = (data) => {
     setState((state) => ({ ...state, ...data }));
-    if(data.phoneNumber.length === 12) setDisabled(false)
-    else setDisabled(true)
+    if (data.phoneNumber.length === 12) setDisabled(false);
+    else setDisabled(true);
   };
+
   const handleSendVerificationCode = async () => {
     try {
-      setDisabled(true)
+      setDisabled(true);
       const validPhone = `+20${phoneNumber}`;
+
       const result = await signInWithPhoneNumber(
         auth,
         validPhone,
         recaptchaVerifier.current
       );
-      if (result.verificationId){
-        navigation.navigate("Verification", { result ,handleSendVerificationCode});
-        setDisabled(false)
+
+      if (result.verificationId) {
+        navigation.navigate("Verification", {
+           result,
+          handleSendVerificationCode,
+        });
+        // setDisabled(false);
       }
+    } catch (error) {
+      const errorMessage = errorMessages[error.message];
 
-    }  catch (error) {
-      const errorMessage = errorMessages[error.message] 
-
-      console.log('the error is ',errorMessage ,error.message)
-      Alert.alert(errorMessage);
+      console.log("the error is ", errorMessage, error.message);
+      Alert.alert(errorMessage || "حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى");    
     } finally {
       setDisabled(false);
     }
   };
-
-  useFocusEffect(
-    useCallback(() => {
-      BackHandler.addEventListener("hardwareBackPress", backAction);
-      return () =>
-        BackHandler.removeEventListener("hardwareBackPress", backAction);
-    }, [backAction])
-  );
-
-  function _spring() {
-    setBackClickCount(1);
-    setTimeout(() => {
-      setBackClickCount(0);
-    }, 1000);
-  }
 
   const { phoneNumber } = state;
 
@@ -92,14 +67,12 @@ const SigninScreen = ({ navigation }) => {
       <View style={{ flex: 1 }}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Logo />
-          <View style={{flex:1,alignItems:'center'}}>
-            
-          <AppText
-          centered={true}
-          text={"Signin with Phone Number"}
-          style={{ marginBottom: 10,      
-          }}
-          />
+          <View style={{ flex: 1, alignItems: "center" }}>
+            <AppText
+              centered={true}
+              text={"Signin with Phone Number"}
+              style={{ marginBottom: 10 }}
+            />
           </View>
           <PhoneNumberTextField
             phoneNumber={phoneNumber}
@@ -107,7 +80,7 @@ const SigninScreen = ({ navigation }) => {
           />
           <View style={{ backgroundColor: "red" }}>
             <FirebaseRecaptchaVerifierModal
-            style={{backgroundColor:'red'}}
+              style={{ backgroundColor: "red" }}
               ref={recaptchaVerifier}
               firebaseConfig={firebaseConfig}
             />
@@ -118,25 +91,17 @@ const SigninScreen = ({ navigation }) => {
             disabled={disabled}
             onPress={() => handleSendVerificationCode()}
           />
-          <View style={{flex:1,alignItems:'center',marginTop:20}}>
-          <AppText
-            text={"We'll send OTP for Verification"}
-            style={{
-              marginTop: Sizes.fixPadding - 5.0,
-              ...Fonts.grayColor18Medium,
-            }}
+          <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
+            <AppText
+              text={"We'll send OTP for Verification"}
+              style={{
+                marginTop: Sizes.fixPadding - 5.0,
+                ...Fonts.grayColor18Medium,
+              }}
             />
-            </View>
-            {/* <AppModal message={errmessage} visible={true}/> */}
+          </View>
         </ScrollView>
       </View>
-      {backClickCount == 1 ? (
-        <View style={[styles.animatedView]}>
-          <Text style={{ ...Fonts.whiteColor15Regular }}>
-            Press back once again to exit
-          </Text>
-        </View>
-      ) : null}
     </SafeAreaView>
   );
 };

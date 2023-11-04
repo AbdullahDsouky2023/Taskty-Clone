@@ -8,7 +8,8 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-
+import { useDispatch } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Colors } from "../../constant/styles";
 import ArrowBack from "../../component/ArrowBack";
 import AppButton from "../../component/AppButton";
@@ -16,48 +17,50 @@ import AppText from "../../component/AppText";
 import LoadingModal from "../../component/Loading";
 import OtpFields from "../../component/OtpFields";
 import { errorMessages } from "../../data/signin";
-import { useDispatch } from "react-redux";
 import { userRegisterSuccess } from "../../store/features/userSlice";
 import { auth } from "../../../firebaseConfig";
-import { getItem, setItem } from "../../utils/secureStore";
+import { changeUserInfo } from "../../utils/firebase/user";
+
 const { width } = Dimensions.get("screen");
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const VerificationScreen = ({ navigation, route }) => {
-  
   const [isLoading, setisLoading] = useState(false);
-  const { result ,handleSendVerificationCode} = route.params;
-  const [otpInput, setOtpInput] = useState("454545");
+  const [otpInput, setOtpInput] = useState("");
   const [resendDisabled, setResendDisabled] = useState(true);
   const [secondsRemaining, setSecondsRemaining] = useState(60);
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch()
+  const { result, handleSendVerificationCode } = route.params;
 
   const confirmVerificationCode = async () => {
     try {
-      console.log("helllllllo",otpInput)
       const res = await result.confirm(otpInput);
-      console.log(otpInput, "this is the confiramtion sent ")
       setResendDisabled(true);
       setSecondsRemaining(60);
-       dispatch(userRegisterSuccess(auth?.currentUser));
-       await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
 
-        console.log('******************************** user verfication **************')
-        console.log(auth.currentUser)
-        console.log('******************************** user verfication **************')
-      navigation.navigate("App");
+      dispatch(userRegisterSuccess(auth?.currentUser));
+      await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
+
+      await changeUserInfo()
+
+      //if existt navigate to app
+      if (!auth?.currentUser.providerData[0].displayName) {
+        navigation.navigate("Register");
+      } else {
+        // if not navigate to
+
+        navigation.navigate("App");
+      }
     } catch (error) {
-      const errorMessage = errorMessages[error.message] 
-
-      console.log('the error is ',errorMessage ,error.message)
-      Alert.alert(errorMessage);
-    }finally {
-      setOtpInput("")
-
+      const errorMessage = errorMessages[error.message];
+      Alert.alert(
+        errorMessage || "حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى"
+      );
+    } finally {
+      setOtpInput("");
     }
   };
-  
+
   useEffect(() => {
     if (resendDisabled) {
       const timer = setInterval(() => {
@@ -87,7 +90,7 @@ const VerificationScreen = ({ navigation, route }) => {
                 color: Colors.primaryColor,
                 marginBottom: 10,
               }}
-              centered={true}
+              centered={false}
             />
             <AppText
               text={"enterOTPCode"}
@@ -99,35 +102,36 @@ const VerificationScreen = ({ navigation, route }) => {
             setisLoading={setisLoading}
             setOtpInput={setOtpInput}
             otpInput={otpInput}
-            confirmVerificationCode={(otpInput)=>confirmVerificationCode(otpInput)}
+            confirmVerificationCode={(otpInput) =>
+              confirmVerificationCode(otpInput)
+            }
           />
           <AppButton
             title={"Continue"}
             path={"Register"}
             // disabled={otpInput.length === 6 }
-            onPress={ confirmVerificationCode}
+            onPress={confirmVerificationCode}
           />
           <View style={styles.sendMessasesContainer}>
             <AppText
               text={"didntReceiveOTP"}
               style={{
                 fontSize: 18,
-                paddingTop:30,
-                paddingRight:20
+                paddingTop: 44,
+                paddingRight: 20,
               }}
               centered={false}
             />
             <AppButton
               title={
-                resendDisabled
-                  ? ` ارسال(${secondsRemaining}s)`
-                  : "ارسال SMS"
+                resendDisabled ? ` ارسال(${secondsRemaining}s)` : "ارسال SMS"
               }
               disabled={resendDisabled}
               onPress={() => {
                 setResendDisabled(true);
                 setSecondsRemaining(60);
-                handleSendVerificationCode()}}
+                handleSendVerificationCode();
+              }}
             />
           </View>
         </View>
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
     // marginRight: 25,
-    justifyContent:'space-between',
-    flexDirection:'row'
+    justifyContent: "space-between",
+    flexDirection: "row",
   },
 });

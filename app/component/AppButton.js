@@ -1,9 +1,9 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
-import AppText from "./AppText";
-import { StyleSheet } from "react-native";
-import { Colors, Sizes, Fonts } from "../constant/styles";
+import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { StyleSheet } from "react-native";
+import AppText from "./AppText";
+import { Colors, Sizes, Fonts } from "../constant/styles";
 
 export default function AppButton({
   path,

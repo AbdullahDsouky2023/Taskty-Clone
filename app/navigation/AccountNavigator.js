@@ -6,6 +6,7 @@ import AccountScreen from '../screens/account/accountScreen';
 import WalletScreen from '../screens/wallet/walletScreen';
 import ShareScreen from '../screens/share/ShareScreen';
 import CallUsScreen from '../screens/Call/CallUsScreen';
+import UserInfo from '../screens/PersonalInfo/UserInfo';
 
 export default function AccountNavigator() {
     const Stack = createStackNavigator()
@@ -21,6 +22,7 @@ export default function AccountNavigator() {
         <Stack.Screen name="wallet" component={WalletScreen} />
         <Stack.Screen name="share" component={ShareScreen} />
         <Stack.Screen name="call-end" component={CallUsScreen} />
+        <Stack.Screen name="user" component={UserInfo} />
     </Stack.Navigator>
   )
 }

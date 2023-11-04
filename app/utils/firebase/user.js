@@ -3,7 +3,7 @@ import { db } from "../../../firebaseConfig";
 
 
 // Function to store user information in Firestore
-export async function storeUserInfo(uid, data) {
+export async function changeUserInfo(uid, data) {
   const userDocRef = doc(db, "users", uid);
 
   try {
@@ -15,14 +15,30 @@ export async function storeUserInfo(uid, data) {
   }
 }
 
-// Example of using the UID to store user data
-// if (currentUser) {
-//   const userUID = currentUser.uid;
-//   const userData = {
-//     name: "John Doe",
-//     email: "johndoe@example.com",
-//     // Add other user data here
-//   };
+async function checkUserAndSetName(userUID, newName) {
+  // Reference to the user's profile document
+  const userDocRef = db.collection('userProfiles').doc(userUID);
 
-  // Store the user information in Firestore
-//   storeUserInfo(userUID, userData);
+  try {
+    const doc = await userDocRef.get();
+    if (doc.exists) {
+      // User already has a name
+      const userData = doc.data();
+      console.log('==============user data======================');
+      console.log(userData);
+      console.log('====================================');
+      const userName = userData.name;
+      console.log(`User's name: ${userName}`);
+    } else {
+      // User does not have a name; set their name
+      await userDocRef.set({ name: newName });
+      console.log(`User's name set to ${newName}`);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+
+
+

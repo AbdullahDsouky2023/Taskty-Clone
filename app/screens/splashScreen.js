@@ -9,6 +9,7 @@ import { userRegisterSuccess } from "../store/features/userSlice";
 import { auth } from "../../firebaseConfig";
 import { getItem, getUserData, setItem } from "../utils/secureStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { checkUserAndSetName } from "../utils/firebase/user";
 
 const SplashScreen = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -24,13 +25,14 @@ const SplashScreen = ({ navigation }) => {
           const userDataString = await AsyncStorage.getItem("userData");
           if (userDataString) {
             const userData = JSON.parse(userDataString);
-            dispatch(userRegisterSuccess(userData));
-            console.log("Now user data is storage ", userData);
+             dispatch(userRegisterSuccess(userData));
+                navigation.push("App");
+
           } else {
-            console.log("No user data found in AsyncStorage");
+              navigation.push("App");
+            // console.log("No user data found in AsyncStorage");
           }
       
-          navigation.push(user ? "App" : "Auth");
         }
       
         checkUserAndNavigate();

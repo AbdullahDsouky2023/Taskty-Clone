@@ -21,7 +21,7 @@ import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 //   messagingSenderId: "197872272379",
 //   appId: "1:197872272379:web:ef909bbd7ebfe41110415e"
 // };
-//second account chrome
+// second account chrome
 export const firebaseConfig = {
   apiKey: "AIzaSyBmuyhQV1uVVliQwffXfsgE7L5iLOLsEzw",
   authDomain: "homeservices3-776d1.firebaseapp.com",

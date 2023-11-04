@@ -20,6 +20,7 @@
   "servicesLookingFor": "أي خدمة تبحث عنها؟",
   "showAll": "أظهار الكل",
   "Account": "حسابي",
+  "Save":"حفظ",
   "Home Cleaning": "نظافة منزلية",
   "Upholstery Cleaning": "نظافة مفروشات",
   "pestControl": "مكافحة حشرات",
@@ -52,5 +53,7 @@
   "Email is required":"من فضلك ادخل الايميل ",
   "FullName":"الاسم",
   "Full Name is too short":"الاسم قصير جدا",
-  "Full Name is too long":"الاسم اطول من المطلوب"
+  "Full Name is too long":"الاسم اطول من المطلوب",
+  "phoneNumber":"رقم الهاتف", 
+   "address":"العنوان"
 }
