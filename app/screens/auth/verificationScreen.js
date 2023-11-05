@@ -44,46 +44,34 @@ const VerificationScreen = ({ navigation, route }) => {
 
       dispatch(userRegisterSuccess(auth?.currentUser));
       await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
-      //create user collection and insert user
-      
-      try {
-        const user = auth.currentUser;
-        const userData = {
-          phoneNumber: user.phoneNumber,
-        };
         const phoneNumberQuery = query(
           usersRef,
           where("phoneNumber", "==", phoneNumber)
         );
+
+        console.log('this is the user phone number which will be conaire',phoneNumber)
         const querySnapshot = await getDocs(phoneNumberQuery);
+        console.log(querySnapshot)
   
-        console.log('this is the snapshot from the firebase =>',querySnapshot.empty);
-        if (!querySnapshot.empty) {
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{ name: 'App' }], // Replace 'Login' with the name of your login screen
-            })
-          );
-        } else {
-          navigation.dispatch(
+        if (querySnapshot.empty) {
+          console.log('user is noooot  found and this name ',querySnapshot.empty);
+
+          return navigation.dispatch(
             CommonActions.reset({
               index: 0,
               routes: [{ name: 'Register' }], // Replace 'Login' with the name of your login screen
             })
-          );       
-           await setDoc(doc(usersRef, user.phoneNumber), userData);
-           console.log("User data saved to Firestore");
+          );  
+          
+        } else {
+          console.log('user is found and this name ',querySnapshot.empty);
+          return navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: 'App' }], // Replace 'Login' with the name of your login screen
+            })
+          );  
           }
-
-      } catch (error) {
-        console.error("Error saving user data to Firestore:", error);
-      }
-      //check is the user is exist
-      
-      
-      setOtpInput("");
-
     } catch (error) {
       const errorMessage =
         errorMessages[error.message] ||

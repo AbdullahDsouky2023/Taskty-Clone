@@ -52,53 +52,98 @@ const RegisterScreen = ({ navigation }) => {
       .required(t("Email is required")),
   });
 
+  // const handleFormSubmit = async (values) => {
+  //   try {
+  //     const usersRef = collection(db, "users");
+  //     setIsLoading(true);
+  
+  //     const emailExistsQuery = query(
+  //       collection(db, "users"),
+  //       where("emailAddress", "==", values.emailAddress)
+  //     );
+  
+  //     const emailExistsSnapshot = await getDocs(emailExistsQuery);
+  
+  //     if (!emailExistsSnapshot.empty) {
+  //       // Email already exists, handle the case (e.g., show an error message)
+  //       Alert.alert(" عنوان البردي الالكتروني  مستخدم من قبل ");
+  //     } else {
+  //       // Email is unique, proceed to insert the document
+  
+  //       dispatch(userRegisterSuccess(auth?.currentUser));
+  //       setItem("userData", auth?.currentUser);
+  
+
+  //         const phone = auth.currentUser.phoneNumber;
+  
+  //         const phoneNumberQuery = query(
+  //           usersRef,
+  //           where("phoneNumber", "==", phone)
+  //         );
+  //         const querySnapshot = await getDocs(phoneNumberQuery);
+  
+  //         if (!querySnapshot.empty && values) {
+  //           // Get the reference to the document you want to update
+  //           const userDocRef = doc(usersRef, phone);
+  //           // Update the document with new values
+  //           await updateDoc(userDocRef, values);
+  //           console.log("User data updated in Firestore");
+  //           navigation.navigate("App");
+  //         }
+        
+  //     }
+  //   } catch (err) {
+  //     console.log("error creating the resi", err.message);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
   const handleFormSubmit = async (values) => {
     try {
       const usersRef = collection(db, "users");
       setIsLoading(true);
   
-      const emailExistsQuery = query(
-        collection(db, "users"),
-        where("emailAddress", "==", values.emailAddress)
+      // Check if the user's document exists
+      const userDocQuery = query(
+        usersRef,
+        where("phoneNumber", "==", auth.currentUser.phoneNumber)
       );
+      const userDocSnapshot = await getDocs(userDocQuery);
   
-      const emailExistsSnapshot = await getDocs(emailExistsQuery);
+      if (!userDocSnapshot.empty) {
+        // User document exists, retrieve existing data
+        const userDocData = userDocSnapshot.docs[0].data();
   
-      if (!emailExistsSnapshot.empty) {
-        // Email already exists, handle the case (e.g., show an error message)
-        Alert.alert(" عنوان البردي الالكتروني  مستخدم من قبل ");
+        // Update only the necessary fields (full name and email)
+        const updatedUserData = {
+          fullName: values.fullName || userDocData.fullName,
+          emailAddress: values.emailAddress || userDocData.emailAddress,
+        };
+  
+        // Update the document with new values
+        const userDocRef = userDocSnapshot.docs[0].ref;
+        await updateDoc(userDocRef, updatedUserData);
       } else {
-        // Email is unique, proceed to insert the document
+        // User document does not exist, proceed with inserting a new document
+        const userData = {
+          fullName: values.fullName,
+          emailAddress: values.emailAddress,
+          phoneNumber: auth.currentUser.phoneNumber,
+        };
   
-        dispatch(userRegisterSuccess(auth?.currentUser));
-        setItem("userData", auth?.currentUser);
-  
-        try {
-          const phone = auth.currentUser.phoneNumber;
-  
-          const phoneNumberQuery = query(
-            usersRef,
-            where("phoneNumber", "==", phone)
-          );
-          const querySnapshot = await getDocs(phoneNumberQuery);
-  
-          if (!querySnapshot.empty) {
-            // Get the reference to the document you want to update
-            const userDocRef = doc(usersRef, phone);
-            // Update the document with new values
-            await updateDoc(userDocRef, values);
-            console.log("User data updated in Firestore");
-          }
-          navigation.navigate("App");
-        } catch (error) {
-          console.error("Error updating user data in Firestore:", error);
-        }
+        await setDoc(doc(usersRef, auth.currentUser.uid), userData);
       }
+  
+      dispatch(userRegisterSuccess(auth?.currentUser));
+      setItem("userData", auth?.currentUser);
+  
+      navigation.navigate("App");
     } catch (err) {
       console.log("error creating the resi", err.message);
     } finally {
       setIsLoading(false);
     }
+
   };
   
   return (
@@ -115,7 +160,7 @@ const RegisterScreen = ({ navigation }) => {
             />
             <AppForm
               initialValues={{ fullName: "", emailAddress: "" }}
-              onSubmit={(data) => handleFormSubmit(data)}
+              onSubmit={handleFormSubmit}
               validationSchema={validationSchema}
             >
               <ErrorMessage error={error} visible={error} />
