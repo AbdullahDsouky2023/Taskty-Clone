@@ -6,6 +6,7 @@ import { FlatList } from 'react-native'
 import { LowOffersList } from '../../data/home'
 import { useNavigation } from '@react-navigation/native'
 import { ITEM_DETAILS } from '../../navigation/routes'
+import ItemScreen from '../../screens/Item/ItemScreen'
 
 export default function LowOffers() {
   const navigation = useNavigation()

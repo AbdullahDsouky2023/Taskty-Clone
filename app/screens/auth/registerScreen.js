@@ -27,17 +27,18 @@ import {
   query,
   where,
   getDocs,
+  updateDoc,
 } from "firebase/firestore";
 import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { storeUserInfo } from "../../utils/firebase/user";
 import { setItem } from "../../utils/secureStore";
+import { userRegisterSuccess } from "../../store/features/userSlice";
 const RegisterScreen = ({ navigation }) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
-  const dispatch = useDispatch()
-  const user = useSelector((state)=>state.user.user)
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
 
   const validationSchema = yup.object().shape({
     fullName: yup
@@ -53,24 +54,45 @@ const RegisterScreen = ({ navigation }) => {
 
   const handleFormSubmit = async (values) => {
     try {
+      const usersRef = collection(db, "users");
       setIsLoading(true);
+  
       const emailExistsQuery = query(
         collection(db, "users"),
         where("emailAddress", "==", values.emailAddress)
       );
-
+  
       const emailExistsSnapshot = await getDocs(emailExistsQuery);
-
+  
       if (!emailExistsSnapshot.empty) {
         // Email already exists, handle the case (e.g., show an error message)
         Alert.alert(" عنوان البردي الالكتروني  مستخدم من قبل ");
       } else {
         // Email is unique, proceed to insert the document
-      
-      dispatch(userRegisterSuccess(auth?.currentUser));
-       setItem('userData',auth?.currentUser)
-        navigation.navigate("App");
-        // const docRef = await addDoc(collection(db, "users"), {...,...user});
+  
+        dispatch(userRegisterSuccess(auth?.currentUser));
+        setItem("userData", auth?.currentUser);
+  
+        try {
+          const phone = auth.currentUser.phoneNumber;
+  
+          const phoneNumberQuery = query(
+            usersRef,
+            where("phoneNumber", "==", phone)
+          );
+          const querySnapshot = await getDocs(phoneNumberQuery);
+  
+          if (!querySnapshot.empty) {
+            // Get the reference to the document you want to update
+            const userDocRef = doc(usersRef, phone);
+            // Update the document with new values
+            await updateDoc(userDocRef, values);
+            console.log("User data updated in Firestore");
+          }
+          navigation.navigate("App");
+        } catch (error) {
+          console.error("Error updating user data in Firestore:", error);
+        }
       }
     } catch (err) {
       console.log("error creating the resi", err.message);
@@ -78,6 +100,7 @@ const RegisterScreen = ({ navigation }) => {
       setIsLoading(false);
     }
   };
+  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />

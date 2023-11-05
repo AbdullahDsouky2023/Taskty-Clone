@@ -55,5 +55,6 @@
   "Full Name is too short":"الاسم قصير جدا",
   "Full Name is too long":"الاسم اطول من المطلوب",
   "phoneNumber":"رقم الهاتف", 
-   "address":"العنوان"
+   "address":"العنوان",
+   "signOut":"تسجيل الخروج"
 }

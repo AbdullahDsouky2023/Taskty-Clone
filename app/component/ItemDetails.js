@@ -7,30 +7,28 @@ import AppHeader from "./AppHeader";
 const { width, height } = Dimensions.get("screen");
 export default function ItemDetails({ item }) {
   return (
-      <View style={styles.container}>
-        <AppHeader subPage={true}/>
-    <ScrollView >
+    <View style={styles.container}>
+      <AppHeader subPage={true} />
+      <ScrollView>
         <Image source={{ uri: item.image }} style={styles.image} />
         <View style={styles.overlay}>
           <AppText text={item.name} style={{ color: Colors.whiteColor }} />
         </View>
         <View style={styles.descriptionContainer}>
-        
           <AppText
             text={item.description}
             centered={false}
             style={styles.descriptionText}
           />
         </View>
-    </ScrollView>
- 
-      </View>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 'auto',
+    height: "auto",
     backgroundColor: "red",
     position: "relative",
   },
@@ -54,12 +52,10 @@ const styles = StyleSheet.create({
     marginTop: -10,
     borderTopStartRadius: 20,
     borderTopEndRadius: 20,
-    paddingBottom:50
+    paddingBottom: 50,
   },
   descriptionText: {
     color: Colors.blackColor,
     fontSize: 15,
   },
-
-  
 });

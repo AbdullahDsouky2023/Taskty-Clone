@@ -19,19 +19,24 @@ export default function OtpFields({setisLoading,otpInput,setOtpInput,confirmVeri
         
         handleTextChange={(text) => {
           setOtpInput(text)
-          // if (otpInput.length == 6) {
-          //   setisLoading(true);
-          //   setTimeout(() => {
-          //     setisLoading(false);
-          //     confirmVerificationCode(otpInput)
-          //   }, 2000);
-          // }
+          if (otpInput.length == 6) {
+            setisLoading(true);
+            setTimeout(() => {
+              setisLoading(false);
+              confirmVerificationCode(otpInput)
+            }, 2000);
+          }
         }}
+        
         inputCount={6}
         keyboardType="numeric"
         tintColor={Colors.primaryColor}
+        // ref={(ref) => {
+        //   otpInputRef = ref;
+        // }}
         offTintColor={Colors.bgColor}
         textInputStyle={styles.textFieldStyle }
+        // value={otpInput}
       />
     );
   }

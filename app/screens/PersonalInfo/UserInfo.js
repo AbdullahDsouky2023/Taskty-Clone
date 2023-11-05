@@ -99,6 +99,7 @@ const UserInfo = ({ navigation }) => {
                 autoCorrect={false}
                 name="fullName"
                 placeholder="fullName"
+                value={user?.fullName }
               />
               <FormField
                 autoCorrect={false}

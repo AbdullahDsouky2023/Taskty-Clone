@@ -46,6 +46,7 @@ const SigninScreen = ({ navigation }) => {
         navigation.navigate("Verification", {
            result,
           handleSendVerificationCode,
+          phoneNumber
         });
         // setDisabled(false);
       }

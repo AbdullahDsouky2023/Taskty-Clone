@@ -9,6 +9,8 @@ import {
   Dimensions,
 } from "react-native";
 import { useDispatch } from "react-redux";
+import { CommonActions } from '@react-navigation/native';
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Colors } from "../../constant/styles";
 import ArrowBack from "../../component/ArrowBack";
@@ -18,8 +20,9 @@ import LoadingModal from "../../component/Loading";
 import OtpFields from "../../component/OtpFields";
 import { errorMessages } from "../../data/signin";
 import { userRegisterSuccess } from "../../store/features/userSlice";
-import { auth } from "../../../firebaseConfig";
+import { auth, db } from "../../../firebaseConfig";
 import { changeUserInfo } from "../../utils/firebase/user";
+import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 
 const { width } = Dimensions.get("screen");
 
@@ -30,32 +33,63 @@ const VerificationScreen = ({ navigation, route }) => {
   const [secondsRemaining, setSecondsRemaining] = useState(60);
   const dispatch = useDispatch();
 
-  const { result, handleSendVerificationCode } = route.params;
+  const { result, handleSendVerificationCode, phoneNumber } = route.params;
 
   const confirmVerificationCode = async () => {
     try {
+      const usersRef = collection(db, "users");
       const res = await result.confirm(otpInput);
       setResendDisabled(true);
       setSecondsRemaining(60);
 
       dispatch(userRegisterSuccess(auth?.currentUser));
       await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
+      //create user collection and insert user
+      
+      try {
+        const user = auth.currentUser;
+        const userData = {
+          phoneNumber: user.phoneNumber,
+        };
+        const phoneNumberQuery = query(
+          usersRef,
+          where("phoneNumber", "==", phoneNumber)
+        );
+        const querySnapshot = await getDocs(phoneNumberQuery);
+  
+        console.log('this is the snapshot from the firebase =>',querySnapshot.empty);
+        if (!querySnapshot.empty) {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: 'App' }], // Replace 'Login' with the name of your login screen
+            })
+          );
+        } else {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: 'Register' }], // Replace 'Login' with the name of your login screen
+            })
+          );       
+           await setDoc(doc(usersRef, user.phoneNumber), userData);
+           console.log("User data saved to Firestore");
+          }
 
-      await changeUserInfo()
-
-      //if existt navigate to app
-      if (!auth?.currentUser.providerData[0].displayName) {
-        navigation.navigate("Register");
-      } else {
-        // if not navigate to
-
-        navigation.navigate("App");
+      } catch (error) {
+        console.error("Error saving user data to Firestore:", error);
       }
+      //check is the user is exist
+      
+      
+      setOtpInput("");
+
     } catch (error) {
-      const errorMessage = errorMessages[error.message];
-      Alert.alert(
-        errorMessage || "حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى"
-      );
+      const errorMessage =
+        errorMessages[error.message] ||
+        "حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى";
+      Alert.alert(errorMessage);
+
     } finally {
       setOtpInput("");
     }
@@ -105,6 +139,8 @@ const VerificationScreen = ({ navigation, route }) => {
             confirmVerificationCode={(otpInput) =>
               confirmVerificationCode(otpInput)
             }
+            // clearOtpInput={clearOtpInput} // Pass the clearOtpInput function
+
           />
           <AppButton
             title={"Continue"}

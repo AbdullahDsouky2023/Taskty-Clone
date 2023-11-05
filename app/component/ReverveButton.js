@@ -5,11 +5,11 @@ import AppText from './AppText'
 import { Colors } from '../constant/styles'
 const { width } = Dimensions.get("screen");
 
-export default function ReserveButton({price}) {
+export default function ReserveButton({price,onPress}) {
   return (
     <View style={styles.ReserveButtonContainer}>
     <AppText text={price} centered={true} style={styles.price} />
-    <AppButton title={"reserveAppointment"} style={{ marginTop: -10 }} />
+    <AppButton title={"reserveAppointment"} style={{ marginTop: -10 }} onPress={onPress} />
   </View>
   )
 }

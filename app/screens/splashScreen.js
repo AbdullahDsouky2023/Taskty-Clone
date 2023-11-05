@@ -6,15 +6,12 @@ import { useFocusEffect } from "@react-navigation/native";
 import Logo from "../component/Logo";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegisterSuccess } from "../store/features/userSlice";
-import { auth } from "../../firebaseConfig";
-import { getItem, getUserData, setItem } from "../utils/secureStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { checkUserAndSetName } from "../utils/firebase/user";
 
 const SplashScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     let user = useSelector((state) => state.user?.user?.phoneNumber);
-
+    
     const backAction = () => {
         BackHandler.exitApp();
         return true;
@@ -24,19 +21,18 @@ const SplashScreen = ({ navigation }) => {
         async function checkUserAndNavigate() {
           const userDataString = await AsyncStorage.getItem("userData");
           if (userDataString) {
-            const userData = JSON.parse(userDataString);
-             dispatch(userRegisterSuccess(userData));
-                navigation.push("App");
+              const userData = JSON.parse(userDataString);
+              dispatch(userRegisterSuccess(userData));
+              navigation.push("App");
 
           } else {
-              navigation.push("App");
-            // console.log("No user data found in AsyncStorage");
+              navigation.push("Auth");
           }
-      
+
         }
       
         checkUserAndNavigate();
-      }, [user, navigation]);
+      }, [user]);
       
 
 

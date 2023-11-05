@@ -16,12 +16,25 @@ const userSlice = createSlice({
       state.user = action.payload;
       state.loading = false;
       state.error = null;
+      console.log('ffffffffffff register is called');
     },
     userRegisterFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(userRegisterSuccess, async (state, action) => {
+      // This is an asynchronous side effect
+      const userDate = await getUserInformation(auth.currentUser.phoneNumber);
+      state.user = userDate;
+      console.log('ffffffffffff builder is called');
+
+    });
+  }
+  
+    
+
 });
 
 export const { userRegisterStart, userRegisterSuccess, userRegisterFailure } = userSlice.actions;
