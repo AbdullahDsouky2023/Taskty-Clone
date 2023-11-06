@@ -3,28 +3,34 @@ import React from 'react'
 import HeaderTextComponent from './HeaderTextComponent'
 import AppBigCard from './AppBigCard'
 import { ReadyPackages as data } from '../../data/home'
-import AppCard from './AppCard'
+import { useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
 export default function ReadyPackages() {
+  const services = useSelector((state)=>state.services.services)?.data
+  const navigation = useNavigation()
+
   return (
     <HeaderTextComponent name={'readyPackages'}  showAll={true}>
         <FlatList
         horizontal
-        data={data}
+        data={services}
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(item,index) => item.name+index}
+        keyExtractor={(item,index)=>item.id}
 
         style={{
             display:'flex',
             flexDirection:'row',
             gap:15
         }}
-        renderItem={({item})=>(
+        renderItem={({item })=>(
             <AppBigCard
-            name={item.name}
-            price={item.price}
-            image={item.image}
-            category={item.category}
+            name={item?.attributes?.name}
+            price={item?.attributes?.Price}
+            onPress={()=>navigation.navigate(ITEM_DETAILS,{item})}
+            category={item?.attributes?.category?.data?.attributes?.name}
+            image={item?.attributes?.image?.data?.attributes?.url}
+
             />
 
         )}

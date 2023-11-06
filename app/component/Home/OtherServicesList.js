@@ -4,15 +4,20 @@ import HeaderTextComponent from './HeaderTextComponent'
 import AppCard from './AppCard'
 import { FlatList } from 'react-native'
 import { LowOffersList } from '../../data/home'
+import { useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
 export default function OtherServicesList() {
+  const services = useSelector((state)=>state.services.services)?.data
+  const navigation = useNavigation()
+
   return (
     <HeaderTextComponent name={'otherServices'} >
         <FlatList
         horizontal
-        data={LowOffersList}
+        data={services}
         showsHorizontalScrollIndicator={false}
-        keyExtractor={(item,index) => item.name+index}
+        keyExtractor={(item,index)=>item.id}
 
         style={{
             display:'flex',
@@ -20,11 +25,12 @@ export default function OtherServicesList() {
             gap:15
         }}
         renderItem={({item})=>(
-            <AppCard
-            name={item.name}
-            price={item.price}
-            image={item.image}
-            />
+          <AppCard
+          name={item?.attributes?.name}
+          price={item?.attributes?.Price}
+          onPress={()=>navigation.navigate(ITEM_DETAILS,{item})}
+          image={item?.attributes?.image?.data?.attributes?.url}
+          />
 
         )}
         />

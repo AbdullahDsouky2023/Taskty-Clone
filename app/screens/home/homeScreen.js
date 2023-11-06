@@ -27,13 +27,15 @@ import useCategories from "../../../utils/categories";
 import { setCategories } from "../../store/features/categorySlice";
 import { setServices } from "../../store/features/serviceSlice";
 import useServices from "../../../utils/services";
+import LoadingScreen from "../loading/LoadingScreen";
+import { ErrorScreen } from "../Error/ErrorScreen";
 const { width } = Dimensions.get("window");
 
 const HomeScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const { data, isLoading, isError } = useCategories()
-  const { services } = useServices()
+  const { data:services } = useServices()
   const getData =async()=>{
     if (data) {
       // Dispatch the fetched categories to the Redux store
@@ -49,8 +51,8 @@ const HomeScreen = ({ navigation }) => {
     getData()
   }, [dispatch,data]);
 
-  if (isLoading) return <Text>Loading...</Text>;
-  if (isError) return <Text>Error fetching data.</Text>;
+  if (isLoading) return <LoadingScreen/>
+  if (isError) return <ErrorScreen hanleRetry={getData}/>
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
@@ -78,18 +80,6 @@ const HomeScreen = ({ navigation }) => {
       </View>
     </SafeAreaView>
   );
-
- 
-
-  
-
-  
-  
- 
-
-  
-
- 
 };
 
 const styles = StyleSheet.create({

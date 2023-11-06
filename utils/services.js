@@ -19,12 +19,12 @@ export default function useServices() {
     }
   };
 
-  const { data :services, isLoading,isError } = useQuery(
+  const { data , isLoading,isError } = useQuery(
     { queryKey: ["services"], queryFn: fetchCategories }
   ); // Changed the query key to 'superheroes'
   
   return {
-    services,
+    data,
     isLoading,
     isError
   };

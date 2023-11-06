@@ -8,7 +8,7 @@ const serviceSlice = createSlice({
   initialState: { services: [] },
   reducers: {
     setServices: (state, action) => {
-      state.categories = action.payload;
+      state.services = action.payload;
     },
     // Add other reducers as needed
   },

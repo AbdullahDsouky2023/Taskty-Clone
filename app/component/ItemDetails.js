@@ -10,13 +10,13 @@ export default function ItemDetails({ item }) {
     <View style={styles.container}>
       <AppHeader subPage={true} />
       <ScrollView>
-        <Image source={{ uri: item.image }} style={styles.image} />
+        <Image source={{ uri: item.attributes.image.data.attributes.url }} style={styles.image} />
         <View style={styles.overlay}>
-          <AppText text={item.name} style={{ color: Colors.whiteColor }} />
+          <AppText text={item.attributes.name} style={{ color: Colors.whiteColor }} />
         </View>
         <View style={styles.descriptionContainer}>
           <AppText
-            text={item.description}
+            text={item.attributes.description}
             centered={false}
             style={styles.descriptionText}
           />
@@ -57,5 +57,7 @@ const styles = StyleSheet.create({
   descriptionText: {
     color: Colors.blackColor,
     fontSize: 15,
+    padding:20,
+    minWidth:'100%',
   },
 });

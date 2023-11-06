@@ -16,19 +16,26 @@ import AppHeader from "../../component/AppHeader";
 import { useDispatch, useSelector } from "react-redux";
 import useServices from "../../../utils/services";
 import { setServices } from "../../store/features/serviceSlice";
+import LoadingScreen from "../loading/LoadingScreen";
+import { ErrorScreen } from "../Error/ErrorScreen";
+import OffersServiceComponentList from "../../component/CurrentOffers/OffersListComponent";
+import AllOffersList from "../../component/CurrentOffers/AllOffersList";
+import { ScrollView } from "react-native-gesture-handler";
 
 const { width } = Dimensions.get("screen");
 
 const CurrentOffersScreen = ({ navigation }) => {
-  const [slectedItem, setSelectedItem] = useState("الكهرباء ");
+  const [slectedItem, setSelectedItem] = useState("all");
   const categories = useSelector((state) => state.categories.categories);
 
-  const selectedItemsData = categories.data.find(
+  const selectedItemsData = categories?.data?.find(
     (category) => category?.attributes.name === slectedItem
   );
   const dispatch = useDispatch();
   const { data, isLoading, isError } = useServices();
-  const services = data?.data.filter((item) => item?.attributes.category?.data.id === selectedItemsData.id);
+  const services = data?.data?.filter(
+    (item) => item?.attributes?.category?.data?.id === selectedItemsData?.id
+  );
   const getData = async () => {
     if (data) {
       // Dispatch the fetched categories to the Redux store
@@ -43,58 +50,55 @@ const CurrentOffersScreen = ({ navigation }) => {
     getData();
   }, [dispatch, data]);
 
-  if (isLoading) return <Text>Loading...</Text>;
-  if (isError) return <Text>Error fetching data.</Text>;
+  if (isLoading) return <LoadingScreen />;
+  if (isError) return <ErrorScreen />;
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <AppHeader />
       <View style={styles.container}>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={categories.data}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 10,
-          }}
-          keyExtractor={(item, index) => item.id}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={
-                item == selectedItemsData ? styles.activeItem : styles.item
-              }
-              onPress={() => setSelectedItem(item?.attributes.name)}
-            >
-              <AppText
-                text={item?.attributes.name}
-                style={{ color: Colors.whiteColor }}
-              />
-            </TouchableOpacity>
-          )}
-        />
-
-        <View style={{ padding: 23 }}>
-          <View style={{ marginBottom: 10 }}>
-            <AppText
-              text={slectedItem}
-              centered={false}
-              style={{ fontSize: 25, color: Colors.blackColor }}
-            />
-          </View>
+        <View style={styles.listContainer}>
+          <TouchableOpacity
+            style={slectedItem == "all" ? styles.activeItem : styles.item}
+            onPress={() => setSelectedItem("all")}
+          >
+            <AppText text={"الكل"} style={{ color: Colors.whiteColor }} />
+          </TouchableOpacity>
           <FlatList
-            data={services}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={categories.data}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 10,
+            }}
+            keyExtractor={(item, index) => item.id}
             renderItem={({ item }) => (
-              <OfferCard
-                service={item.attributes.name}
-                price={item.attributes.Price}
-                image={item.attributes.image.data.attributes.url}
-              />
+              <TouchableOpacity
+                style={
+                  item == selectedItemsData ? styles.activeItem : styles.item
+                }
+                onPress={() => setSelectedItem(item?.attributes?.name)}
+              >
+                <AppText
+                  text={item?.attributes.name}
+                  style={{ color: Colors.whiteColor }}
+                />
+              </TouchableOpacity>
             )}
-            ItemSeparatorComponent={<View style={{ height: 10 }} />}
           />
         </View>
+        <ScrollView >
+          {slectedItem === "all" ? (
+            <AllOffersList categories={categories} />
+          ) : (
+            <OffersServiceComponentList
+              data={services}
+              slectedItem={slectedItem}
+            />
+          )}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -103,6 +107,13 @@ const CurrentOffersScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 30,
+  },
+  listContainer: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 12,
+    justifyContent: "center",
   },
   item: {
     height: 50,

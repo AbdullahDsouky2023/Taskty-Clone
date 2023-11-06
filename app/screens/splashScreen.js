@@ -43,11 +43,6 @@ const SplashScreen = ({ navigation }) => {
         }, [backAction])
     );
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //       navigation.push(user ? "App" : "Auth");
-    //     }, 5000);
-    //   }, [user, navigation]);
       
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
