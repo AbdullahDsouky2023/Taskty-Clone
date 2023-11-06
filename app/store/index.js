@@ -6,7 +6,7 @@ const store = configureStore({
     reducer:{
         user:userReducer,
         categories:categoryReducer,
-        services:categoryReducer,
+        services:servicesReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false

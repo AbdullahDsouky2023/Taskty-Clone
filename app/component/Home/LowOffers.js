@@ -7,9 +7,12 @@ import { LowOffersList } from '../../data/home'
 import { useNavigation } from '@react-navigation/native'
 import { ITEM_DETAILS } from '../../navigation/routes'
 import ItemScreen from '../../screens/Item/ItemScreen'
+import { useSelector } from 'react-redux'
 
 export default function LowOffers() {
   const navigation = useNavigation()
+  const services = useSelector((state)=>state.services.services)
+  console.log(services,"serve")
   return (
     <HeaderTextComponent name={'Low Offers'}  showAll={true}  >
         <FlatList

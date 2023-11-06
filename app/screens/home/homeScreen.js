@@ -25,16 +25,20 @@ import AppHeader from "../../component/AppHeader";
 import { useDispatch } from "react-redux";
 import useCategories from "../../../utils/categories";
 import { setCategories } from "../../store/features/categorySlice";
+import { setServices } from "../../store/features/serviceSlice";
+import useServices from "../../../utils/services";
 const { width } = Dimensions.get("window");
 
 const HomeScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const { data, isLoading, isError } = useCategories()
+  const { services } = useServices()
   const getData =async()=>{
     if (data) {
       // Dispatch the fetched categories to the Redux store
        dispatch(setCategories(data));
+       dispatch(setServices(services));
     } else if (isError) {
       console.log(isError)
       // Handle the error
