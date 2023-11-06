@@ -34,19 +34,19 @@ const SigninScreen = ({ navigation }) => {
   const handleSendVerificationCode = async () => {
     try {
       setDisabled(true);
-      const validPhone = `+20${phoneNumber.replace(/\s/g, '').trim()}`
+      const phoneNumberValid = `+20${phoneNumber}`;
 
       const result = await signInWithPhoneNumber(
         auth,
-        validPhone,
+        phoneNumberValid,
         recaptchaVerifier.current
       );
-          console.log('this is the number from the sign page ',validPhone)
+          console.log('this is the number from the sign page ',phoneNumberValid)
       if (result.verificationId) {
         navigation.navigate("Verification", {
            result,
           handleSendVerificationCode,
-          validPhone
+          phoneNumber:phoneNumberValid
         });
         // setDisabled(false);
       }

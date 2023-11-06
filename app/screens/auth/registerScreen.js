@@ -131,7 +131,7 @@ const RegisterScreen = ({ navigation }) => {
           phoneNumber: auth.currentUser.phoneNumber,
         };
   
-        await setDoc(doc(usersRef, auth.currentUser.uid), userData);
+        await setDoc(doc(usersRef, auth.currentUser.phoneNumber), userData);
       }
   
       dispatch(userRegisterSuccess(auth?.currentUser));
