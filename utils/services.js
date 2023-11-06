@@ -7,10 +7,10 @@ const api = axios.create({
 
 
 
-export default function useCategories() {
+export default function useServices() {
   const fetchCategories = async () => {
     try {
-      const response = await api.get(`/api/categories?populate=*`);
+      const response = await api.get(`/api/services?populate=*`);
       
       return response.data
     } catch (error) {
@@ -20,7 +20,7 @@ export default function useCategories() {
   };
 
   const { data, isLoading,isError } = useQuery(
-    { queryKey: ["categories"], queryFn: fetchCategories }
+    { queryKey: ["services"], queryFn: fetchCategories }
   ); // Changed the query key to 'superheroes'
   
   return {

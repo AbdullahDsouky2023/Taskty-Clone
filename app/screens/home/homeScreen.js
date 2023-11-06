@@ -7,19 +7,10 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
-  Image,
-  TouchableOpacity,
 } from "react-native";
-import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
-import CountDown from "react-native-countdown-component";
-import { SharedElement } from "react-navigation-shared-element";
 
 import { Colors, Fonts, Sizes } from "../../constant/styles";
 import {
-  offersBannerList,
-  handPickedItemsList,
-  featuredBrandsList,
-  dealsOfTheDaysList,
   topCategoriesList,
 } from "../../data/home";
 import OffersBanner from "../../component/Home/OffersBanner";
@@ -37,36 +28,23 @@ import { setCategories } from "../../store/features/categorySlice";
 const { width } = Dimensions.get("window");
 
 const HomeScreen = ({ navigation }) => {
-  // const [state, setState] = useState({
-  //   offers: offersBannerList,
-  //   activeSlide: 0,
-  //   days: 694,
-  // });
-
-  // const updateState = (data) => setState((state) => ({ ...state, ...data }));
-
-  // const { offers, activeSlide, days } = state;
 
   const dispatch = useDispatch();
   const { data, isLoading, isError } = useCategories()
-  console.log(data)
-  const getData =()=>{
-
+  const getData =async()=>{
     if (data) {
       // Dispatch the fetched categories to the Redux store
-      dispatch(setCategories(data));
-      console.log(data)
+       dispatch(setCategories(data));
     } else if (isError) {
       console.log(isError)
       // Handle the error
     }
   }
 
-  useEffect(() => {
-    // Fetch categories using the React Query hook
-    
+  useEffect(() => {    
     getData()
-  }, [dispatch]);
+  }, [dispatch,data]);
+
   if (isLoading) return <Text>Loading...</Text>;
   if (isError) return <Text>Error fetching data.</Text>;
   return (

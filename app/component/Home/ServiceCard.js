@@ -8,7 +8,7 @@ import AppText from '../AppText'
 export default function ServiceCard({image,name}) {
   return (
     <View style={styles.card}>
-            <Image style={styles.imageCard} source={image}/>
+            <Image style={styles.imageCard} source={{uri:image}}/>
             <AppText text={name} style={styles.text}/>
         </View>
   )
