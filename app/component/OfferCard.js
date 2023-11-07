@@ -3,10 +3,13 @@ import React from "react";
 import { Colors } from "../constant/styles";
 import AppText from "./AppText";
 import { Image } from "react-native";
+import { TouchableWithoutFeedback } from "react-native";
 const { width } = Dimensions.get("screen");
-export default function OfferCard({ service, price, image }) {
+export default function OfferCard({ service, price, image,onPress }) {
   return (
-    <View style={styles.itemCardContainer}>
+    <TouchableWithoutFeedback onPress={onPress} >
+      <View style={styles.itemCardContainer}>
+
       <Image
         style={styles.cardImage}
         source={{
@@ -29,7 +32,8 @@ export default function OfferCard({ service, price, image }) {
           centered={false}
         />
       </View>
-    </View>
+</View>
+    </TouchableWithoutFeedback>
   );
 }
 

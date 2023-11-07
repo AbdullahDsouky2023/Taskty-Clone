@@ -12,6 +12,7 @@ import { AntDesign } from '@expo/vector-icons';
 import AccountNavigator from "../navigation/AccountNavigator";
 import { Octicons } from '@expo/vector-icons'; 
 import CurrentOffersScreen from "../screens/CurrentOffersScreen/CurrentOffersScreen";
+import { OFFERS } from "../navigation/routes.js";
 
 const Tab = createBottomTabNavigator();
 
@@ -64,7 +65,7 @@ const BottomTabBar = () => {
                     }}
                 />
                 <Tab.Screen
-                    name={t('Offers')}
+                    name={OFFERS}
                     component={CurrentOffersScreen}
                     options={{
                         tabBarIcon: ({ color }) => <MaterialCommunityIcons name="gift-open-outline" size={27} color={color} />

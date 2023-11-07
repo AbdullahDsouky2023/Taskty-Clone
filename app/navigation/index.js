@@ -29,16 +29,12 @@ const RootNavigator = () => {
       >
         <Stack.Screen name="Loading" component={LoadingScreen} />
         <Stack.Screen name="Splash" component={SplashScreen} />
-
         <Stack.Screen name="App" component={AppNavigator} />
-
         <Stack.Screen name="Auth" component={AuthNavigator} />
-
         <Stack.Screen
           name={ITEM_DETAILS}
           component={ItemScreen}
           // initialParams={{ item }} // Pass the item object to ItemOrderDetails
-
           options={{ headerShown: false }}
         />
         <Stack.Screen

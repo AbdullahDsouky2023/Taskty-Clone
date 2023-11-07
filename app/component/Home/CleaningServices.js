@@ -5,6 +5,7 @@ import AppBigCard from './AppBigCard'
 import { LowOffersList, ReadyPackages } from '../../data/home'
 import { useNavigation } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
+import { ITEM_DETAILS } from '../../navigation/routes'
 
 export default function CleaningServices() {
   const services = useSelector((state)=>state.services.services)?.data

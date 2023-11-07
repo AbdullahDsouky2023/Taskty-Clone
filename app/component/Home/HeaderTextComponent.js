@@ -6,6 +6,7 @@ import { Colors, Sizes, Fonts } from "../../constant/styles";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
+import { OFFERS } from "../../navigation/routes";
 
 export default function HeaderTextComponent({ name, showAll, children }) {
   const navigation = useNavigation()
@@ -15,7 +16,7 @@ export default function HeaderTextComponent({ name, showAll, children }) {
       <View style={styles.headerTextContainer}>
         <AppText text={name} style={styles.text} />
         {showAll && (
-          <TouchableWithoutFeedback onPress={()=>navigation.navigate(t('Offers'))}>
+          <TouchableWithoutFeedback onPress={()=>navigation.navigate((OFFERS),{name:"all"})}>
 
           <AppText text={"showAll"} style={{ ...Fonts.primaryColor15Light }} />
           </TouchableWithoutFeedback>

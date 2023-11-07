@@ -9,19 +9,20 @@ export default function AllOffersList() {
     const { data, isLoading, isError } = useServices();
    
   return (
-    <ScrollView >
-   <ScrollView>
+    <View >
+   <View>
    {
    categories?.data?.map((category)=>{
           const services = data?.data?.filter(
             (item) => item?.attributes?.category?.data?.id === category?.id
           );
         return (<OffersServiceComponentList 
+          key={category?.id}
         data={services} 
         slectedItem={category?.attributes?.name}/>)
      })   
     }
-   </ScrollView>
-  </ScrollView>
+   </View>
+  </View>
   )
 }

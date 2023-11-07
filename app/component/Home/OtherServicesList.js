@@ -6,6 +6,7 @@ import { FlatList } from 'react-native'
 import { LowOffersList } from '../../data/home'
 import { useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
+import { ITEM_DETAILS } from '../../navigation/routes'
 
 export default function OtherServicesList() {
   const services = useSelector((state)=>state.services.services)?.data

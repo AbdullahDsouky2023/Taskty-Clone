@@ -3,14 +3,16 @@ import React from 'react'
 import AppButton from './AppButton'
 import AppText from './AppText'
 import { Colors } from '../constant/styles'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 const { width } = Dimensions.get("screen");
 
 export default function ReserveButton({price,onPress}) {
   return (
-    <View style={styles.ReserveButtonContainer}>
+
+    <TouchableOpacity onPress={onPress}>
     <AppText text={price} centered={true} style={styles.price} />
     <AppButton title={"reserveAppointment"} style={{ marginTop: -10 }} onPress={onPress} />
-  </View>
+  </TouchableOpacity>
   )
 }
 const styles = StyleSheet.create({

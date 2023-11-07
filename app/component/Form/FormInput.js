@@ -30,6 +30,7 @@ function FormTextInput({ icon, width = "100%", ...otherProps }) {
         {...otherProps}
         placeholder={t(otherProps.placeholder)}
       />
+      
     </View>
   );
 }

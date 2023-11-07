@@ -3,9 +3,12 @@ import React from "react";
 import { Image } from "react-native";
 import AppText from "../AppText";
 import { Colors } from "../../constant/styles";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-export default function AppBigCard({image,name,price,category=''}) {
+export default function AppBigCard({image,name,price,category='',onPress}) {
   return (
+    <TouchableWithoutFeedback onPress={onPress}>
+
     <View style={styles.cardContainer}>
       <Image
         style={styles.cardImage}
@@ -26,6 +29,7 @@ export default function AppBigCard({image,name,price,category=''}) {
         </View>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 const styles = StyleSheet.create({
