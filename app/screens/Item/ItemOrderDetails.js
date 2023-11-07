@@ -36,21 +36,47 @@ import { setItem } from "../../utils/secureStore";
 import { userRegisterSuccess } from "../../store/features/userSlice";
 import FormDatePicker from "../../component/Form/FormDatePicker";
 import FormTimePicker from "../../component/Form/FormTimePicker";
+import ReserveButton from "../../component/ReverveButton";
+import { format } from "date-fns";
+import { arDZ } from "date-fns/locale";
+import SuccessModel from "../../component/SuccessModal";
 
 export default function ItemOrderDetails({ route, navigation }) {
   const { item } = route.params;
   const [error, setError] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const handleFormSubmit = (values) => {
-    console.log("form submit", values);
+    try {
+      // Create valid Date objects
+      const date = new Date(values.Date);
+      const time = new Date(values.Time);
+  
+      // Format the date and time
+      const formattedDate = format(date, "dd MMMM yyyy", {
+        locale: arDZ,
+      });
+      const formattedTime = format(time, "hh:mm a", {
+        locale: arDZ,
+      });
+      setShowSuccess(true)
+      console.log("Form submit", {
+        Date: formattedDate,
+        Time: formattedTime,
+        description: values.description,
+      });
+    } catch (error) {
+      console.error("Error parsing date or time:", error);
+    }
   };
+  
+
   const validationSchema = yup.object().shape({
-    date: yup.date().required("Date is required"),
-    time: yup.string().required("Time is required"),
-    description: yup.string().required("Description is required"),
+    Date: yup.date().required("من فضلك اختار يوم التنفيذ"),
+    Time: yup.string().required("من فضلك اختار وقت التنفيذ"),
+    description: yup.string()
   });
 
   return (
@@ -69,9 +95,9 @@ export default function ItemOrderDetails({ route, navigation }) {
               }}
             />
             <AppForm
-            enableReinitialize={true} // Add this prop
-              initialValues={{ date: "", time: "", description: "" }}
-              onSubmit={(values) => handleFormSubmit(values)}
+              enableReinitialize={true}
+              initialValues={{ Date: "", Time: "", description: "" }}
+              onSubmit={handleFormSubmit}
               validationSchema={validationSchema}
             >
               <ErrorMessage error={error} visible={error} />
@@ -80,13 +106,13 @@ export default function ItemOrderDetails({ route, navigation }) {
                 centered={false}
                 style={styles.label}
               />
-              <FormDatePicker placeholder="Date" />
+              <FormDatePicker name="Date" placeholder="Date"  />
               <AppText
                 text={"وقت التنفيذ"}
                 centered={false}
                 style={styles.label}
               />
-              <FormTimePicker placeholder="Date" />
+              <FormTimePicker name="Time" placeholder="Time" />
               <AppText
                 text={"معلومات  اخري"}
                 centered={false}
@@ -96,17 +122,19 @@ export default function ItemOrderDetails({ route, navigation }) {
                 autoCapitalize="none"
                 autoCorrect={false}
                 name="description" // Make sure the name matches the field in the form values
-                placeholder="description"
+                // placeholder="description"
                 multiline={true}
                 numberOfLines={4}
+                textAlignVertical="top" // Add this line
+
                 // ... other props
               />
-
-              <SubmitButton title="Register" />
+              <SubmitButton title={"Book"}/>
             </AppForm>
           </View>
         </ScrollView>
-        <LoadingModal visible={isLoading} />
+
+        <SuccessModel visible={showSuccess} onPress={()=>setShowSuccess(false)}/>
       </View>
     </SafeAreaView>
   );
@@ -115,7 +143,7 @@ export default function ItemOrderDetails({ route, navigation }) {
 const styles = StyleSheet.create({
   label: {
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingVertical: 4,
     color: Colors.blackColor,
   },
 });
