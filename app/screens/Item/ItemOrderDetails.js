@@ -8,7 +8,9 @@ import {
   Dimensions,
 } from "react-native";
 import * as yup from "yup";
-import { useTranslation } from "react-i18next";
+import { format } from "date-fns";
+import { arDZ } from "date-fns/locale";
+import {  useSelector } from "react-redux";
 
 import ArrowBack from "../../component/ArrowBack";
 import { Colors } from "../../constant/styles";
@@ -16,28 +18,25 @@ import AppText from "../../component/AppText";
 import AppForm from "../../component/Form/Form";
 import ErrorMessage from "../../component/Form/ErrorMessage";
 import FormField from "../../component/Form/FormField";
-import SubmitButton from "../../component/Form/FormSubmitButton";
 
-import { useDispatch, useSelector } from "react-redux";
 import FormDatePicker from "../../component/Form/FormDatePicker";
+import SubmitButton from "../../component/Form/FormSubmitButton";
 import FormTimePicker from "../../component/Form/FormTimePicker";
-import { format } from "date-fns";
-import { arDZ } from "date-fns/locale";
 import SuccessModel from "../../component/SuccessModal";
 import FormImagePicker from "../../component/Form/FormImagePicker";
 import { postOrder } from "../../../utils/orders";
 import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
 
-const { width } = Dimensions.get('window')
+const { width } = Dimensions.get("window");
 
 export default function ItemOrderDetails({ route, navigation }) {
   const { item } = route.params;
   const [error, setError] = useState();
   const [showSuccess, setShowSuccess] = useState(false);
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
+
   const user = useSelector((state) => state.user.user);
-  const handleFormSubmit = async(values) => {
+
+  const handleFormSubmit = async (values) => {
     try {
       // Create valid Date objects
       const date = new Date(values.Date);
@@ -51,25 +50,20 @@ export default function ItemOrderDetails({ route, navigation }) {
         locale: arDZ,
       });
 
-      const imageData = new FormData();
-    imageData.append('images', values.image); // Use the appropriate field name
-    imageData.append('ref', 'orders'); // Replace with your Strapi model name
-    imageData.append('refId', '1'); 
       const formSubmitionData = {
         date: formattedDate.toString(),
         time: formattedTime.toString(),
         description: values.description,
-        images: imageData,
+        // images: imageData,
         service: item.id,
         location: "Benisuif",
-        phoneNumber:user.phoneNumber
+        phoneNumber: user.phoneNumber,
       };
-      
 
-      const data = await postOrder(formSubmitionData)
-     if(data) {
-      navigation.navigate(ORDER_SUCCESS_SCREEN)
-     }
+      const data = await postOrder(formSubmitionData);
+      if (data) {
+        navigation.navigate(ORDER_SUCCESS_SCREEN);
+      }
     } catch (error) {
       console.error("Error parsing date or time:", error);
     }
@@ -82,28 +76,33 @@ export default function ItemOrderDetails({ route, navigation }) {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor,position:'relative',height:'100%', }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: Colors.bodyBackColor,
+        position: "relative",
+        height: "100%",
+      }}
+    >
       <StatusBar backgroundColor={Colors.primaryColor} />
-      <View style={{ flex: 1, 
-    paddingBottom: 100,
-   }}>
+      <View style={{ flex: 1, paddingBottom: 100 }}>
         <ArrowBack />
-            <AppForm
-              enableReinitialize={true}
-              initialValues={{ Date: "", Time: "", description: "", image: null }}
-              onSubmit={handleFormSubmit}
-              validationSchema={validationSchema}
-            >
-        <ScrollView showsVerticalScrollIndicator={false} >
-          <View style={{ flex: 1, alignItems: "center" }}>
-            <AppText
-              text={item.attributes.name}
-              style={{
-                color: Colors.primaryColor,
-                marginBottom: 10,
-                fontSize: 15,
-              }}
-            />
+        <AppForm
+          enableReinitialize={true}
+          initialValues={{ Date: "", Time: "", description: "", image: null }}
+          onSubmit={handleFormSubmit}
+          validationSchema={validationSchema}
+        >
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={{ flex: 1, alignItems: "center" }}>
+              <AppText
+                text={item.attributes.name}
+                style={{
+                  color: Colors.primaryColor,
+                  marginBottom: 10,
+                  fontSize: 15,
+                }}
+              />
               <ErrorMessage error={error} visible={error} />
               <AppText
                 text={"يوم التنفيذ"}
@@ -139,14 +138,16 @@ export default function ItemOrderDetails({ route, navigation }) {
                 style={styles.label}
               />
               <FormImagePicker name="image" width={width} />
+            </View>
+          </ScrollView>
+          <View style={styles.orderButtonContainer}>
+            <AppText
+              text={item.attributes.Price}
+              style={{ color: Colors.blackColor }}
+            />
+            <SubmitButton title={"Book"} style={styles.buttonSubmit} />
           </View>
-        </ScrollView>
-              <View style={styles.orderButtonContainer}>
-
-              <AppText text={item.attributes.Price} style={{color:Colors.blackColor}}/>
-              <SubmitButton title={"Book"} style={styles.buttonSubmit} />
-              </View>
-            </AppForm>
+        </AppForm>
 
         <SuccessModel
           visible={showSuccess}
@@ -163,21 +164,22 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     color: Colors.blackColor,
   },
-  orderButtonContainer :{
+  orderButtonContainer: {
     height: 100,
-        position: "absolute",
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        backgroundColor: Colors.grayColor,
-        borderRadius: 20,
-        width: width,
-        bottom: 0,
-        right: 0,
-        paddingHorizontal: 20,
-  },buttonSubmit:{
-    width:width*0.3,
-    marginTop:10
-  }
+    position: "absolute",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: Colors.grayColor,
+    borderRadius: 20,
+    width: width,
+    bottom: 0,
+    right: 0,
+    paddingHorizontal: 20,
+  },
+  buttonSubmit: {
+    width: width * 0.3,
+    marginTop: 10,
+  },
 });

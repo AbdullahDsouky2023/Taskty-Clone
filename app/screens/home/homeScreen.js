@@ -26,9 +26,11 @@ import { useDispatch } from "react-redux";
 import useCategories from "../../../utils/categories";
 import { setCategories } from "../../store/features/categorySlice";
 import { setServices } from "../../store/features/serviceSlice";
+import { setOrders } from "../../store/features/ordersSlice";
 import useServices from "../../../utils/services";
 import LoadingScreen from "../loading/LoadingScreen";
 import { ErrorScreen } from "../Error/ErrorScreen";
+import useOrders from "../../../utils/orders";
 const { width } = Dimensions.get("window");
 
 const HomeScreen = ({ navigation }) => {
@@ -36,11 +38,13 @@ const HomeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { data, isLoading, isError } = useCategories()
   const { data:services } = useServices()
+  const { data:orders } = useOrders()
   const getData =async()=>{
     if (data) {
       // Dispatch the fetched categories to the Redux store
        dispatch(setCategories(data));
        dispatch(setServices(services));
+       dispatch(setOrders(orders));
     } else if (isError) {
       console.log(isError)
       // Handle the error

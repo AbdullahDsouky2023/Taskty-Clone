@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import CurrentOrders from "./CurrentOrders";
-import { Colors } from "../../constant/styles";
+import { Colors, mainFont } from "../../constant/styles";
 import { useTranslation } from "react-i18next";
 import AppHeader from "../../component/AppHeader";
 
@@ -19,7 +19,7 @@ function OrderScreen() {
           tabBarInactiveTintColor: Colors.grayColor,
           tabBarLabelStyle: {
             fontSize: 14.0,
-            fontFamily: "Janna-Lt",
+            fontFamily: mainFont.light,
           },
           tabBarIndicatorStyle: {
             backgroundColor: Colors.primaryColor, // Change this to the color you want
