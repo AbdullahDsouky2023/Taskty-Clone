@@ -1,11 +1,12 @@
 import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { Dimensions, FlatList, StyleSheet } from "react-native";
 
 import ServiceCard from "./ServiceCard";
 import HeaderTextComponent from "./HeaderTextComponent";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { OFFERS } from "../../navigation/routes";
+const  { width } = Dimensions.get('screen')
 
 export default function ServicesList() {
   const categories = useSelector((state) => state.categories.categories);
@@ -40,5 +41,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: 10,
     padding: 16,
+    width:width
   },
 });

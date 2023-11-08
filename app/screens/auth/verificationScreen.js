@@ -127,7 +127,7 @@ const VerificationScreen = ({ navigation, route }) => {
         return navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: "Register" }],
+            routes: [{ name: "Register" ,params:{validPhone:phoneNumber}}],
           })
         );
       } else {

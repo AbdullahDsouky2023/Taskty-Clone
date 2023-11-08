@@ -11,7 +11,7 @@ export default function ReviewCard({ username, review, userImage }) {
       <View style={styles.reviewContainer}>
         <View style={styles.header}>
           <AppText text={"SercureOrder"} style={{ color: Colors.blackColor }} />
-          <AppText text={"clientReviews"} style={{ fontSize: 13 }} />
+          <AppText text={"clientReviews"} style={{ fontSize: 12 }} />
         </View>
         <View style={styles.contentContainer}>
           <View style={styles.userImageContainer}>
@@ -24,6 +24,7 @@ export default function ReviewCard({ username, review, userImage }) {
             <AppText
               text={username}
               style={styles.name}
+              
             />
           </View>
           <AppText
@@ -61,6 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 10,
     gap: 10,
+    backgroundColor:"red",
   },
   image: {
     height: 50,
@@ -77,8 +79,10 @@ const styles = StyleSheet.create({
   },
   review :{
     
-      fontSize: 14,
+      fontSize: 13,
       color: Colors.blackColor,
+      flexWrap: 'wrap',
+      maxWidth:width,
       width: width * 0.68,
     
   }

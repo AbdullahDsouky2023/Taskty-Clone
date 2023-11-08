@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -33,13 +33,13 @@ import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../../utils/secureStore";
 import { userRegisterSuccess } from "../../store/features/userSlice";
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation,route}) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-
+  const { verifiedPhone } = route?.params
   const validationSchema = yup.object().shape({
     fullName: yup
       .string()
@@ -52,105 +52,122 @@ const RegisterScreen = ({ navigation }) => {
       .required(t("Email is required")),
   });
 
-  // const handleFormSubmit = async (values) => {
-  //   try {
-  //     const usersRef = collection(db, "users");
-  //     setIsLoading(true);
-  
-  //     const emailExistsQuery = query(
-  //       collection(db, "users"),
-  //       where("emailAddress", "==", values.emailAddress)
-  //     );
-  
-  //     const emailExistsSnapshot = await getDocs(emailExistsQuery);
-  
-  //     if (!emailExistsSnapshot.empty) {
-  //       // Email already exists, handle the case (e.g., show an error message)
-  //       Alert.alert(" عنوان البردي الالكتروني  مستخدم من قبل ");
-  //     } else {
-  //       // Email is unique, proceed to insert the document
-  
-  //       dispatch(userRegisterSuccess(auth?.currentUser));
-  //       setItem("userData", auth?.currentUser);
-  
-
-  //         const phone = auth.currentUser.phoneNumber;
-  
-  //         const phoneNumberQuery = query(
-  //           usersRef,
-  //           where("phoneNumber", "==", phone)
-  //         );
-  //         const querySnapshot = await getDocs(phoneNumberQuery);
-  
-  //         if (!querySnapshot.empty && values) {
-  //           // Get the reference to the document you want to update
-  //           const userDocRef = doc(usersRef, phone);
-  //           // Update the document with new values
-  //           await updateDoc(userDocRef, values);
-  //           console.log("User data updated in Firestore");
-  //           navigation.navigate("App");
-  //         }
-        
-  //     }
-  //   } catch (err) {
-  //     console.log("error creating the resi", err.message);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
   const handleFormSubmit = async (values) => {
     try {
       const usersRef = collection(db, "users");
       setIsLoading(true);
   
-      // Check if the user's document exists
-      const userDocQuery = query(
-        usersRef,
-        where("phoneNumber", "==", auth.currentUser.phoneNumber)
+      const emailExistsQuery = query(
+        collection(db, "users"),
+        where("emailAddress", "==", values.emailAddress)
       );
-      const userDocSnapshot = await getDocs(userDocQuery);
   
-      if (!userDocSnapshot.empty) {
-        // User document exists, retrieve existing data
-        const userDocData = userDocSnapshot.docs[0].data();
+      const emailExistsSnapshot = await getDocs(emailExistsQuery);
   
-        // Update only the necessary fields (full name and email)
-        const updatedUserData = {
-          fullName: values.fullName || userDocData.fullName,
-          emailAddress: values.emailAddress || userDocData.emailAddress,
-        };
-  
-        // Update the document with new values
-        const userDocRef = userDocSnapshot.docs[0].ref;
-        await updateDoc(userDocRef, updatedUserData);
+      if (!emailExistsSnapshot.empty) {
+        // Email already exists, handle the case (e.g., show an error message)
+        Alert.alert(" عنوان البردي الالكتروني  مستخدم من قبل ");
       } else {
-        // User document does not exist, proceed with inserting a new document
-        const userData = {
-          fullName: values.fullName,
-          emailAddress: values.emailAddress,
-          phoneNumber: auth.currentUser.phoneNumber,
-        };
+        // Email is unique, proceed to insert the document
   
-        await setDoc(doc(usersRef, auth.currentUser.phoneNumber), userData);
+        dispatch(userRegisterSuccess(auth?.currentUser));
+        setItem("userData", auth?.currentUser);
+  
+
+          const phone = auth.currentUser.phoneNumber;
+  
+          const phoneNumberQuery = query(
+            usersRef,
+            where("phoneNumber", "==", phone)
+          );
+          const querySnapshot = await getDocs(phoneNumberQuery);
+  
+          if (!querySnapshot.empty && values) {
+            // Get the reference to the document you want to update
+            const userDocRef = doc(usersRef, phone);
+            // Update the document with new values
+            await updateDoc(userDocRef, values);
+            console.log("User data updated in Firestore");
+            navigation.navigate("App");
+          }
+        
       }
-  
-      dispatch(userRegisterSuccess(auth?.currentUser));
-      setItem("userData", auth?.currentUser);
-  
-      navigation.navigate("App");
     } catch (err) {
       console.log("error creating the resi", err.message);
     } finally {
       setIsLoading(false);
     }
-
   };
+   const redirectUser = async( ) =>{
+     
+       const phoneNumberQuery = query(
+         usersRef,
+         where("phoneNumber", "==", verifiedPhone)
+       );
+       const querySnapshot = await getDocs(phoneNumberQuery);
+   
+       if (!querySnapshot.empty ) {
+         dispatch(userRegisterSuccess(auth?.currentUser));
+         setItem("userData", auth?.currentUser);
+         navigation.navigate("App");
+       }
+
+   }
+  useEffect(()=>{
+    redirectUser()
+  },[])
+  // const handleFormSubmit = async (values) => {
+  //   try {
+  //     const usersRef = collection(db, "users");
+  //     setIsLoading(true);
+  
+  //     // Check if the user's document exists
+  //     const userDocQuery = query(
+  //       usersRef,
+  //       where("phoneNumber", "==", auth.currentUser.phoneNumber)
+  //     );
+  //     const userDocSnapshot = await getDocs(userDocQuery);
+  
+  //     if (!userDocSnapshot.empty) {
+  //       // User document exists, retrieve existing data
+  //       const userDocData = userDocSnapshot.docs[0].data();
+  
+  //       // Update only the necessary fields (full name and email)
+  //       const updatedUserData = {
+  //         fullName: values.fullName || userDocData.fullName,
+  //         emailAddress: values.emailAddress || userDocData.emailAddress,
+  //       };
+  
+  //       // Update the document with new values
+  //       const userDocRef = userDocSnapshot.docs[0].ref;
+  //       await updateDoc(userDocRef, updatedUserData);
+  //     } else {
+  //       // User document does not exist, proceed with inserting a new document
+  //       const userData = {
+  //         fullName: values.fullName,
+  //         emailAddress: values.emailAddress,
+  //         phoneNumber: auth.currentUser.phoneNumber,
+  //       };
+  
+  //       await setDoc(doc(usersRef, auth.currentUser.phoneNumber), userData);
+  //     }
+  
+  //     dispatch(userRegisterSuccess(auth?.currentUser));
+  //     setItem("userData", auth?.currentUser);
+  
+  //     navigation.navigate("App");
+  //   } catch (err) {
+  //     console.log("error creating the resi", err.message);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+
+  // };
   
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
-        <ArrowBack />
         <ScrollView showsVerticalScrollIndicator={false}>
           <Logo />
           <View style={{ flex: 1, alignItems: "center" }}>
