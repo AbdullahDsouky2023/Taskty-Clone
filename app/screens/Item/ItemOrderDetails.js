@@ -26,6 +26,7 @@ import { arDZ } from "date-fns/locale";
 import SuccessModel from "../../component/SuccessModal";
 import FormImagePicker from "../../component/Form/FormImagePicker";
 import { postOrder } from "../../../utils/orders";
+import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
 
 const { width } = Dimensions.get('window')
 
@@ -49,19 +50,25 @@ export default function ItemOrderDetails({ route, navigation }) {
       const formattedTime = format(time, "hh:mm a", {
         locale: arDZ,
       });
-      const formDate = {
+
+      const imageData = new FormData();
+    imageData.append('images', values.image); // Use the appropriate field name
+    imageData.append('ref', 'orders'); // Replace with your Strapi model name
+    imageData.append('refId', '1'); 
+      const formSubmitionData = {
         date: formattedDate.toString(),
         time: formattedTime.toString(),
         description: values.description,
-        // images: values.image,
+        images: imageData,
         service: item.id,
         location: "Benisuif",
+        phoneNumber:user.phoneNumber
       };
       
 
-      const data = await postOrder(formDate)
+      const data = await postOrder(formSubmitionData)
      if(data) {
-      navigation.navigate("App")
+      navigation.navigate(ORDER_SUCCESS_SCREEN)
      }
     } catch (error) {
       console.error("Error parsing date or time:", error);
@@ -72,7 +79,6 @@ export default function ItemOrderDetails({ route, navigation }) {
     Date: yup.date().required("من فضلك اختار يوم التنفيذ"),
     Time: yup.string().required("من فضلك اختار وقت التنفيذ"),
     description: yup.string(),
-    image: yup.string().optional("hgug"),
   });
 
   return (
@@ -128,7 +134,7 @@ export default function ItemOrderDetails({ route, navigation }) {
                 // ... other props
               />
               <AppText
-                text={"Choose Image"}
+                text={"اختيار صورة"}
                 centered={false}
                 style={styles.label}
               />

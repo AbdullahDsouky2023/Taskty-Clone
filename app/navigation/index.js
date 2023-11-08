@@ -9,10 +9,11 @@ import LoadingScreen from "../component/loadingScreen";
 import SplashScreen from "../screens/splashScreen";
 import AuthNavigator from "./AuthNavigator";
 import AppNavigator from "./AppNavigator";
-import { ITEM_DETAILS, ITEM_ORDER_DETAILS } from "./routes";
+import { ITEM_DETAILS, ITEM_ORDER_DETAILS, ORDER_SUCCESS_SCREEN } from "./routes";
 import ItemScreen from "../screens/Item/ItemScreen";
 import OrderNavigator from "./orderNavigator";
 import ItemOrderDetails from "../screens/Item/ItemOrderDetails";
+import OrderCreationSuccess from "../screens/OrderCreationSuccess";
 
 LogBox.ignoreAllLogs();
 
@@ -40,6 +41,11 @@ const RootNavigator = () => {
         <Stack.Screen
           name={ITEM_ORDER_DETAILS}
           component={ItemOrderDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={ORDER_SUCCESS_SCREEN}
+          component={OrderCreationSuccess}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
