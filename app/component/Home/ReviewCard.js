@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 10,
     gap: 10,
-    backgroundColor:"red",
   },
   image: {
     height: 50,

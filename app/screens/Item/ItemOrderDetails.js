@@ -49,19 +49,20 @@ export default function ItemOrderDetails({ route, navigation }) {
       const formattedTime = format(time, "hh:mm a", {
         locale: arDZ,
       });
-      setShowSuccess(true);
-      const formDate = JSON.parse({
-        data:{
-
-          date: "formattedDate.toString()",
-          time: "formattedTime.toString()",
+      const formDate = {
+        date: formattedDate.toString(),
+        time: formattedTime.toString(),
         description: values.description,
-        images:values.image,
-        service:item,
-        location:"Benisuif"
-      }
-      })
-      await postOrder(formDate)
+        // images: values.image,
+        service: item.id,
+        location: "Benisuif",
+      };
+      
+
+      const data = await postOrder(formDate)
+     if(data) {
+      navigation.navigate("App")
+     }
     } catch (error) {
       console.error("Error parsing date or time:", error);
     }
@@ -136,7 +137,8 @@ export default function ItemOrderDetails({ route, navigation }) {
         </ScrollView>
               <View style={styles.orderButtonContainer}>
 
-              <SubmitButton title={"Book"} />
+              <AppText text={item.attributes.Price} style={{color:Colors.blackColor}}/>
+              <SubmitButton title={"Book"} style={styles.buttonSubmit} />
               </View>
             </AppForm>
 
@@ -168,5 +170,8 @@ const styles = StyleSheet.create({
         bottom: 0,
         right: 0,
         paddingHorizontal: 20,
+  },buttonSubmit:{
+    width:width*0.3,
+    marginTop:10
   }
 });

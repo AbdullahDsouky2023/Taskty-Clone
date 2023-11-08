@@ -20,7 +20,7 @@ export default function ItemScreen({ route,navigation }) {
         <OtherServicesList />
         <UsersReviews/>
       </ScrollView>
-     <ReserveButton price={item.price} onPress={()=>navigation.navigate(ITEM_ORDER_DETAILS,{item})}/>
+     <ReserveButton price={item.attributes.Price} onPress={()=>navigation.navigate(ITEM_ORDER_DETAILS,{item})}/>
     </View>
   );
 }
