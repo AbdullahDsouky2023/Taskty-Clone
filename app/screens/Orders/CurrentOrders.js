@@ -21,13 +21,14 @@ export default function CurrentOrders() {
     console.log("from the current order Screen", currentOrders.length);
 
   return (
-    <ScrollView style={styles.container}>
-      {currentOrders.length === 0 ? 
+    <>
+    {currentOrders.length === 0 ? 
       <View style={styles.noItemContainer}>
-
-      <AppText text={"لا يوجد طلبات لعرضها"}/> 
+      
+      <AppText text={"لا يوجد طلبات لعرضها"} /> 
       </View>
       :
+      <ScrollView style={styles.container}>
       <FlatList
       data={currentOrders}
       style={styles.listContainer}
@@ -36,8 +37,9 @@ export default function CurrentOrders() {
       }}
       keyExtractor={(item)=>item.id}
       />
+      </ScrollView>
     }
-    </ScrollView>
+        </>
   );
 }
 
@@ -59,7 +61,9 @@ const styles = StyleSheet.create({
   display:'flex',
   alignItems:'center',
   justifyContent:'center',
-  height:"100%"
+  height:"100%",
+  width:width,
+  backgroundColor:Colors.whiteColor
  }
 
 });
