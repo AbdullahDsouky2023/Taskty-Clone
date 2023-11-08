@@ -18,6 +18,15 @@ export const postOrder = (values) =>
     .catch((error) => {
       console.error("Error:", error.response.data); // Log the error response
     });
+export const cancleOrder = (id) =>
+  api
+    .delete(`/api/orders/${id}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Error deleting the item :", error.response.data); // Log the error response
+    });
 
 export default function useOrders() {
   const fetchOrders = async () => {

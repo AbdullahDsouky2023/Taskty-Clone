@@ -12,6 +12,7 @@ export const Colors = {
     success:'#4FBF67',
     warning:"#FF6628",
     error:'#FF3D00',
+    piege:'#FCF1EA',
     overlayColor: 'rgba(0, 0, 0, 0.2)',
 
     

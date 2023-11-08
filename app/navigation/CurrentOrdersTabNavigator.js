@@ -1,13 +1,7 @@
 
 import React from 'react'
-import {createStackNavigator} from '@react-navigation/stack'
-import SigninScreen from "../screens/auth/signinScreen";
-import { MaterialIcons } from '@expo/vector-icons';
-import { TransitionPresets } from "@react-navigation/stack";
-import { ITEM_DETAILS, ORDERS, PREVIOUS_ORDERS } from './routes';
-import HomeScreen from '../screens/home/homeScreen';
+import { ORDERS, PREVIOUS_ORDERS } from './routes';
 import { useTranslation } from 'react-i18next';
-import ItemDetails from '../component/ItemDetails';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Colors, mainFont } from '../constant/styles';
 import CurrentOrders from '../screens/Orders/CurrentOrders';

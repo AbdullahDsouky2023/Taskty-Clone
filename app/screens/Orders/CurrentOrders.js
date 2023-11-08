@@ -2,34 +2,32 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ScrollView } from "react-native-virtualized-view";
-import { FontAwesome } from '@expo/vector-icons'; 
-import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { Colors } from "../../constant/styles";
-import AppText from "../../component/AppText";
 import CurrentOrderCard from "../../component/orders/CurrentOrderCard";
 import { FlatList } from "react-native-gesture-handler";
+import { Colors } from "../../constant/styles";
+import AppText from "../../component/AppText";
 const { width } = Dimensions.get("screen");
 
 
 export default function CurrentOrders() {
   
-  // const [ user,setUser] = useState({})
-  const [ currentOrders,setCurrentOrders] = useState([])
-  const item = currentOrders[0]
   const user = useSelector((state) => state?.user?.user);
   const orders = useSelector((state) => state?.orders?.orders);
-  useEffect(()=>{
     
-    const currentOrders = orders?.data.filter(
-      (order) => order?.attributes?.phoneNumber === user?.phoneNumber
+  const currentOrders = orders?.data?.filter(
+    (order) => order?.attributes?.phoneNumber === user?.phoneNumber
     );
-    setCurrentOrders(currentOrders)
+    const item = currentOrders[0]
     console.log("from the current order Screen", currentOrders.length);
-    },[])
 
   return (
     <ScrollView style={styles.container}>
+      {currentOrders.length === 0 ? 
+      <View style={styles.noItemContainer}>
+
+      <AppText text={"لا يوجد طلبات لعرضها"}/> 
+      </View>
+      :
       <FlatList
       data={currentOrders}
       style={styles.listContainer}
@@ -38,6 +36,7 @@ export default function CurrentOrders() {
       }}
       keyExtractor={(item)=>item.id}
       />
+    }
     </ScrollView>
   );
 }
@@ -55,6 +54,12 @@ const styles = StyleSheet.create({
  listContainer:{
   display:"flex",
   gap:10
+ },
+ noItemContainer:{
+  display:'flex',
+  alignItems:'center',
+  justifyContent:'center',
+  height:"100%"
  }
 
 });

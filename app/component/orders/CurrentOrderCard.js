@@ -13,7 +13,7 @@ export default function CurrentOrderCard(
 ) {
     const navigation = useNavigation()
   return (
-    <TouchableWithoutFeedback onPress={()=>navigation.navigate(ORDERS_DETAILS)}>
+    <TouchableWithoutFeedback onPress={()=>navigation.navigate(ORDERS_DETAILS,{item})}>
 
     <View style={styles.orderCardContainer}>
 
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
       marginTop:12,
       flex:1,
       gap:5,
-      backgroundColor:'#FCF1EA',
+      backgroundColor:Colors.piege,
       // elevation:1,
       borderColor: Colors.blackColor,
       borderWidth: 0.4,
