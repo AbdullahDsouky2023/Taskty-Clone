@@ -6,8 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 I18nManager.forceRTL(true);
 
+export const client = new QueryClient()
 const App = () => {
-  const client = new QueryClient()
   return (
     <Provider store={store}>
          <QueryClientProvider client={client}>

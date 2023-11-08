@@ -5,7 +5,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  Alert,
+  Dimensions,
 } from "react-native";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
@@ -13,33 +13,21 @@ import { useTranslation } from "react-i18next";
 import ArrowBack from "../../component/ArrowBack";
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
-import Logo from "../../component/Logo";
 import AppForm from "../../component/Form/Form";
 import ErrorMessage from "../../component/Form/ErrorMessage";
 import FormField from "../../component/Form/FormField";
 import SubmitButton from "../../component/Form/FormSubmitButton";
 
-import { auth, db, fireStore } from "../../../firebaseConfig";
-import {
-  doc,
-  setDoc,
-  addDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-} from "firebase/firestore";
-import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { setItem } from "../../utils/secureStore";
-import { userRegisterSuccess } from "../../store/features/userSlice";
 import FormDatePicker from "../../component/Form/FormDatePicker";
 import FormTimePicker from "../../component/Form/FormTimePicker";
-import ReserveButton from "../../component/ReverveButton";
 import { format } from "date-fns";
 import { arDZ } from "date-fns/locale";
 import SuccessModel from "../../component/SuccessModal";
+import FormImagePicker from "../../component/Form/FormImagePicker";
+import { postOrder } from "../../../utils/orders";
+
+const { width } = Dimensions.get('window')
 
 export default function ItemOrderDetails({ route, navigation }) {
   const { item } = route.params;
@@ -48,12 +36,12 @@ export default function ItemOrderDetails({ route, navigation }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = async(values) => {
     try {
       // Create valid Date objects
       const date = new Date(values.Date);
       const time = new Date(values.Time);
-  
+
       // Format the date and time
       const formattedDate = format(date, "dd MMMM yyyy", {
         locale: arDZ,
@@ -61,30 +49,45 @@ export default function ItemOrderDetails({ route, navigation }) {
       const formattedTime = format(time, "hh:mm a", {
         locale: arDZ,
       });
-      setShowSuccess(true)
-      console.log("Form submit", {
-        Date: formattedDate,
-        Time: formattedTime,
+      setShowSuccess(true);
+      const formDate = JSON.parse({
+        data:{
+
+          date: "formattedDate.toString()",
+          time: "formattedTime.toString()",
         description: values.description,
-      });
+        images:values.image,
+        service:item,
+        location:"Benisuif"
+      }
+      })
+      await postOrder(formDate)
     } catch (error) {
       console.error("Error parsing date or time:", error);
     }
   };
-  
 
   const validationSchema = yup.object().shape({
     Date: yup.date().required("من فضلك اختار يوم التنفيذ"),
     Time: yup.string().required("من فضلك اختار وقت التنفيذ"),
-    description: yup.string()
+    description: yup.string(),
+    image: yup.string().optional("hgug"),
   });
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor,position:'relative',height:'100%', }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, 
+    paddingBottom: 100,
+   }}>
         <ArrowBack />
-        <ScrollView showsVerticalScrollIndicator={false}>
+            <AppForm
+              enableReinitialize={true}
+              initialValues={{ Date: "", Time: "", description: "", image: null }}
+              onSubmit={handleFormSubmit}
+              validationSchema={validationSchema}
+            >
+        <ScrollView showsVerticalScrollIndicator={false} >
           <View style={{ flex: 1, alignItems: "center" }}>
             <AppText
               text={item.attributes.name}
@@ -94,19 +97,13 @@ export default function ItemOrderDetails({ route, navigation }) {
                 fontSize: 15,
               }}
             />
-            <AppForm
-              enableReinitialize={true}
-              initialValues={{ Date: "", Time: "", description: "" }}
-              onSubmit={handleFormSubmit}
-              validationSchema={validationSchema}
-            >
               <ErrorMessage error={error} visible={error} />
               <AppText
                 text={"يوم التنفيذ"}
                 centered={false}
                 style={styles.label}
               />
-              <FormDatePicker name="Date" placeholder="Date"  />
+              <FormDatePicker name="Date" placeholder="Date" />
               <AppText
                 text={"وقت التنفيذ"}
                 centered={false}
@@ -129,12 +126,24 @@ export default function ItemOrderDetails({ route, navigation }) {
 
                 // ... other props
               />
-              <SubmitButton title={"Book"}/>
-            </AppForm>
+              <AppText
+                text={"Choose Image"}
+                centered={false}
+                style={styles.label}
+              />
+              <FormImagePicker name="image" width={width} />
           </View>
         </ScrollView>
+              <View style={styles.orderButtonContainer}>
 
-        <SuccessModel visible={showSuccess} onPress={()=>setShowSuccess(false)}/>
+              <SubmitButton title={"Book"} />
+              </View>
+            </AppForm>
+
+        <SuccessModel
+          visible={showSuccess}
+          onPress={() => setShowSuccess(false)}
+        />
       </View>
     </SafeAreaView>
   );
@@ -146,4 +155,18 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     color: Colors.blackColor,
   },
+  orderButtonContainer :{
+    height: 100,
+        position: "absolute",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backgroundColor: Colors.grayColor,
+        borderRadius: 20,
+        width: width,
+        bottom: 0,
+        right: 0,
+        paddingHorizontal: 20,
+  }
 });
