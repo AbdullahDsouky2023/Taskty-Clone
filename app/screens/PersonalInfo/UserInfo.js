@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
+import { Util } from 'expo';
 
 import ArrowBack from "../../component/ArrowBack";
 import { Colors } from "../../constant/styles";
@@ -28,56 +29,82 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
+import * as Updates from 'expo-updates';
+import { AntDesign } from '@expo/vector-icons'; 
+
 import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { storeUserInfo } from "../../utils/firebase/user";
 import { setItem } from "../../utils/secureStore";
+import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
+import { setUserData } from "../../store/features/userSlice";
 const UserInfo = ({ navigation }) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
-  const dispatch = useDispatch()
-  const user = useSelector((state)=>state.user.user)
-
+  const dispatch = useDispatch();
+  const validPhone = auth?.currentUser.phoneNumber?.replace("+", "");
+  const userData = useSelector((state)=>state.user.userData)
+  // let user = useSelector((state) => state.user?.user?.phoneNumber);
   const validationSchema = yup.object().shape({
     fullName: yup
       .string()
-      .required(t("Full name is required"))
-      .min(2, "Full Name is too short")
-      .max(50, "Full Name is too long"),
+      // .required(t("Full name is required"))
+      .min(2, "الاسم  المدخل قصير جدا")
+      .max(50, "الاسم المدخل طويل جدا"),
     emailAddress: yup
       .string()
-      .email(t("Invalid email address"))
-      .required(t("Email is required")),
+      .email(("الايميل المدخل غير صالح"))
+      // .required("الايميل مطلوب"),
+     , location:yup.string()
+      // .required(t("Email is required")),
   });
-
   const handleFormSubmit = async (values) => {
     try {
       setIsLoading(true);
-      const emailExistsQuery = query(
-        collection(db, "users"),
-        where("emailAddress", "==", values.emailAddress)
-      );
+      console.log("this is the use data will be submite", {
+        email: values.emailAddress || userData.email,
+        username: values.fullName || userData.username,
+        location: values.location,
+        phoneNumber: Number(validPhone),
+      });
+      const res = await updateUserData(userData.id,{
+        email: values.emailAddress || userData.email,
+        username: values.fullName || userData.username,
+        location: values.location,
+        // phoneNumber: Number(validPhone),
+      });
+      if (res) {
+        const gottenuser = await getUserByPhoneNumber(Number(validPhone))
+        dispatch(setUserData(gottenuser));
+        // console.log("success",gottenuser)
+        Alert.alert("تم التعديل بنجاح");
+        Updates.reloadAsync()
 
-      const emailExistsSnapshot = await getDocs(emailExistsQuery);
-
-      if (!emailExistsSnapshot.empty) {
-        // Email already exists, handle the case (e.g., show an error message)
-        Alert.alert(" عنوان البردي الالكتروني  مستخدم من قبل ");
+        navigation.navigate("Splash")
       } else {
-        // Email is unique, proceed to insert the document
-      
-      dispatch(userRegisterSuccess(auth?.currentUser));
-       setItem('userData',auth?.currentUser)
-        navigation.navigate("App");
-        // const docRef = await addDoc(collection(db, "users"), {...,...user});
+        console.log(res)
+        Alert.alert("Something goes wrong");
       }
     } catch (err) {
-      console.log("error creating the resi", err.message);
+      console.log("error creating the resi", err);
     } finally {
       setIsLoading(false);
     }
   };
+
+  const convertNumber =(phoneNumber)=>{
+
+// Convert the number to a string
+let phoneNumberString = phoneNumber.toString();
+
+// Remove the first character
+let phoneNumberWithoutFirstDigit = phoneNumberString.slice(1);
+
+// Add "0" at the beginning
+let finalPhoneNumber =  phoneNumberWithoutFirstDigit;
+return finalPhoneNumber
+  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
@@ -90,7 +117,8 @@ const UserInfo = ({ navigation }) => {
               style={{ color: Colors.primaryColor, marginBottom: 10 }}
             />
             <AppForm
-              initialValues={{ fullName: "", emailAddress: "" }}
+              enableReinitialize={true}
+              initialValues={{ fullName: "", emailAddress: "",location:"" }}
               onSubmit={(data) => handleFormSubmit(data)}
               validationSchema={validationSchema}
             >
@@ -98,26 +126,20 @@ const UserInfo = ({ navigation }) => {
               <FormField
                 autoCorrect={false}
                 name="fullName"
-                placeholder="fullName"
-                value={user?.fullName }
+                // placeholder="fullName"
+                icon = {"user"}
+                placeholder={userData?.username }
               />
-              <FormField
-                autoCorrect={false}
-                name="phoneNumber"
-                placeholder="phoneNumber"
-              />
-              <FormField
-                autoCorrect={false}
-                name="address"
-                placeholder="address"
-              />
+
               <FormField
                 autoCapitalize="none"
                 autoCorrect={false}
                 keyboardType="email-address"
                 name="emailAddress"
-                placeholder="emailAddress"
+                // placeholder="emailAddress"
                 textContentType="emailAddress"
+                placeholder={userData?.email}
+
               />
 
               <SubmitButton title="Save" />

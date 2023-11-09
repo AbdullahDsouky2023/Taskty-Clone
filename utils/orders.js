@@ -9,6 +9,8 @@ export const postOrder = (values) =>
       data: {
         ...values,
       },
+      "images.media" :values.image
+
     })
     .then((response) => {
       return response.data;
@@ -16,16 +18,18 @@ export const postOrder = (values) =>
     .catch((error) => {
       console.error("Error:", error.response.data); // Log the error response
     });
-export const cancleOrder = (id) =>
-  api
-    .delete(`/api/orders/${id}`)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      console.error("Error deleting the item :", error.response.data); // Log the error response
-    });
-
+export const cancleOrder = async(id) => {
+try {
+  const data = await api.delete(`/api/orders/${id}`)
+  console.log(data)
+  if(data) return true
+    else return false
+  } catch (error) {
+  console.error("Error deleting the item :", error); // Log the error response
+  
+}
+  }
+    
 export default function useOrders() {
   const fetchOrders = async () => {
     try {

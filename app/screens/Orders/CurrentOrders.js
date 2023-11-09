@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ScrollView } from "react-native-virtualized-view";
 import CurrentOrderCard from "../../component/orders/CurrentOrderCard";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from "react-native";
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 const { width } = Dimensions.get("screen");
@@ -17,8 +17,10 @@ export default function CurrentOrders() {
   const currentOrders = orders?.data?.filter(
     (order) => order?.attributes?.phoneNumber === user?.phoneNumber
     );
-    const item = currentOrders[0]
-    console.log("from the current order Screen", currentOrders.length);
+    useEffect(()=>{
+        
+      console.log("from the current order Screen", currentOrders.length);
+    },[orders,currentOrders])
 
   return (
     <>

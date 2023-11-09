@@ -22,7 +22,7 @@ import { auth } from "../../../firebaseConfig";
 import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../../utils/secureStore";
-import { userRegisterSuccess } from "../../store/features/userSlice";
+import { setUserData, userRegisterSuccess } from "../../store/features/userSlice";
 import { createUser } from "../../../utils/user";
 const RegisterScreen = ({ navigation,route}) => {
   const [error, setError] = useState();
@@ -64,6 +64,7 @@ const RegisterScreen = ({ navigation,route}) => {
       if(res){
         dispatch(userRegisterSuccess(auth?.currentUser));
         setItem("userData", auth?.currentUser);
+        setUserData(res)
         navigation.navigate("App");
       }else {
         Alert.alert("Something goes wrong")

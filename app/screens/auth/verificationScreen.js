@@ -68,7 +68,7 @@ const VerificationScreen = ({ navigation, route }) => {
       dispatch(userRegisterSuccess(auth?.currentUser));
       await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
       const user =   await getUserByPhoneNumber(auth?.currentUser?.phoneNumber)
-      if (user.length === 0) {
+      if (!user) {
         console.log("User not found");
         return navigation.dispatch(
           CommonActions.reset({
@@ -76,7 +76,7 @@ const VerificationScreen = ({ navigation, route }) => {
             routes: [{ name: "Register" ,params:{validPhone:phoneNumber}}],
           })
         );
-      } else if  (user.length === 1) {
+      } else if  (user?.length === 1) {
         console.log("User found");
         return navigation.dispatch(
           CommonActions.reset({

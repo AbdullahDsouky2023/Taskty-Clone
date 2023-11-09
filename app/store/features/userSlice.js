@@ -6,6 +6,7 @@ const userSlice = createSlice({
   initialState: {
     user: null, // Store user data here
     loading: false,
+    userData:null,
     error: null,
   },
   reducers: {
@@ -22,6 +23,13 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    setUserData:(state, action) => {
+      state.userData = action.payload;
+      state.loading = false;
+      state.error = null;
+      state.user=state.user
+      console.log('setting the user  is called');
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(userRegisterSuccess, async (state, action) => {
@@ -37,6 +45,6 @@ const userSlice = createSlice({
 
 });
 
-export const { userRegisterStart, userRegisterSuccess, userRegisterFailure } = userSlice.actions;
+export const { userRegisterStart, userRegisterSuccess,setUserData, userRegisterFailure } = userSlice.actions;
 
 export default userSlice.reducer;

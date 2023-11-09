@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { Colors, Sizes } from "../../constant/styles";
 import AppText from "../../component/AppText";
-import OfferCard from "../../component/OfferCard";
 import AppHeader from "../../component/AppHeader";
 import { useDispatch, useSelector } from "react-redux";
 import useServices from "../../../utils/services";

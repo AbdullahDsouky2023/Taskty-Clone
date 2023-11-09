@@ -26,6 +26,7 @@ import SuccessModel from "../../component/SuccessModal";
 import FormImagePicker from "../../component/Form/FormImagePicker";
 import { postOrder } from "../../../utils/orders";
 import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
+import { CommonActions } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 
@@ -60,13 +61,14 @@ export default function ItemOrderDetails({ route, navigation }) {
         phoneNumber: user.phoneNumber,
       };
 
-      const data = await postOrder({
-        "data":formSubmitionData,
-        "images.media":values.image
-      }
-        );
+      const data = await postOrder(formSubmitionData);
       if (data) {
-        navigation.navigate(ORDER_SUCCESS_SCREEN);
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: ORDER_SUCCESS_SCREEN }],
+          })
+        );
       }
     } catch (error) {
       console.error("Error parsing date or time:", error);

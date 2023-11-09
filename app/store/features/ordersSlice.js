@@ -6,6 +6,9 @@ const orderSlice = createSlice({
   initialState: { orders: [] },
   reducers: {
     setOrders: (state, action) => {
+      console.log('====================================');
+      console.log("Orders Was Called and cahnged");
+      console.log('====================================');
       state.orders = action.payload;
     },
   },
