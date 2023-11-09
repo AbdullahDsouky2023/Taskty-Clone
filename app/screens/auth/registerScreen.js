@@ -10,7 +10,6 @@ import {
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 
-import ArrowBack from "../../component/ArrowBack";
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 import Logo from "../../component/Logo";
@@ -18,21 +17,13 @@ import AppForm from "../../component/Form/Form";
 import ErrorMessage from "../../component/Form/ErrorMessage";
 import FormField from "../../component/Form/FormField";
 import SubmitButton from "../../component/Form/FormSubmitButton";
-import { auth, db, fireStore } from "../../../firebaseConfig";
-import {
-  doc,
-  setDoc,
-  addDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-} from "firebase/firestore";
+import { auth } from "../../../firebaseConfig";
+
 import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../../utils/secureStore";
 import { userRegisterSuccess } from "../../store/features/userSlice";
+import { createUser } from "../../../utils/user";
 const RegisterScreen = ({ navigation,route}) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -54,116 +45,39 @@ const RegisterScreen = ({ navigation,route}) => {
 
   const handleFormSubmit = async (values) => {
     try {
-      const usersRef = collection(db, "users");
+      const validPhone = auth?.currentUser.phoneNumber?.replace("+", "")
       setIsLoading(true);
-  
-      const emailExistsQuery = query(
-        collection(db, "users"),
-        where("emailAddress", "==", values.emailAddress)
-      );
-  
-      const emailExistsSnapshot = await getDocs(emailExistsQuery);
-  
-      if (!emailExistsSnapshot.empty) {
-        // Email already exists, handle the case (e.g., show an error message)
-        Alert.alert(" عنوان البردي الالكتروني  مستخدم من قبل ");
-      } else {
-        // Email is unique, proceed to insert the document
-  
+      console.log("this is the use data will be submite",{
+        email:values.emailAddress,
+        usernmae:values.fullName,
+        password:"hoohoh",
+        location:"lkjkln",
+        phoneNumber:Number(validPhone)
+      });
+      const res = await createUser({
+        email:values.emailAddress,
+        username:values.fullName,
+        password:"hoohoh",
+        location:"lkjkln",
+        phoneNumber:Number(validPhone)
+      })
+      if(res){
         dispatch(userRegisterSuccess(auth?.currentUser));
         setItem("userData", auth?.currentUser);
-  
-
-          const phone = auth.currentUser.phoneNumber;
-  
-          const phoneNumberQuery = query(
-            usersRef,
-            where("phoneNumber", "==", phone)
-          );
-          const querySnapshot = await getDocs(phoneNumberQuery);
-  
-          if (!querySnapshot.empty && values) {
-            // Get the reference to the document you want to update
-            const userDocRef = doc(usersRef, phone);
-            // Update the document with new values
-            await updateDoc(userDocRef, values);
-            console.log("User data updated in Firestore");
-            navigation.navigate("App");
-          }
-        
+        navigation.navigate("App");
+      }else {
+        Alert.alert("Something goes wrong")
       }
+
+      
     } catch (err) {
       console.log("error creating the resi", err.message);
     } finally {
       setIsLoading(false);
     }
   };
-   const redirectUser = async( ) =>{
-     
-       const phoneNumberQuery = query(
-         usersRef,
-         where("phoneNumber", "==", verifiedPhone)
-       );
-       const querySnapshot = await getDocs(phoneNumberQuery);
-   
-       if (!querySnapshot.empty ) {
-         dispatch(userRegisterSuccess(auth?.currentUser));
-         setItem("userData", auth?.currentUser);
-         navigation.navigate("App");
-       }
 
-   }
-  useEffect(()=>{
-    redirectUser()
-  },[])
-  // const handleFormSubmit = async (values) => {
-  //   try {
-  //     const usersRef = collection(db, "users");
-  //     setIsLoading(true);
-  
-  //     // Check if the user's document exists
-  //     const userDocQuery = query(
-  //       usersRef,
-  //       where("phoneNumber", "==", auth.currentUser.phoneNumber)
-  //     );
-  //     const userDocSnapshot = await getDocs(userDocQuery);
-  
-  //     if (!userDocSnapshot.empty) {
-  //       // User document exists, retrieve existing data
-  //       const userDocData = userDocSnapshot.docs[0].data();
-  
-  //       // Update only the necessary fields (full name and email)
-  //       const updatedUserData = {
-  //         fullName: values.fullName || userDocData.fullName,
-  //         emailAddress: values.emailAddress || userDocData.emailAddress,
-  //       };
-  
-  //       // Update the document with new values
-  //       const userDocRef = userDocSnapshot.docs[0].ref;
-  //       await updateDoc(userDocRef, updatedUserData);
-  //     } else {
-  //       // User document does not exist, proceed with inserting a new document
-  //       const userData = {
-  //         fullName: values.fullName,
-  //         emailAddress: values.emailAddress,
-  //         phoneNumber: auth.currentUser.phoneNumber,
-  //       };
-  
-  //       await setDoc(doc(usersRef, auth.currentUser.phoneNumber), userData);
-  //     }
-  
-  //     dispatch(userRegisterSuccess(auth?.currentUser));
-  //     setItem("userData", auth?.currentUser);
-  
-  //     navigation.navigate("App");
-  //   } catch (err) {
-  //     console.log("error creating the resi", err.message);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
 
-  // };
-  
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
@@ -176,7 +90,9 @@ const RegisterScreen = ({ navigation,route}) => {
               style={{ color: Colors.primaryColor, marginBottom: 10 }}
             />
             <AppForm
-              initialValues={{ fullName: "", emailAddress: "" }}
+          enableReinitialize={true}
+
+initialValues={{ fullName: "", emailAddress: "" }}
               onSubmit={handleFormSubmit}
               validationSchema={validationSchema}
             >

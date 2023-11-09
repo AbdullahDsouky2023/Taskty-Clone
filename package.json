@@ -44,6 +44,7 @@
     "react-native-countdown-component": "^2.7.1",
     "react-native-dashed-line": "^1.1.0",
     "react-native-dialog": "^9.3.0",
+    "react-native-dotenv": "^3.4.9",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-intl-phone-input": "^1.2.27",
     "react-native-otp-textinput": "^1.0.0",

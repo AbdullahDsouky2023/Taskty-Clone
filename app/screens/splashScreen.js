@@ -7,6 +7,9 @@ import Logo from "../component/Logo";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegisterSuccess } from "../store/features/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BASE_URL } from '@env';
+import { getUserByPhoneNumber } from "../../utils/user";
+import { auth } from "../../firebaseConfig";
 
 const SplashScreen = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -19,15 +22,21 @@ const SplashScreen = ({ navigation }) => {
 
     useEffect(() => {
         async function checkUserAndNavigate() {
-          const userDataString = await AsyncStorage.getItem("userData");
-          if (userDataString) {
-              const userData = JSON.parse(userDataString);
-              dispatch(userRegisterSuccess(userData));
-              navigation.push("App");
-
-          } else {
-              navigation.push("Auth");
-          }
+try {
+    const userDataString = await AsyncStorage.getItem("userData");
+    if (userDataString) {
+        const userData = JSON.parse(userDataString);
+        dispatch(userRegisterSuccess(userData));
+        navigation.push("App");
+        const gottenuser = await getUserByPhoneNumber(user)
+        console.log("user you want is ",gottenuser.email)
+    } else {
+        navigation.push("Auth");
+    }
+    
+} catch (error) {
+    console.log(error);
+}
 
         }
       

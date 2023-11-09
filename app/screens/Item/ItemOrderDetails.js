@@ -60,7 +60,11 @@ export default function ItemOrderDetails({ route, navigation }) {
         phoneNumber: user.phoneNumber,
       };
 
-      const data = await postOrder(formSubmitionData);
+      const data = await postOrder({
+        "data":formSubmitionData,
+        "images.media":values.image
+      }
+        );
       if (data) {
         navigation.navigate(ORDER_SUCCESS_SCREEN);
       }

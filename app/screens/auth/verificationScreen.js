@@ -21,7 +21,6 @@ import OtpFields from "../../component/OtpFields";
 import { errorMessages } from "../../data/signin";
 import { userRegisterSuccess } from "../../store/features/userSlice";
 import { auth, db } from "../../../firebaseConfig";
-import { changeUserInfo } from "../../utils/firebase/user";
 import {
   collection,
   doc,
@@ -30,6 +29,7 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
+import { getUserByPhoneNumber } from "../../../utils/user";
 
 const { width } = Dimensions.get("screen");
 
@@ -42,61 +42,7 @@ const VerificationScreen = ({ navigation, route }) => {
 
   const { result, handleSendVerificationCode, phoneNumber } = route.params;
 
-  // const confirmVerificationCode = async () => {
-  //   try {
-  //     const usersRef = collection(db, "users");
-  //     const res = await result.confirm(otpInput);
-  //     const validPhone = `+20${phoneNumber?.replace(/\s/g, "").trim()}`;
-  //     const phoneNumberQuery = query(
-  //       usersRef,
-  //       where("phoneNumber", "==", validPhone)
-  //     );
-  //     const querySnapshot = await getDocs(phoneNumberQuery);
 
-  //     setResendDisabled(true);
-  //     setSecondsRemaining(60);
-  //     dispatch(userRegisterSuccess(auth?.currentUser));
-  //     await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
-
-  //     console.log(
-  //       "this is the user phone number which will be conaire",
-  //       phoneNumber === auth.currentUser.phoneNumber
-  //     );
-  //     console.log(querySnapshot);
-
-  //     if (querySnapshot.empty) {
-  //       console.log(
-  //         "user is noooot  found and this name ",
-  //         querySnapshot.empty
-  //       );
-
-  //       return navigation.dispatch(
-  //         CommonActions.reset({
-  //           index: 0,
-  //           routes: [{ name: "Register" }], // Replace 'Login' with the name of your login screen
-  //         })
-  //       );
-  //     } else {
-  //       console.log("user is found and this name ", querySnapshot.empty);
-  //       return navigation.dispatch(
-  //         CommonActions.reset({
-  //           index: 0,
-  //           routes: [{ name: "App" }], // Replace 'Login' with the name of your login screen
-  //         })
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.log("====================================");
-  //     console.log(error.message, " from verfication screen error ");
-  //     console.log("====================================");
-  //     const errorMessage =
-  //       errorMessages[error.message] ||
-  //       "حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى";
-  //     Alert.alert(errorMessage);
-  //   } finally {
-  //     setOtpInput("");
-  //   }
-  // };
   const confirmVerificationCode = async () => {
     try {
       const usersRef = collection(db, "users");
@@ -121,8 +67,8 @@ const VerificationScreen = ({ navigation, route }) => {
       setSecondsRemaining(60);
       dispatch(userRegisterSuccess(auth?.currentUser));
       await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
-  
-      if (querySnapshot.empty) {
+      const user =   await getUserByPhoneNumber(auth?.currentUser?.phoneNumber)
+      if (user.length === 0) {
         console.log("User not found");
         return navigation.dispatch(
           CommonActions.reset({
@@ -130,7 +76,7 @@ const VerificationScreen = ({ navigation, route }) => {
             routes: [{ name: "Register" ,params:{validPhone:phoneNumber}}],
           })
         );
-      } else {
+      } else if  (user.length === 1) {
         console.log("User found");
         return navigation.dispatch(
           CommonActions.reset({
