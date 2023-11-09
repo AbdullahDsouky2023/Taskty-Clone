@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
+  Alert,
 } from "react-native";
 import * as yup from "yup";
 import { format } from "date-fns";
@@ -37,8 +38,8 @@ export default function ItemOrderDetails({ route, navigation }) {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const user = useSelector((state) => state.user.user);
-  const userData = useSelector((state) => state.user.userData);
-console.log(userData.location)
+  const userData = useSelector((state) => state?.user?.userData);
+console.log(userData?.location)
   const handleFormSubmit = async (values) => {
     try {
       const currentLocation = await getLocationFromStorage()
@@ -75,6 +76,7 @@ console.log(userData.location)
         );
       }
     } catch (error) {
+      Alert.alert("حدثت مشكله حاول مرة اخري")
       console.error("Error parsing date or time:", error);
     }
   };

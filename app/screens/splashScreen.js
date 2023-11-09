@@ -10,6 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getUserByPhoneNumber } from "../../utils/user";
 import LocationModal from "../component/location/LocationModal";
 import { getLocationFromStorage } from "../../utils/location";
+import { auth } from "../../firebaseConfig";
 
 const SplashScreen = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const SplashScreen = ({ navigation }) => {
 try {
   await getLocationFromStorage()
     const userDataString = await AsyncStorage.getItem("userData");
-    if (userDataString) {
+    if (userDataString  && auth.currentUser !== null) {
         const userData = JSON.parse(userDataString);
         const gottenuser = await getUserByPhoneNumber(user)
         dispatch(setUserData(gottenuser));

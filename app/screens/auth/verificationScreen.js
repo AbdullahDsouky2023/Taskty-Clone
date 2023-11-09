@@ -37,7 +37,7 @@ const VerificationScreen = ({ navigation, route }) => {
   const [isLoading, setisLoading] = useState(false);
   const [otpInput, setOtpInput] = useState("");
   const [resendDisabled, setResendDisabled] = useState(true);
-  const [secondsRemaining, setSecondsRemaining] = useState(60);
+  const [secondsRemaining, setSecondsRemaining] = useState(30);
   const dispatch = useDispatch();
 
   const { result, handleSendVerificationCode, phoneNumber } = route.params;
@@ -64,24 +64,24 @@ const VerificationScreen = ({ navigation, route }) => {
       const querySnapshot = await getDocs(phoneNumberQuery);
   
       setResendDisabled(true);
-      setSecondsRemaining(60);
+      setSecondsRemaining(30);
       dispatch(userRegisterSuccess(auth?.currentUser));
       await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
-      const user =   await getUserByPhoneNumber(auth?.currentUser?.phoneNumber)
-      if (!user) {
-        console.log("User not found");
-        return navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: "Register" ,params:{validPhone:phoneNumber}}],
-          })
-        );
-      } else if  (user) {
+      const user =   await getUserByPhoneNumber(validPhone)
+      if (user) {
         console.log("User found");
         return navigation.dispatch(
           CommonActions.reset({
             index: 0,
             routes: [{ name: "App" }],
+          })
+        );
+      } else  {
+        console.log("User not found");
+        return navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: "Register" ,params:{validPhone:phoneNumber}}],
           })
         );
       }
@@ -166,7 +166,7 @@ const VerificationScreen = ({ navigation, route }) => {
               disabled={resendDisabled}
               onPress={() => {
                 setResendDisabled(true);
-                setSecondsRemaining(60);
+                setSecondsRemaining(30);
                 handleSendVerificationCode();
               }}
             />

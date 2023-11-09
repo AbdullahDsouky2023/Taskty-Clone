@@ -16,16 +16,24 @@ export const getUserByPhoneNumber = async(phone)=>{
     try {
         // Remove the "+" symbol
         if(phone){
-
+            console.log("user phone from user is ",phone)
             const phoneNumberWithoutPlus = phone?.replace("+", "");
             
             // Convert the string to a number
             const phoneNumber = Number(phoneNumberWithoutPlus);
             const user =    await api.get(`/api/users?filters[$and][0][phoneNumber][$eq]=${phoneNumber}`)
             console.log("usus",user?.data)
-            setUserData(user?.data[0])
-            if(user) return user?.data[0]
-        }else return null;
+            if(user?.data[0] && user?.data.length !== 0) {
+                setUserData(user?.data[0])
+                console.log("userfound",user?.data.length)
+                return true
+            }
+            else {
+                console.log("userfound",user?.data.length)
+                return false
+
+            } 
+        } return false;
     } catch (error) {
         console.log("Error creating the user ",error.message)
     }
