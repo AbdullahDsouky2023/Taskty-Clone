@@ -54,7 +54,8 @@ try {
         dispatch(userRegisterSuccess(userData));
         navigation.push("App");
     } else {
-        navigation.push("Auth");
+        navigation.push("App");
+        // navigation.push("Auth");
     }
     
 } catch (error) {
