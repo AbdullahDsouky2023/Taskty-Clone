@@ -11,7 +11,7 @@ import { getUserByPhoneNumber } from "../../utils/user";
 import LocationModal from "../component/location/LocationModal";
 import { getLocationFromStorage } from "../../utils/location";
 import { auth } from "../../firebaseConfig";
-
+import {BASE_URL } from '@env'
 const SplashScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     let user = useSelector((state) => state.user?.user?.phoneNumber);
@@ -46,6 +46,7 @@ const SplashScreen = ({ navigation }) => {
         async function checkUserAndNavigate() {
 try {
   await getLocationFromStorage()
+  console.log(BASE_URL)
     const userDataString = await AsyncStorage.getItem("userData");
     if (userDataString  && auth.currentUser !== null) {
         const userData = JSON.parse(userDataString);
@@ -54,7 +55,7 @@ try {
         dispatch(userRegisterSuccess(userData));
         navigation.push("App");
     } else {
-        navigation.push("Auth");
+        navigation.push("App");
     }
     
 } catch (error) {

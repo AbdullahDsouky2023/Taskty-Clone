@@ -54,16 +54,16 @@ console.log(userData?.location)
       const formattedTime = format(time, "hh:mm a", {
         locale: arDZ,
       });
-
+      const UserValues =  {date: formattedDate.toString(),
+      time: formattedTime.toString(),
+      description: values.description,
+      // images: imageData,
+      service: item.id,
+      location: currentLocation,
+      phoneNumber: user.phoneNumber,
+      user:userData.id}
       const formSubmitionData = {
-        date: formattedDate.toString(),
-        time: formattedTime.toString(),
-        description: values.description,
-        // images: imageData,
-        service: item.id,
-        location: currentLocation,
-        phoneNumber: user.phoneNumber,
-        user:userData.id
+       "data":UserValues
       };
 
       const data = await postOrder(formSubmitionData);

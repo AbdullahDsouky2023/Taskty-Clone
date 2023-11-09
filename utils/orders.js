@@ -6,11 +6,7 @@ import api from './index';
 export const postOrder = (values) =>
   api
     .post("/api/orders", {
-      data: {
         ...values,
-      },
-      "images.media" :values.image
-
     })
     .then((response) => {
       return response.data;

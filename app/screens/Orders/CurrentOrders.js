@@ -19,12 +19,12 @@ export default function CurrentOrders() {
     );
     useEffect(()=>{
         
-      console.log("from the current order Screen", currentOrders.length);
+      console.log("from the current order Screen", currentOrders?.length);
     },[orders,currentOrders])
 
   return (
     <>
-    {currentOrders.length === 0 ? 
+    {currentOrders?.length === 0 ? 
       <View style={styles.noItemContainer}>
       
       <AppText text={"لا يوجد طلبات لعرضها"} /> 
@@ -37,7 +37,7 @@ export default function CurrentOrders() {
       renderItem={({item})=>{
         return <CurrentOrderCard item={item}/>
       }}
-      keyExtractor={(item)=>item.id}
+      keyExtractor={(item)=>item?.id}
       />
       </ScrollView>
     }

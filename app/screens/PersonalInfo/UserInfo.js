@@ -43,8 +43,8 @@ const UserInfo = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const validPhone = auth?.currentUser.phoneNumber?.replace("+", "");
-  const userData = useSelector((state)=>state.user.userData)
+  const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "");
+  const userData = useSelector((state)=>state.user?.userData)
   // let user = useSelector((state) => state.user?.user?.phoneNumber);
   const validationSchema = yup.object().shape({
     fullName: yup
@@ -63,14 +63,14 @@ const UserInfo = ({ navigation }) => {
     try {
       setIsLoading(true);
       console.log("this is the use data will be submite", {
-        email: values.emailAddress || userData.email,
-        username: values.fullName || userData.username,
+        email: values.emailAddress || userData?.email,
+        username: values.fullName || userData?.username,
         location: values.location,
         phoneNumber: Number(validPhone),
       });
-      const res = await updateUserData(userData.id,{
-        email: values.emailAddress || userData.email,
-        username: values.fullName || userData.username,
+      const res = await updateUserData(userData?.id,{
+        email: values.emailAddress || userData?.email,
+        username: values.fullName || userData?.username,
         location: values.location,
         // phoneNumber: Number(validPhone),
       });
@@ -96,7 +96,7 @@ const UserInfo = ({ navigation }) => {
   const convertNumber =(phoneNumber)=>{
 
 // Convert the number to a string
-let phoneNumberString = phoneNumber.toString();
+let phoneNumberString = phoneNumber?.toString();
 
 // Remove the first character
 let phoneNumberWithoutFirstDigit = phoneNumberString.slice(1);

@@ -16,13 +16,13 @@ import { useSelector } from "react-redux";
 
 
 const AccountScreen = ({ navigation }) => {
-  const user = useSelector((state)=>state.user.user)
+  const user = useSelector((state)=>state.user?.user)
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
         {/* <Logo /> */}
-        <AppText text={user.phoneNumber}/>
+        <AppText text={user?.phoneNumber}/>
         <GeneralSettings/>
       </View>
     </SafeAreaView>
