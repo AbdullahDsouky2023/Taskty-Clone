@@ -27,6 +27,7 @@ import FormImagePicker from "../../component/Form/FormImagePicker";
 import { postOrder } from "../../../utils/orders";
 import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
 import { CommonActions } from "@react-navigation/native";
+import { getLocationFromStorage } from "../../../utils/location";
 
 const { width } = Dimensions.get("window");
 
@@ -36,9 +37,11 @@ export default function ItemOrderDetails({ route, navigation }) {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const user = useSelector((state) => state.user.user);
-
+  const userData = useSelector((state) => state.user.userData);
+console.log(userData.location)
   const handleFormSubmit = async (values) => {
     try {
+      const currentLocation = await getLocationFromStorage()
       // Create valid Date objects
       const date = new Date(values.Date);
       const time = new Date(values.Time);
@@ -57,8 +60,9 @@ export default function ItemOrderDetails({ route, navigation }) {
         description: values.description,
         // images: imageData,
         service: item.id,
-        location: "Benisuif",
+        location: currentLocation,
         phoneNumber: user.phoneNumber,
+        user:userData.id
       };
 
       const data = await postOrder(formSubmitionData);

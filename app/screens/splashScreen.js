@@ -7,9 +7,7 @@ import Logo from "../component/Logo";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserData, userRegisterSuccess } from "../store/features/userSlice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { BASE_URL } from '@env';
 import { getUserByPhoneNumber } from "../../utils/user";
-import { auth } from "../../firebaseConfig";
 import LocationModal from "../component/location/LocationModal";
 import { getLocationFromStorage } from "../../utils/location";
 

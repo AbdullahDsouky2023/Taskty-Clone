@@ -42,8 +42,8 @@ const { width } = Dimensions.get('screen')
             justifyContent:'center'
           }}
         >
-         <AppText text={'السماح للتطبيق بالوصول لموقعك'} style={{color:Colors.blackColor}}/>
-         <AppButton title={'نعم'}onPress={handleConfirm}/>
+         <AppText text={' يجب السماح للتطبيق بالوصول لموقعك '} style={{color:Colors.blackColor}}/>
+         <AppButton title={'تاكيد'}onPress={handleConfirm}/>
         </View>
       </View>
     </Dialog.Container>

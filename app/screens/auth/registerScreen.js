@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../../utils/secureStore";
 import { setUserData, userRegisterSuccess } from "../../store/features/userSlice";
 import { createUser } from "../../../utils/user";
+import { getLocationFromStorage } from "../../../utils/location";
 const RegisterScreen = ({ navigation,route}) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
@@ -45,6 +46,7 @@ const RegisterScreen = ({ navigation,route}) => {
 
   const handleFormSubmit = async (values) => {
     try {
+      const userLocation = await getLocationFromStorage()
       const validPhone = auth?.currentUser.phoneNumber?.replace("+", "")
       setIsLoading(true);
       console.log("this is the use data will be submite",{
@@ -57,8 +59,8 @@ const RegisterScreen = ({ navigation,route}) => {
       const res = await createUser({
         email:values.emailAddress,
         username:values.fullName,
-        password:"hoohoh",
-        location:"lkjkln",
+        password:"hoohodh",
+        location:userLocation,
         phoneNumber:Number(validPhone)
       })
       if(res){

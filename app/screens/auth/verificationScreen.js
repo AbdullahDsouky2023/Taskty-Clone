@@ -76,7 +76,7 @@ const VerificationScreen = ({ navigation, route }) => {
             routes: [{ name: "Register" ,params:{validPhone:phoneNumber}}],
           })
         );
-      } else if  (user?.length === 1) {
+      } else if  (user) {
         console.log("User found");
         return navigation.dispatch(
           CommonActions.reset({
