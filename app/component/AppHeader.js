@@ -9,7 +9,10 @@ export default function AppHeader({ subPage = false}) {
     const navigation = useNavigation()
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/images/account/Logo.png")} />
+      <Image source={require("../assets/images/icon.png")} style={{
+        width:40,
+        height:40
+      }} height={50} width={50} />
       {subPage ? (
         <TouchableWithoutFeedback onPress={()=>navigation.goBack()}>
 
@@ -20,7 +23,7 @@ export default function AppHeader({ subPage = false}) {
             />
             </TouchableWithoutFeedback>
           ) : (
-          <Ionicons name="md-notifications-outline" size={27} color="white" />
+          <Ionicons name="md-notifications-outline" size={27} color={Colors.blackColor} />
       )}
     </View>
   );
@@ -32,6 +35,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
-    backgroundColor: Colors.primaryColor,
+    backgroundColor: Colors.piege,
   },
 });

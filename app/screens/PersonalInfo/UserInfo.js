@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -43,8 +43,10 @@ const UserInfo = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const validPhone = auth?.currentUser.phoneNumber?.replace("+", "");
+  const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "");
   const userData = useSelector((state)=>state.user.userData)
+  const memoizedUserData = useMemo(() => userData, [userData]);
+
   // let user = useSelector((state) => state.user?.user?.phoneNumber);
   const validationSchema = yup.object().shape({
     fullName: yup
@@ -68,6 +70,9 @@ const UserInfo = ({ navigation }) => {
         location: values.location,
         phoneNumber: Number(validPhone),
       });
+
+      if (!isEqual(updatedData, userData)) {
+
       const res = await updateUserData(userData.id,{
         email: values.emailAddress || userData.email,
         username: values.fullName || userData.username,
@@ -85,7 +90,7 @@ const UserInfo = ({ navigation }) => {
       } else {
         console.log(res)
         Alert.alert("Something goes wrong");
-      }
+      }}
     } catch (err) {
       console.log("error creating the resi", err);
     } finally {

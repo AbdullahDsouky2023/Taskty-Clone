@@ -45,48 +45,39 @@ const VerificationScreen = ({ navigation, route }) => {
 
   const confirmVerificationCode = async () => {
     try {
-      const usersRef = collection(db, "users");
-      const res = await result.confirm(otpInput);
+      // const usersRef = collection(db, "users");
+      // const res = await result.confirm(otpInput);
       // Make sure the phone number is properly formatted and trimmed
-      const validPhone = `+20${phoneNumber.replace(/\s/g, "").trim()}`;
-      
+      const validPhone = `${phoneNumber.replace(/\s/g, "").trim()}`;
+      const PhoneNumberValidated = convertPhoneTovalid(validPhone)
       // Double-check the query and phone number
-      console.log("validPhone:", validPhone);
+      console.log("PhoneNumberValidated:", PhoneNumberValidated);
       
-      const phoneNumberQuery = query(
-        collection(db, "users"),
-        where("phoneNumber", "==", validPhone)
-      );
-      
-      // Double-check the query and querySnapshot
-      console.log("phoneNumberQuery:", phoneNumberQuery);
-      
-      const querySnapshot = await getDocs(phoneNumberQuery);
-  
-      setResendDisabled(true);
-      setSecondsRemaining(30);
-      dispatch(userRegisterSuccess(auth?.currentUser));
-      await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
-      const user =   await getUserByPhoneNumber(validPhone)
+      // const phoneNumberQuery = query(
+        // collection(db, "users"),
+        // where("phoneNumber", "==", validPhone)
+        // );
+        
+        // Do/uble-check the query and querySnapshot
+        // console.log("phoneNumberQuery:", phoneNumberQuery);
+        
+        // const querySnapshot = await getDocs(phoneNumberQuery);
+        
+        setResendDisabled(true);
+        setSecondsRemaining(30);
+        dispatch(userRegisterSuccess(auth?.currentUser));
+        await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
+        const user = await getUserByPhoneNumber(PhoneNumberValidated)
       if (user) {
-        console.log("User found");
-        return navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: "App" }],
-          })
-        );
-      } else  {
-        console.log("User not found");
-        return navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: "Register" ,params:{validPhone:phoneNumber}}],
-          })
-        );
+        console.log("User found verficICtion");
+        return navigation.navigate("App")
+      } else {
+        console.log("User not found verficICtion");
+        return navigation.navigate("Register", { validPhone: phoneNumber })
+
       }
     } catch (error) {
-      console.log("Error from verification screen:", error.message);
+      console.log("Error from verification screen:", error?.message);
       const errorMessage =
         errorMessages[error.message] ||
         "حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى";
@@ -95,8 +86,14 @@ const VerificationScreen = ({ navigation, route }) => {
       setOtpInput("");
     }
   };
-  
 
+const convertPhoneTovalid=(phone)=>{
+  const phoneNumberWithoutPlus = phone?.replace("+", "");
+            
+            // Convert the string to a number
+            const phoneNumber = Number(phoneNumberWithoutPlus);
+            return phoneNumber
+}
   useEffect(() => {
     if (resendDisabled) {
       const timer = setInterval(() => {
@@ -141,7 +138,7 @@ const VerificationScreen = ({ navigation, route }) => {
             confirmVerificationCode={(otpInput) =>
               confirmVerificationCode(otpInput)
             }
-            // clearOtpInput={clearOtpInput} // Pass the clearOtpInput function
+          // clearOtpInput={clearOtpInput} // Pass the clearOtpInput function
           />
           <AppButton
             title={"Continue"}

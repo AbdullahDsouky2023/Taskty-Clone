@@ -7,7 +7,7 @@ export const createUser = async(data)=>{
             ...data,
             role:2,
         })
-        return true
+        return createdUser
     } catch (error) {
         console.log("Error creating the user ",error)
     }
@@ -15,25 +15,23 @@ export const createUser = async(data)=>{
 export const getUserByPhoneNumber = async(phone)=>{
     try {
         // Remove the "+" symbol
-        if(phone){
+        // +201144254129
+        // if(phone){
             console.log("user phone from user is ",phone)
-            const phoneNumberWithoutPlus = phone?.replace("+", "");
             
-            // Convert the string to a number
-            const phoneNumber = Number(phoneNumberWithoutPlus);
-            const user =    await api.get(`/api/users?filters[$and][0][phoneNumber][$eq]=${phoneNumber}`)
+            const user =    await api.get(`/api/users?filters[$and][0][phoneNumber][$eq]=`+phoneNumber)
             console.log("usus",user?.data)
-            if(user?.data[0] && user?.data.length !== 0) {
+            if(user?.data[0] && user?.data[0]?.phoneNumber) {
                 setUserData(user?.data[0])
-                console.log("userfound",user?.data.length)
+                console.log("userfound",user?.data)
                 return true
             }
             else {
-                console.log("userfound",user?.data.length)
+                console.log("userfound not ",user?.data)
                 return false
 
             } 
-        } return false;
+        // } /
     } catch (error) {
         console.log("Error creating the user ",error.message)
     }

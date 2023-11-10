@@ -62,7 +62,7 @@ console.log(userData?.location)
         // images: imageData,
         service: item.id,
         location: currentLocation,
-        phoneNumber: user.phoneNumber,
+        phoneNumber: user?.phoneNumber  ,
         user:userData.id
       };
 

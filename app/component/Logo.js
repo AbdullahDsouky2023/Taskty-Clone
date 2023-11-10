@@ -6,7 +6,7 @@ import { Sizes } from '../constant/styles'
 export default function Logo() {
     return (
         <Image
-            source={{uri:'https://th.bing.com/th/id/OIP.L9k7FElhv2O5Ar52LyyFpAHaHa?pid=ImgDet&rs=1'}}
+            source={require('../assets/images/icon.png')}
             style={styles.appLogoStyle}
             resizeMode="contain"
         />
