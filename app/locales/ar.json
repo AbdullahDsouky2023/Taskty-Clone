@@ -57,5 +57,10 @@
   "Full Name is too long":"الاسم اطول من المطلوب",
   "phoneNumber":"رقم الهاتف", 
    "address":"العنوان",
-   "signOut":"تسجيل الخروج"
+   "signOut":"تسجيل الخروج",
+   "current Location":"العنوان الحالي",
+   "Manual Location":"العنوان اليدوي",
+   "Add Address":" اضافه عنوان جديد",
+      "Add":"أضافه",
+      "Please add the location":"من فضلك ادخل العنوان"
 }

@@ -5,6 +5,11 @@ export const settingsItemArray = [
     icon:"user",
     desc:""
 },
+     {
+    name:"العنوان ",
+    icon:"location-pin",
+    desc:""
+},
     {
     name:"المحفظه",
     icon:"wallet",

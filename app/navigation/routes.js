@@ -5,3 +5,5 @@ export const  ORDER_SUCCESS_SCREEN = "OrderSuccessScreen"
 export const ORDERS = ("طلبات جاري تنفيذها")
 export const ORDERS_DETAILS = (" تفاصيل جاري تنفيذها")
 export const PREVIOUS_ORDERS = ("طلبات سابقه")
+export const MANUAL_LOCATION_ADD = "manual-location-screen"
+
