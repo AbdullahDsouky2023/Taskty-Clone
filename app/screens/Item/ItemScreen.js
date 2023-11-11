@@ -4,7 +4,7 @@ import ItemDetails from "../../component/ItemDetails";
 import OtherServicesList from "../../component/Home/OtherServicesList";
 import ReserveButton from "../../component/ReverveButton";
 import UsersReviews from "../../component/Home/UsersReview";
-import { ITEM_ORDER_DETAILS } from "../../navigation/routes";
+import { ITEM_ORDER_DETAILS, ORDER_SELECT_LOCATION } from "../../navigation/routes";
 export default function ItemScreen({ route,navigation }) {
 
 
@@ -20,7 +20,7 @@ export default function ItemScreen({ route,navigation }) {
         <OtherServicesList />
         <UsersReviews/>
       </ScrollView>
-     <ReserveButton price={item.attributes.Price} onPress={()=>navigation.navigate(ITEM_ORDER_DETAILS,{item})}/>
+     <ReserveButton price={item.attributes.Price} onPress={()=>navigation.navigate(ORDER_SELECT_LOCATION,{item})}/>
     </View>
   );
 }

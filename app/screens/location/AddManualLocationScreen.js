@@ -14,98 +14,58 @@ import { useTranslation } from "react-i18next";
 import ArrowBack from "../../component/ArrowBack";
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
-
-import { auth, } from "../../../firebaseConfig";
-
-import * as Updates from "expo-updates";
-import { CheckBox, Icon } from "@rneui/themed";
-import { Ionicons } from '@expo/vector-icons'; 
-
 import LoadingModal from "../../component/Loading";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
-import { setUserData } from "../../store/features/userSlice";
+import { useSelector } from "react-redux";
 import { getLocationFromStorage } from "../../../utils/location";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import AppForm from "../../component/Form/Form";
 import AppFormField from "../../component/Form/FormField";
 import ErrorMessage from "../../component/Form/ErrorMessage";
 import SubmitButton from "../../component/Form/FormSubmitButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ORDER_SELECT_LOCATION } from "../../navigation/routes";
 const { width } = Dimensions.get("screen");
 
-
-const AddManualLocationScreen = ({ navigation }) => {
+const AddManualLocationScreen = ({ navigation,route }) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
-  const [selectedLocation, setSelectedLocation] = useState();
   const userData = useSelector((state) => state.user?.userData);
-  const [newLocation, setNewLocation] = useState('');
 
   const handleAddLocation = async (data) => {
-    if (data.location.trim() !== '') {
+    if (data.location.trim() !== "") {
       try {
-  
-        const storedLocations = await AsyncStorage.getItem('manualLocations');
-        const existingLocations = storedLocations ? JSON.parse(storedLocations) : [];
-        
+        const storedLocations = await AsyncStorage.getItem("manualLocations");
+        const existingLocations = storedLocations
+          ? JSON.parse(storedLocations)
+          : [];
+
         const updatedLocations = [...existingLocations, data.location];
-        console.log("the new location ",updatedLocations)
-        await AsyncStorage.setItem('manualLocations', JSON.stringify(updatedLocations));
-        
-        // Navigate back to the Address screen
-        navigation.navigate("location-pin",{updatedLocations});
+        console.log("the new location ", updatedLocations);
+        await AsyncStorage.setItem(
+          "manualLocations",
+          JSON.stringify(updatedLocations)
+        );
+          if(route.params?.order){
+            navigation.navigate(ORDER_SELECT_LOCATION, { updatedLocations });
+          }else {
+            navigation.navigate("location-pin", { updatedLocations });
+          }
+          // Navigate back to the Address screen
+          
       } catch (error) {
-        console.error('Error adding manual location:', error);
+        console.error("Error adding manual location:", error);
       }
     }
   };
   // let user = useSelector((state) => state.user?.user?.phoneNumber);
   const validationSchema = yup.object().shape({
-    
-     location:yup.string()
-     .min(5,"العنوان المدخل قصير جدا ")
-     .max(100,"العنوان المدخل قصير جدا ")
-     .required(t("Please add the location"))
-      // .required(t("Email is required")),
+    location: yup
+      .string()
+      .min(5, "العنوان المدخل قصير جدا ")
+      .max(100, "العنوان المدخل قصير جدا ")
+      .required(t("Please add the location")),
+    // .required(t("Email is required")),
   });
- 
- 
-  const handleFormSubmit = async (values) => {
-    try {
-      setIsLoading(true);
-      console.log("this is the use data will be submite", {
-        location: values.location,
-      });
-    //   const res = await updateUserData(userData?.id, {
-    //     location: values.location,
-    //     // phoneNumber: Number(validPhone),
-    //   });
-    //   if (res) {
-    //     const gottenuser = await getUserByPhoneNumber(Number(validPhone));
-    //     dispatch(setUserData(gottenuser));
-    //     // console.log("success",gottenuser)
-    //     Alert.alert("تم التعديل بنجاح");
-    //     Updates.reloadAsync();
-
-    //     navigation.navigate("Splash");
-    //   } else {
-    //     console.log(res);
-    //     Alert.alert("Something goes wrong");
-    //   }
-    } catch (err) {
-      console.log("error creating the resi", err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  const getCurrentLocationFromStorage = async () => {
-    const location = await getLocationFromStorage();
-    //    console.log(location)
-    setCurrentLocation(location);
-  };
-
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
@@ -114,16 +74,19 @@ const AddManualLocationScreen = ({ navigation }) => {
         <ArrowBack />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ flex: 1, alignItems: "center" }}>
-
             <AppText
               text={"Add Address"}
-              style={{ color: Colors.primaryColor, marginBottom: 10 ,fontSize:19}}
-              />
-              
-              <AppForm
+              style={{
+                color: Colors.primaryColor,
+                marginBottom: 10,
+                fontSize: 19,
+              }}
+            />
+
+            <AppForm
               enableReinitialize={true}
-              initialValues={{ location:"" }}
-              onSubmit={(data) =>handleAddLocation(data)}
+              initialValues={{ location: "" }}
+              onSubmit={(data) => handleAddLocation(data)}
               validationSchema={validationSchema}
             >
               <ErrorMessage error={error} visible={error} />
@@ -131,7 +94,7 @@ const AddManualLocationScreen = ({ navigation }) => {
                 autoCorrect={false}
                 name="location"
                 // placeholder="fullName"
-                icon = {"user"}
+                icon={"user"}
                 // placeholder={"location"}
               />
               <SubmitButton title="Save" />
@@ -154,17 +117,17 @@ const styles = StyleSheet.create({
     alignContent: "center",
     justifyContent: "center",
     flexDirection: "row",
-    marginVertical:10,
+    marginVertical: 10,
     padding: 10,
   },
-  headerContainer:{
+  headerContainer: {
     display: "flex",
     alignContent: "center",
-    width:width*0.94,
-    marginTop:10,
+    width: width * 0.94,
+    marginTop: 10,
     justifyContent: "space-between",
     flexDirection: "row",
-  }
+  },
 });
 
 export default AddManualLocationScreen;

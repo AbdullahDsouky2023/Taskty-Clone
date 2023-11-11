@@ -12,10 +12,10 @@ export default function LocationAddressItem({location}) {
             
               {/* currentLocation primary */}
               <View style={[styles.currentLocation,{
-                backgroundColor: Colors.whiteColor
+                backgroundColor: Colors.piege
                 ,borderWidth:1
               }]}>
-                <Ionicons name="md-location-outline" size={24} color="black" />
+                <Ionicons name="md-location-outline" size={24} color={Colors.primaryColor} />
                 <AppText
                   text={location}
                   centered={false}

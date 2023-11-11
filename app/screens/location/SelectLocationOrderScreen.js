@@ -7,6 +7,7 @@ import {
   ScrollView,
   Alert,
   Dimensions,
+  FlatList,
 } from "react-native";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
@@ -28,59 +29,39 @@ import { setUserData } from "../../store/features/userSlice";
 import { getLocationFromStorage } from "../../../utils/location";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { MANUAL_LOCATION_ADD } from "../../navigation/routes";
+import SelectLocationItem from "../../component/location/SelectLocationItem";
+import AppButton from "../../component/AppButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const { width } = Dimensions.get("screen");
 
 
-const LocationScreen = ({ navigation }) => {
-  const [error, setError] = useState();
+const SlectLocationOrderScreen = ({ navigation,route }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [currentLocation, setCurrentLocation] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "");
   const userData = useSelector((state) => state.user?.userData);
-  // let user = useSelector((state) => state.user?.user?.phoneNumber);
-  const validationSchema = yup.object().shape({
-    fullName: yup
-      .string()
-      // .required(t("Full name is required"))
-      .min(2, "الاسم  المدخل قصير جدا")
-      .max(50, "الاسم المدخل طويل جدا"),
-    emailAddress: yup.string().email("الايميل المدخل غير صالح"),
-    // .required("الايميل مطلوب"),
-    location: yup.string(),
-    // .required(t("Email is required")),
-  });
-  const handleFormSubmit = async (values) => {
-    try {
-      setIsLoading(true);
-      console.log("this is the use data will be submite", {
-        email: values.emailAddress || userData?.email,
-        username: values.fullName || userData?.username,
-        location: values.location,
-        phoneNumber: Number(validPhone),
-      });
-      const res = await updateUserData(userData?.id, {
-        location: values.location,
-        // phoneNumber: Number(validPhone),
-      });
-      if (res) {
-        const gottenuser = await getUserByPhoneNumber(Number(validPhone));
-        dispatch(setUserData(gottenuser));
-        // console.log("success",gottenuser)
-        Alert.alert("تم التعديل بنجاح");
-        Updates.reloadAsync();
+  const [ manualLocations,setManualLocations] = useState([])
+  useEffect(() => {
+    loadManualLocations();
+    console.log("this load function was called")
+    // Check if there are updated locations from the AddAddressScreen
+    if (route.params?.updatedLocations) {
+      setManualLocations(route?.params?.updatedLocations);
+    }
+  }, [route?.params?.updatedLocations]);
 
-        navigation.navigate("Splash");
-      } else {
-        console.log(res);
-        Alert.alert("Something goes wrong");
+  const loadManualLocations = async () => {
+    try {
+      const storedLocations = await AsyncStorage.getItem("manualLocations");
+
+      if (storedLocations !== null) {
+        setManualLocations(JSON.parse(storedLocations));
+        console.log("manual location found ", JSON.parse(storedLocations));
       }
-    } catch (err) {
-      console.log("error creating the resi", err);
-    } finally {
-      setIsLoading(false);
+    } catch (error) {
+      console.error("Error loading manual locations:", error);
     }
   };
   const getCurrentLocationFromStorage = async () => {
@@ -114,52 +95,11 @@ const LocationScreen = ({ navigation }) => {
               text={"address"}
               style={{ color: Colors.primaryColor, marginBottom: 10 ,fontSize:19}}
               />
-              <TouchableOpacity onPress={()=>navigation.navigate(MANUAL_LOCATION_ADD)}>
-<Ionicons name="ios-add-circle-outline" size={32} color={Colors.blackColor} />
+              <TouchableOpacity onPress={()=>navigation.navigate(MANUAL_LOCATION_ADD,{order:true})}>
+              <Ionicons name="ios-add-circle-outline" size={32} color={Colors.blackColor} />
               </TouchableOpacity>
               </View>
-            <View>
-              <AppText
-                text={"current Location"}
-                centered={false}
-                style={{ color: Colors.blackColor, marginBottom: 10 }}
-              />
-              {/* currentLocation primary */}
-              <View style={[styles.currentLocation,{
-                backgroundColor:currentLocation === selectedLocation ? Colors.primaryColor : Colors.whiteColor
-                ,borderWidth:currentLocation === selectedLocation ? 0 :1
-              }]}>
-                <CheckBox
-                containerStyle={{backgroundColor:"transparent"}}
-                  center
-                  checkedIcon={
-                    <Icon
-                      name="radio-button-checked"
-                      type="material"
-                      color={Colors.white}
-                      size={25}
-                      iconStyle={{ marginRight: 10,color:Colors.whiteColor }}
-                    />
-                  }
-                  uncheckedIcon={
-                    <Icon
-                      name="radio-button-unchecked"
-                      type="material"
-                      color="grey"
-                      size={25}
-                      iconStyle={{ marginRight: 10,color:Colors.blackColor }}
-                    />
-                  }
-                  checked={selectedLocation === currentLocation}
-                  onPress={() => setSelectedLocation(currentLocation)}
-                />
-                <AppText
-                  text={currentLocation}
-                  centered={false}
-                  style={{ color:currentLocation === selectedLocation ? Colors.whiteColor: Colors.blackColor, marginBottom: 10 }}
-                />
-              </View>
-            </View>
+              <SelectLocationItem selectedLocation={selectedLocation} currentLocation={currentLocation} setSelectedLocation={setSelectedLocation}/>
             <View>
               <AppText
                 text={"Manual Location"}
@@ -167,18 +107,18 @@ const LocationScreen = ({ navigation }) => {
                 style={{ color: Colors.blackColor, marginBottom: 10 }}
               />
               {/* currentLocation primary */}
-              {/* <FlatList
+              <FlatList
         data={manualLocations}
         renderItem={({ item }) => (
-          // Render your manual location item here
-          // Example: <Text>{item}</Text>
+          <SelectLocationItem selectedLocation={selectedLocation} currentLocation={item} setSelectedLocation={setSelectedLocation}/>
         )}
         keyExtractor={(item, index) => index.toString()}
-      /> */}
+      />
             </View>
           </View>
         </ScrollView>
-        <LoadingModal visible={isLoading} />
+          {selectedLocation && <AppButton title={"comfirm"}/>}
+        <LoadingModal visible={!currentLocation} />
       </View>
     </SafeAreaView>
   );
@@ -207,4 +147,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LocationScreen;
+export default SlectLocationOrderScreen;

@@ -14,12 +14,9 @@ import ArrowBack from "../../component/ArrowBack";
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 
-import { auth } from "../../../firebaseConfig";
-
 import { Ionicons } from "@expo/vector-icons";
 
 import LoadingModal from "../../component/Loading";
-import { useDispatch, useSelector } from "react-redux";
 import { getLocationFromStorage } from "../../../utils/location";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { MANUAL_LOCATION_ADD } from "../../navigation/routes";
@@ -48,7 +45,6 @@ const LocationScreen = ({ navigation, route }) => {
   }, []);
 
   useEffect(() => {
-    // Load stored locations from AsyncStorage when the component mounts
     loadManualLocations();
     console.log("this load function was called")
     // Check if there are updated locations from the AddAddressScreen

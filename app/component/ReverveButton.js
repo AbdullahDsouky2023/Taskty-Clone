@@ -4,6 +4,7 @@ import AppButton from './AppButton'
 import AppText from './AppText'
 import { Colors } from '../constant/styles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import PriceTextComponent from './PriceTextComponent'
 const { width } = Dimensions.get("screen");
 
 export default function ReserveButton({price,onPress}) {
@@ -12,7 +13,7 @@ export default function ReserveButton({price,onPress}) {
     <TouchableOpacity onPress={onPress} >
     <View style={styles.ReserveButtonContainer}> 
 
-    <AppText text={price} centered={false} style={styles.price} />
+    <PriceTextComponent price={price} style={{fontSize:19}}/>
     <AppButton title={"reserveAppointment"} 
     style={styles.buttonSubmit}
     onPress={onPress} />

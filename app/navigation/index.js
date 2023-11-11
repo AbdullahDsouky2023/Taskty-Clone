@@ -9,11 +9,13 @@ import LoadingScreen from "../component/loadingScreen";
 import SplashScreen from "../screens/splashScreen";
 import AuthNavigator from "./AuthNavigator";
 import AppNavigator from "./AppNavigator";
-import { ITEM_DETAILS, ITEM_ORDER_DETAILS, ORDER_SUCCESS_SCREEN } from "./routes";
+import { ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SUCCESS_SCREEN } from "./routes";
 import ItemScreen from "../screens/Item/ItemScreen";
 import OrderNavigator from "./orderNavigator";
 import ItemOrderDetails from "../screens/Item/ItemOrderDetails";
 import OrderCreationSuccess from "../screens/OrderCreationSuccess";
+import SlectLocationOrderScreen from "../screens/location/SelectLocationOrderScreen";
+import AddManualLocationScreen from "../screens/location/AddManualLocationScreen";
 
 LogBox.ignoreAllLogs();
 
@@ -48,6 +50,13 @@ const RootNavigator = () => {
           component={OrderCreationSuccess}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name={ORDER_SELECT_LOCATION}
+          component={SlectLocationOrderScreen}
+          options={{ headerShown: false }}
+        />
+             <Stack.Screen name={MANUAL_LOCATION_ADD} component={AddManualLocationScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

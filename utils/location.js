@@ -27,6 +27,37 @@ export const getLocationFromStorage = async () => {
   
     return null; // Return null if the location is not found or an error occurs.
   };
-  
+  // Assuming you have a utility file with AsyncStorage functions
+
+
+export const getManualLocations = async () => {
+  try {
+    const storedLocations = await AsyncStorage.getItem('manualLocations');
+    return storedLocations ? JSON.parse(storedLocations) : [];
+  } catch (error) {
+    console.error('Error getting manual locations:', error);
+    return [];
+  }
+};
+
+export const updateManualLocations = async (updatedLocations) => {
+  try {
+    await AsyncStorage.setItem('manualLocations', JSON.stringify(updatedLocations));
+  } catch (error) {
+    console.error('Error updating manual locations:', error);
+  }
+};
+
+export const deleteLocation = async (locationToDelete) => {
+  try {
+    const currentLocations = await getManualLocations();
+    const updatedLocations = currentLocations.filter(location => location !== locationToDelete);
+    await updateManualLocations(updatedLocations);
+    console.log('Location deleted:', locationToDelete);
+  } catch (error) {
+    console.error('Error deleting location:', error);
+  }
+};
+
   // Example usage:
   
