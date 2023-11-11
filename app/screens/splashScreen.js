@@ -80,7 +80,7 @@ const SplashScreen = ({ navigation }) => {
         } else {
           console.log("this function was called to auth ")
           // navigation.push("App");
-          navigation.push("App");
+          navigation.push("Auth");
         }
 
       } catch (error) {

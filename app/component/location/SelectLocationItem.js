@@ -10,18 +10,22 @@ import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 
 import { CheckBox, Icon } from "@rneui/themed";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width } = Dimensions.get("screen");
 
 
-export default function SelectLocationItem({currentLocation,item,setSelectedLocation}) {
-    if(item) return;
+export default function SelectLocationItem({selectedLocation,item,setSelectedLocation}) {
+    if(!item) return;
   return (
-    <View>
+    <TouchableOpacity onPress={() =>{
+        console.log("ite mseleceted",item)
+        setSelectedLocation(item)
+                }}>
     {/* currentLocation primary */}
     <View style={[styles.currentLocation,{
-      backgroundColor:currentLocation === item ? Colors.primaryColor : Colors.whiteColor
-      ,borderWidth:currentLocation === item ? 0 :1
+      backgroundColor:selectedLocation === item ? Colors.primaryColor : Colors.whiteColor
+      ,borderWidth:selectedLocation === item ? 0 :1
     }]}>
       <CheckBox
       containerStyle={{backgroundColor:"transparent"}}
@@ -44,16 +48,15 @@ export default function SelectLocationItem({currentLocation,item,setSelectedLoca
             iconStyle={{ marginRight: 10,color:Colors.blackColor }}
           />
         }
-        checked={item === currentLocation}
-        onPress={() => setSelectedLocation(item)}
+        checked={item === selectedLocation}
       />
       <AppText
-        text={currentLocation}
+        text={item}
         centered={false}
-        style={{ color:currentLocation === item ? Colors.whiteColor: Colors.blackColor, marginBottom: 10 }}
+        style={{ color:selectedLocation === item ? Colors.whiteColor: Colors.blackColor, marginBottom: 10 }}
       />
     </View>
-  </View>
+  </TouchableOpacity>
   )
 }
 

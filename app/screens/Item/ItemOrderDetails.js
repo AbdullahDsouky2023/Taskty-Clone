@@ -11,7 +11,7 @@ import {
 import * as yup from "yup";
 import { format } from "date-fns";
 import { arDZ } from "date-fns/locale";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import ArrowBack from "../../component/ArrowBack";
 import { Colors } from "../../constant/styles";
@@ -29,12 +29,14 @@ import { postOrder } from "../../../utils/orders";
 import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
 import { CommonActions } from "@react-navigation/native";
 import { getLocationFromStorage } from "../../../utils/location";
+import { setCurrentOrderProperties } from "../../store/features/ordersSlice";
 
 const { width } = Dimensions.get("window");
 
 export default function ItemOrderDetails({ route, navigation }) {
   const { item } = route.params;
   const [error, setError] = useState();
+  const dispatch = useDispatch()
   const [showSuccess, setShowSuccess] = useState(false);
 
   const user = useSelector((state) => state?.user?.user);
@@ -60,14 +62,15 @@ export default function ItemOrderDetails({ route, navigation }) {
         time: formattedTime.toString(),
         description: values?.description,
         // images: imageData,
-        service: item?.id,
-        location: currentLocation,
-        phoneNumber:user?.phoneNumber,
-        user:userData?.id
+        // service: item?.id,
+        // phoneNumber:user?.phoneNumber,
+        // user:userData?.id
       };
       console.log("***********************");
       console.log("user order will be su", "d");
       console.log("***********************");
+
+      dispatch(setCurrentOrderProperties(formSubmitionData))
       const data = await postOrder(formSubmitionData);
       if (data) {
         navigation.dispatch(

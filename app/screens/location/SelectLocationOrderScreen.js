@@ -9,8 +9,6 @@ import {
   Dimensions,
   FlatList,
 } from "react-native";
-import * as yup from "yup";
-import { useTranslation } from "react-i18next";
 
 import ArrowBack from "../../component/ArrowBack";
 import { Colors } from "../../constant/styles";
@@ -18,20 +16,17 @@ import AppText from "../../component/AppText";
 
 import { auth, } from "../../../firebaseConfig";
 
-import * as Updates from "expo-updates";
-import { CheckBox, Icon } from "@rneui/themed";
 import { Ionicons } from '@expo/vector-icons'; 
 
 import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
-import { setUserData } from "../../store/features/userSlice";
 import { getLocationFromStorage } from "../../../utils/location";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { MANUAL_LOCATION_ADD } from "../../navigation/routes";
+import { ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD } from "../../navigation/routes";
 import SelectLocationItem from "../../component/location/SelectLocationItem";
 import AppButton from "../../component/AppButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setCurrentOrderProperties } from "../../store/features/ordersSlice";
 const { width } = Dimensions.get("screen");
 
 
@@ -77,11 +72,15 @@ const SlectLocationOrderScreen = ({ navigation,route }) => {
   };
   useEffect(() => {
     getCurrentLocationFromStorage();
-  }, []);
-  console.log('====================================');
-  console.log(selectedLocation );
-  console.log('====================================');
-
+    console.log('====================================');
+    console.log(selectedLocation ,"selectedLocation from the order scren page is ");
+    console.log('====================================');
+  }, [selectedLocation]);
+const handleSubmitLocation = ()=>{
+  console.log("this is the location submiteed",selectedLocation)
+  dispatch(setCurrentOrderProperties({"location":selectedLocation}))
+  navigation.navigate(ITEM_ORDER_DETAILS,{item:route?.params?.item})
+}
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
@@ -99,7 +98,7 @@ const SlectLocationOrderScreen = ({ navigation,route }) => {
               <Ionicons name="ios-add-circle-outline" size={32} color={Colors.blackColor} />
               </TouchableOpacity>
               </View>
-              <SelectLocationItem selectedLocation={selectedLocation} currentLocation={currentLocation} setSelectedLocation={setSelectedLocation}/>
+              <SelectLocationItem selectedLocation={selectedLocation} item={currentLocation} setSelectedLocation={setSelectedLocation}/>
             <View>
               <AppText
                 text={"Manual Location"}
@@ -110,14 +109,15 @@ const SlectLocationOrderScreen = ({ navigation,route }) => {
               <FlatList
         data={manualLocations}
         renderItem={({ item }) => (
-          <SelectLocationItem selectedLocation={selectedLocation} currentLocation={item} setSelectedLocation={setSelectedLocation}/>
+          <SelectLocationItem
+           selectedLocation={selectedLocation} item={item} setSelectedLocation={setSelectedLocation}/>
         )}
         keyExtractor={(item, index) => index.toString()}
       />
             </View>
           </View>
         </ScrollView>
-          {selectedLocation && <AppButton title={"comfirm"}/>}
+          {selectedLocation && <AppButton title={"comfirm"} onPress={handleSubmitLocation}/>}
         <LoadingModal visible={!currentLocation} />
       </View>
     </SafeAreaView>

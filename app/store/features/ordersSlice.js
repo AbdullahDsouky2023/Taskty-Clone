@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const orderSlice = createSlice({
   name: "orders",
-  initialState: { orders: [] },
+  initialState: { orders: [] , currentOrderData:{} },
   reducers: {
     setOrders: (state, action) => {
       console.log('====================================');
@@ -11,9 +11,18 @@ const orderSlice = createSlice({
       console.log('====================================');
       state.orders = action.payload;
     },
+    setCurrentOrderProperties: (state, action) => {
+      
+      const propertiesToUpdate = action.payload;
+      state.currentOrderData = { ...state.currentOrderData, ...propertiesToUpdate };
+      console.log("setCurrentOrderProperties Was Called and cahnged",state.currentOrderData);
+    },
+    clearCurrentOrder: (state) => {
+      state.currentOrderData = {};
+    },
   },
  
 });
 
-export const { setOrders } = orderSlice.actions;
+export const { setOrders,setCurrentOrderProperties,clearCurrentOrder } = orderSlice.actions;
 export default orderSlice.reducer;
