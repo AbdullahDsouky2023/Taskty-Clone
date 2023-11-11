@@ -3,6 +3,9 @@ import { Text, View, StyleSheet, SafeAreaView, StatusBar, ScrollView, Image, Dim
 import { Colors, Fonts, Sizes } from "../../constant/styles";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Dialog } from "react-native-paper";
+import ArrowBack from "../../component/ArrowBack";
+import { CommonActions } from "@react-navigation/native";
+import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
 
 const { width } = Dimensions.get('screen');
 
@@ -72,7 +75,7 @@ const PaymentScreen = ({ navigation }) => {
                         <MaterialIcons name="done" size={40} color={Colors.primaryColor} />
                     </View>
                     <Text style={{ ...Fonts.grayColor18Medium, marginTop: Sizes.fixPadding + 10.0 }}>
-                        Your order has been placed!
+                       تم حجز الطلب بنجاح!
                     </Text>
                 </View>
             </Dialog>
@@ -85,11 +88,16 @@ const PaymentScreen = ({ navigation }) => {
                 <TouchableOpacity
                     activeOpacity={0.6}
                     onPress={() => {
-                        updateState({ showSuccessDialog: true })
-                        setTimeout(() => {
-                            updateState({ showSuccessDialog: false })
-                            navigation.push('BottomTabBar');
-                        }, 2000);
+                        // updateState({ showSuccessDialog: true })
+                        // setTimeout(() => {
+                            // updateState({ showSuccessDialog: false })
+                            navigation.dispatch(
+                                CommonActions.reset({
+                                  index: 0,
+                                  routes: [{ name: ORDER_SUCCESS_SCREEN}],
+                                })
+                              );
+                        // }, 2000);
                     }
                     }
                     style={styles.payButtonWrapStyle}
@@ -150,12 +158,10 @@ const PaymentScreen = ({ navigation }) => {
     function header() {
         return (
             <View style={styles.headerWrapStyle}>
-                <MaterialIcons name="arrow-back" size={24} color={Colors.whiteColor}
-                    onPress={() => navigation.pop()}
-                />
                 <Text style={{ ...Fonts.whiteColor19Medium, marginLeft: Sizes.fixPadding + 5.0 }}>
-                    Choose Payment Option
+                    أختيار وسيله الدفع
                 </Text>
+               {/* <ArsrowBack/> */}
             </View>
         )
     }
@@ -166,6 +172,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primaryColor,
         alignItems: 'center',
         flexDirection: 'row',
+        justifyContent:"space-between",
         height: 56.0,
         paddingHorizontal: Sizes.fixPadding * 2.0,
         marginBottom: Sizes.fixPadding,

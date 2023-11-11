@@ -16,6 +16,7 @@ import ItemOrderDetails from "../screens/Item/ItemOrderDetails";
 import OrderCreationSuccess from "../screens/OrderCreationSuccess";
 import SlectLocationOrderScreen from "../screens/location/SelectLocationOrderScreen";
 import AddManualLocationScreen from "../screens/location/AddManualLocationScreen";
+import PaymentScreen from "../screens/payment/paymentScreen";
 
 LogBox.ignoreAllLogs();
 
@@ -56,6 +57,7 @@ const RootNavigator = () => {
           options={{ headerShown: false }}
         />
              <Stack.Screen name={MANUAL_LOCATION_ADD} component={AddManualLocationScreen} />
+             <Stack.Screen name={"Payment"} component={PaymentScreen} />
 
       </Stack.Navigator>
     </NavigationContainer>

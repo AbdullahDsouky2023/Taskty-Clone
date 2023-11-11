@@ -30,6 +30,7 @@ import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
 import { CommonActions } from "@react-navigation/native";
 import { getLocationFromStorage } from "../../../utils/location";
 import { setCurrentOrderProperties } from "../../store/features/ordersSlice";
+import PriceTextComponent from "../../component/PriceTextComponent";
 
 const { width } = Dimensions.get("window");
 
@@ -67,19 +68,27 @@ export default function ItemOrderDetails({ route, navigation }) {
         // user:userData?.id
       };
       console.log("***********************");
-      console.log("user order will be su", "d");
+      console.log("user order will be su");
       console.log("***********************");
 
       dispatch(setCurrentOrderProperties(formSubmitionData))
-      const data = await postOrder(formSubmitionData);
-      if (data) {
+      const ITEM_PRICE = Number(item?.attributes?.Price)
+      // const data = await postOrder(formSubmitionData);
+      // if (data) {
+      if(ITEM_PRICE  > 0 ){
+        navigation.navigate("Payment")
+
+      }else if (ITEM_PRICE  === 0) {
+        
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: ORDER_SUCCESS_SCREEN }],
+            routes: [{ name: ORDER_SUCCESS_SCREEN}],
           })
-        );
-      }
+        );  
+       }
+  
+      // }
     } catch (error) {
       Alert.alert("حدثت مشكله حاول مرة اخري");
       console.error("Error parsing date or time:", error);
@@ -158,10 +167,7 @@ export default function ItemOrderDetails({ route, navigation }) {
             </View>
           </ScrollView>
           <View style={styles.orderButtonContainer}>
-            <AppText
-              text={item.attributes.Price}
-              style={{ color: Colors.blackColor }}
-            />
+           <PriceTextComponent price={item?.attributes?.Price} style={{fontSize:19}}/>
             <SubmitButton title={"Book"} style={styles.buttonSubmit} />
           </View>
         </AppForm>
