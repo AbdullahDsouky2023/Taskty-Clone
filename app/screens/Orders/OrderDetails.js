@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
 import { ORDERS } from "../../navigation/routes";
+import PriceTextComponent from "../../component/PriceTextComponent";
 
 const { width } = Dimensions.get("screen");
 export default function OrderDetails({ navigation, route }) {
@@ -55,10 +56,9 @@ export default function OrderDetails({ navigation, route }) {
         </View>
         <View style={styles.itemContainer}>
           <AppText centered={false} text={" السعر"} style={styles.title} />
-          <AppText
-            centered={false}
-            text={item?.attributes?.service?.data?.attributes?.Price}
-            style={styles.price}
+          <PriceTextComponent
+          style={{color:Colors.blackColor,fontSize:14,marginTop:4}}
+          price={item?.attributes?.service?.data?.attributes?.name}
           />
         </View>
         <View style={styles.itemContainer}>
@@ -69,7 +69,7 @@ export default function OrderDetails({ navigation, route }) {
             style={styles.price}
           />
         </View>
-        <View style={styles.itemContainer}>
+        <View style={styles.descriptionContainer}>
           <AppText centered={false} text={" ملاحظات"} style={styles.title} />
           <AppText
             centered={false}
@@ -115,7 +115,20 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    height: 70,
+    height: "auto",
+    width: width * 0.9,
+    padding: 10,
+    borderWidth: 0.7,
+    borderRadius: 10,
+    marginVertical: 10,
+    backgroundColor: Colors.piege,
+    gap: 10,
+  },
+  descriptionContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "auto",
     width: width * 0.9,
     padding: 10,
     borderWidth: 0.7,

@@ -62,7 +62,7 @@ export default function ItemOrderDetails({ route, navigation }) {
         // images: imageData,
         service: item?.id,
         location: currentLocation,
-        phoneNumber:userData?.id,
+        phoneNumber:user?.phoneNumber,
         user:userData?.id
       };
       console.log("***********************");

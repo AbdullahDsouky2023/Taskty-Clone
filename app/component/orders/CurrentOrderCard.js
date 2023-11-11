@@ -13,6 +13,7 @@ import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 import { useNavigation } from "@react-navigation/native";
 import { ORDERS_DETAILS } from "../../navigation/routes";
+import PriceTextComponent from "../PriceTextComponent";
 const { width } = Dimensions.get("screen");
 export default function CurrentOrderCard({ item }) {
   const navigation = useNavigation();
@@ -39,11 +40,9 @@ export default function CurrentOrderCard({ item }) {
         {/* Price */}
         <View style={styles.date}>
           <FontAwesome5 name="money-check" size={18} color="black" />
-          <AppText
-            text={item?.attributes?.service?.data?.attributes?.Price}
-            centered={false}
-            style={styles.price}
-          />
+          <PriceTextComponent
+            price={item?.attributes?.service?.data?.attributes?.Price}
+           />
         </View>
         {/* date */}
         <View style={styles.date}>

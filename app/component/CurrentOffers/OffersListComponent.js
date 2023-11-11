@@ -30,6 +30,7 @@ export default function OffersServiceComponentList({ data, slectedItem }) {
       </View>
       <FlatList
         data={data}
+        scrollEnabled={false}
         renderItem={({ item }) => {
           return (
             <OfferCard
