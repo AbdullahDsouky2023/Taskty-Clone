@@ -4,6 +4,7 @@ import { Image } from "react-native";
 import AppText from "../AppText";
 import { Colors } from "../../constant/styles";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import PriceTextComponent from "../PriceTextComponent";
 
 export default function AppBigCard({image,name,price,category='',onPress}) {
   return (
@@ -25,7 +26,7 @@ export default function AppBigCard({image,name,price,category='',onPress}) {
         />
         <View style={styles.text2Cotainer}>
           <AppText text={category} style={styles.text2} centered={false} />
-          <AppText text={price} style={styles.price} centered={true} />
+          <PriceTextComponent price={price}/>
         </View>
       </View>
     </View>

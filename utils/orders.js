@@ -7,7 +7,7 @@ const api = axios.create({
   baseURL: "http://192.168.1.7:1337", // Set your base URL
 });
 
-export const postOrder = (values) =>
+export const postOrder = (values,images) =>
   api
     .post("/api/orders", {
         data:{
@@ -15,11 +15,32 @@ export const postOrder = (values) =>
         }
     })
     .then((response) => {
-      return response.data;
+      const orderId = response.data.id
+      uploadImage(images,orderId)
     })
     .catch((error) => {
       console.error("Error:", error.response.data); // Log the error response
     });
+
+export const uploadImage=(images,id)=>{
+  axios
+  .post('http://localhost:1337/upload', images)
+  .then((response) => {
+    const imageId = response.data[0].id;
+
+    axios
+      .post('http://localhost:1337/api/orders', { images: imageId })
+      .then((response) => {
+        //handle success
+      })
+      .catch((error) => {
+        //handle error
+      });
+  })
+  .catch((error) => {
+    //handle error
+  });
+}  
 export const cancleOrder = async(id) => {
 try {
   const data = await api.delete(`/api/orders/${id}`)

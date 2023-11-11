@@ -7,14 +7,15 @@ const api = axios.create({
 
 export const createUser = async(data)=>{
     try {
-     const createdUser =await api.post('/api/users',{
+     const createdUser = await api.post('/api/users',{
             ...data,
             role:2,
         })
-        console.log(createUser,"this is the user will be created")
-        return createdUser
+        console.log(createdUser,"this is the user will be created")
+            return createdUser
+
     } catch (error) {
-        console.log("Error creating the user ",error.message)
+        console.log("Error creating the user ",error)
     }
 }
 export const getUserByPhoneNumber = async(phone)=>{

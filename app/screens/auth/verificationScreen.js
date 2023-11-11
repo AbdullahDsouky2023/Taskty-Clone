@@ -40,32 +40,21 @@ const VerificationScreen = ({ navigation, route }) => {
   const [secondsRemaining, setSecondsRemaining] = useState(30);
   const dispatch = useDispatch();
 
-  const { result, handleSendVerificationCode, phoneNumber } = route.params;
+  // const { result, handleSendVerificationCode, phoneNumber } = route.params;
 
 
   const confirmVerificationCode = async () => {
     try {
-      // const usersRef = collection(db, "users");
-      const res = await result.confirm(otpInput);
-      // Make sure the phone number is properly formatted and trimmed
+      // const res = await result?.confirm(otpInput);
       
       // Double-check the query and phone number
       console.log("PhoneNumberValidated:", phoneNumber);
       
-      // const phoneNumberQuery = query(
-        // collection(db, "users"),
-        // where("phoneNumber", "==", validPhone)
-        // );
-        
-        // Do/uble-check the query and querySnapshot
-        // console.log("phoneNumberQuery:", phoneNumberQuery);
-        
-        // const querySnapshot = await getDocs(phoneNumberQuery);
         
         setResendDisabled(true);
         setSecondsRemaining(30);
-        dispatch(userRegisterSuccess(auth?.currentUser));
-        await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
+        // dispatch(userRegisterSuccess(auth?.currentUser));
+        // await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
         const user = await getUserByPhoneNumber(phoneNumber)
       if (user) {
         console.log("User found verficICtion");

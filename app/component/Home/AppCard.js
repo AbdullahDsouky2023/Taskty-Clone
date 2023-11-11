@@ -4,6 +4,7 @@ import React from 'react'
 import AppText from '../AppText'
 import { Colors } from '../../constant/styles'
 import { TouchableWithoutFeedback } from 'react-native';
+import PriceTextComponent from '../PriceTextComponent';
 export default function AppCard({image,name,price,onPress}) {
   return (
     <TouchableWithoutFeedback onPress={onPress}>
@@ -23,11 +24,8 @@ export default function AppCard({image,name,price,onPress}) {
           centered={false}
           style={styles.serviceName}
         />
-        <AppText
-          text={price}
-          style={styles.servicePrice}
-          centered={false}
-        />
+       <PriceTextComponent price={price}/>
+
       </View>
       </View>
     </TouchableWithoutFeedback>

@@ -4,6 +4,7 @@ import { Colors } from "../constant/styles";
 import AppText from "./AppText";
 import { Image } from "react-native";
 import { TouchableWithoutFeedback } from "react-native";
+import PriceTextComponent from "./PriceTextComponent";
 const { width } = Dimensions.get("screen");
 export default function OfferCard({ service, price, image,onPress }) {
   return (
@@ -26,11 +27,8 @@ export default function OfferCard({ service, price, image,onPress }) {
           }}
           centered={false}
         />
-        <AppText
-          text={price}
-          style={{ color: Colors.primaryColor }}
-          centered={false}
-        />
+       <PriceTextComponent price={price}/>
+
       </View>
 </View>
     </TouchableWithoutFeedback>

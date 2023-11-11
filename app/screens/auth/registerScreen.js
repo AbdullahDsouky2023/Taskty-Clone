@@ -18,7 +18,7 @@ import ErrorMessage from "../../component/Form/ErrorMessage";
 import FormField from "../../component/Form/FormField";
 import SubmitButton from "../../component/Form/FormSubmitButton";
 import { auth } from "../../../firebaseConfig";
-
+import { SECRET_PASSWORD} from "@env"
 import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../../utils/secureStore";
@@ -33,12 +33,12 @@ const RegisterScreen = ({ navigation,route}) => {
   const user = useSelector((state) => state.user.user);
   const memoizedUser = useMemo(() => user, [user]);
 
-  const { phoneNumber } = route?.params
+  // const { phoneNumber } = route?.params
   const validationSchema = yup.object().shape({
     fullName: yup
       .string()
       .required(t("Full name is required"))
-      .min(2, "Full Name is too short")
+      .min(3, "Full Name is too short")
       .max(50, "Full Name is too long"),
     emailAddress: yup
       .string()
@@ -54,9 +54,9 @@ const RegisterScreen = ({ navigation,route}) => {
       console.log("this is the use data will be submite",{
         email:values.emailAddress,
         username:values.fullName,
-        password:"hoohoh",
+        password:SECRET_PASSWORD,
         location:"lkjkln",
-        phoneNumber:201113221851
+        phoneNumber:phoneNumber
       });
       const res = await createUser({
         email:values.emailAddress,
@@ -71,6 +71,8 @@ const RegisterScreen = ({ navigation,route}) => {
         setItem("userData", auth?.currentUser);
         setUserData(res)
         navigation.navigate("App");
+      }else {
+        Alert.alert("الاسم او البريد الالكتروني مستخدم من قبل ")
       }
 
     

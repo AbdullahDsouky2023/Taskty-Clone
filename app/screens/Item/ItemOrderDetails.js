@@ -11,7 +11,7 @@ import {
 import * as yup from "yup";
 import { format } from "date-fns";
 import { arDZ } from "date-fns/locale";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import ArrowBack from "../../component/ArrowBack";
 import { Colors } from "../../constant/styles";
@@ -39,10 +39,10 @@ export default function ItemOrderDetails({ route, navigation }) {
 
   const user = useSelector((state) => state?.user?.user);
   const userData = useSelector((state) => state?.user?.userData);
-console.log(userData?.location)
+  console.log(userData?.location);
   const handleFormSubmit = async (values) => {
     try {
-      const currentLocation = await getLocationFromStorage()
+      const currentLocation = await getLocationFromStorage();
       // Create valid Date objects
       const date = new Date(values?.Date);
       const time = new Date(values?.Time);
@@ -54,31 +54,31 @@ console.log(userData?.location)
       const formattedTime = format(time, "hh:mm a", {
         locale: arDZ,
       });
-       
+
       const formSubmitionData = {
         date: formattedDate.toString(),
         time: formattedTime.toString(),
-        description: values.description,
+        description: values?.description,
         // images: imageData,
-        service: item.id,
+        service: item?.id,
         location: currentLocation,
         phoneNumber: user.phoneNumber,
-        user:userData.id
+        user:userData?.id
       };
-      console.log("***********************")
-      console.log("user order will be su",formSubmitionData)
-      console.log("***********************")
-      const data = await postOrder(formSubmitionData);
-      if (data) {
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: ORDER_SUCCESS_SCREEN }],
-          })
-        );
-      }
+      console.log("***********************");
+      console.log("user order will be su", "d");
+      console.log("***********************");
+      // const data = await postOrder(formSubmitionData);
+      // if (data) {
+      //   navigation.dispatch(
+      //     CommonActions.reset({
+      //       index: 0,
+      //       routes: [{ name: ORDER_SUCCESS_SCREEN }],
+      //     })
+      //   );
+      // }
     } catch (error) {
-      Alert.alert("حدثت مشكله حاول مرة اخري")
+      Alert.alert("حدثت مشكله حاول مرة اخري");
       console.error("Error parsing date or time:", error);
     }
   };
