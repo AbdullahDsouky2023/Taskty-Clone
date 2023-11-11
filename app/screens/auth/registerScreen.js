@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -31,7 +31,9 @@ const RegisterScreen = ({ navigation,route}) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
-  const { verifiedPhone } = route?.params
+  const memoizedUser = useMemo(() => user, [user]);
+
+  const { phoneNumber } = route?.params
   const validationSchema = yup.object().shape({
     fullName: yup
       .string()
@@ -47,22 +49,23 @@ const RegisterScreen = ({ navigation,route}) => {
   const handleFormSubmit = async (values) => {
     try {
       const userLocation = await getLocationFromStorage()
-      const validPhone = auth?.currentUser.phoneNumber?.replace("+", "")
+      // const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "")
       setIsLoading(true);
       console.log("this is the use data will be submite",{
         email:values.emailAddress,
-        usernmae:values.fullName,
+        username:values.fullName,
         password:"hoohoh",
         location:"lkjkln",
-        phoneNumber:Number(validPhone)
+        phoneNumber:201113221851
       });
       const res = await createUser({
         email:values.emailAddress,
         username:values.fullName,
-        password:"hoohodh",
+        password:"hoohofyufyufdh",
         location:userLocation,
-        phoneNumber:Number(validPhone)
+        phoneNumber:phoneNumber
       })
+
       if(res){
         dispatch(userRegisterSuccess(auth?.currentUser));
         setItem("userData", auth?.currentUser);
@@ -72,7 +75,7 @@ const RegisterScreen = ({ navigation,route}) => {
         Alert.alert("Something goes wrong")
       }
 
-      
+    
     } catch (err) {
       console.log("error creating the resi", err.message);
     } finally {

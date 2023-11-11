@@ -18,6 +18,7 @@ export default function PhoneNumberTextField({ phoneNumber, updateState }) {
         ...Fonts.blackColor17Medium,
         marginLeft: Sizes.fixPadding - 5.0,
       }}
+      
       phoneInputStyle={{
         flex: 1,
         paddingRight: Sizes.fixPadding,
@@ -34,6 +35,7 @@ export default function PhoneNumberTextField({ phoneNumber, updateState }) {
 const styles = StyleSheet.create({
   phoneNumberTextFieldStyle: {
     borderColor: Colors.primaryColor,
+    color: Colors.primaryColor,
     borderWidth: 1.0,
     borderRadius: Sizes.fixPadding - 5.0,
     marginHorizontal: Sizes.fixPadding,

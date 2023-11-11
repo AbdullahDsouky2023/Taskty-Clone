@@ -6,7 +6,7 @@ import { Sizes } from '../constant/styles'
 export default function Logo() {
     return (
         <Image
-            source={{uri:'https://th.bing.com/th/id/OIP.L9k7FElhv2O5Ar52LyyFpAHaHa?pid=ImgDet&rs=1'}}
+            source={require('../assets/images/icon.png')}
             style={styles.appLogoStyle}
             resizeMode="contain"
         />
@@ -14,8 +14,8 @@ export default function Logo() {
 }
 const styles = StyleSheet.create({
     appLogoStyle: {
-        width: 100,
-        height: 100,
+        width: 60,
+        height: 60,
         alignSelf: 'center',
         marginBottom: Sizes.fixPadding * 4,
         marginTop: Sizes.fixPadding * 8

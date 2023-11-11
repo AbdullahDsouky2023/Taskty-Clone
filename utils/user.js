@@ -1,39 +1,41 @@
 import { setUserData } from '../app/store/features/userSlice';
-import api from './index';
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: "http://192.168.1.7:1337", // Set your base URL
+});
 
 export const createUser = async(data)=>{
     try {
-     const createdUser =    await api.post('/api/users',{
+     const createdUser =await api.post('/api/users',{
             ...data,
             role:2,
         })
-        return true
+        return createdUser
     } catch (error) {
-        console.log("Error creating the user ",error)
+        console.log("Error creating the user ",error.message)
     }
 }
 export const getUserByPhoneNumber = async(phone)=>{
     try {
         // Remove the "+" symbol
+        // +201144254129
         if(phone){
-            console.log("user phone from user is ",phone)
-            const phoneNumberWithoutPlus = phone?.replace("+", "");
+            console.log("user phone from user is ",typeof(phone))
             
-            // Convert the string to a number
-            const phoneNumber = Number(phoneNumberWithoutPlus);
-            const user =    await api.get(`/api/users?filters[$and][0][phoneNumber][$eq]=${phoneNumber}`)
+            const user =    await api.get(`/api/users?filters[$and][0][phoneNumber][$eq]=`+phone)
             console.log("usus",user?.data)
-            if(user?.data[0] && user?.data.length !== 0) {
+            if(user?.data[0] && user?.data[0]?.phoneNumber) {
                 setUserData(user?.data[0])
-                console.log("userfound",user?.data.length)
-                return true
+                console.log("userfound",user?.data)
+                return user?.data[0]
             }
             else {
-                console.log("userfound",user?.data.length)
-                return false
+                console.log("userfound not ",user?.data)
+                return null
 
             } 
-        } return false;
+        } 
     } catch (error) {
         console.log("Error creating the user ",error.message)
     }

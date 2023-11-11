@@ -21,8 +21,8 @@ const AccountScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
-        {/* <Logo /> */}
-        <AppText text={user?.phoneNumber}/>
+        <Logo />
+        {/* <AppText text={user?.phoneNumber}/> */}
         <GeneralSettings/>
       </View>
     </SafeAreaView>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   SafeAreaView,
   StatusBar,
@@ -85,8 +85,8 @@ const UserInfo = ({ navigation }) => {
       } else {
         console.log(res)
         Alert.alert("Something goes wrong");
-      }
-    } catch (err) {
+      }}
+     catch (err) {
       console.log("error creating the resi", err);
     } finally {
       setIsLoading(false);

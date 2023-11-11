@@ -1,12 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import api from './index';
+// import api from './index';
 
+import axios from "axios";
 
+const api = axios.create({
+  baseURL: "http://192.168.1.7:1337", // Set your base URL
+});
 
 export const postOrder = (values) =>
   api
     .post("/api/orders", {
-        ...values,
+        data:{
+          ...values
+        }
     })
     .then((response) => {
       return response.data;

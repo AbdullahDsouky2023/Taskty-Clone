@@ -48,6 +48,7 @@ export default function OtpFields({setisLoading,otpInput,setOtpInput,confirmVeri
         backgroundColor: Colors.whiteColor,
         borderColor: Colors.blackColor,
         borderWidth: 1.0,
+        color:Colors.primaryColor,
         direction:'ltr',
         // ...Fonts.primaryColor18Medium,
         // padding:34,

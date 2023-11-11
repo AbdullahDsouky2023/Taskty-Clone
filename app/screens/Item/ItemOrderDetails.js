@@ -37,15 +37,15 @@ export default function ItemOrderDetails({ route, navigation }) {
   const [error, setError] = useState();
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state?.user?.user);
   const userData = useSelector((state) => state?.user?.userData);
 console.log(userData?.location)
   const handleFormSubmit = async (values) => {
     try {
       const currentLocation = await getLocationFromStorage()
       // Create valid Date objects
-      const date = new Date(values.Date);
-      const time = new Date(values.Time);
+      const date = new Date(values?.Date);
+      const time = new Date(values?.Time);
 
       // Format the date and time
       const formattedDate = format(date, "dd MMMM yyyy", {
@@ -54,18 +54,20 @@ console.log(userData?.location)
       const formattedTime = format(time, "hh:mm a", {
         locale: arDZ,
       });
-             const UserValues =  {date: formattedDate.toString(),
-      time: formattedTime.toString(),
-      description: values.description,
-      // images: imageData,
-      service: item.id,
-      location: currentLocation,
-      phoneNumber: user.phoneNumber,
-      user:userData.id}
+       
       const formSubmitionData = {
-       "data":UserValues
+        date: formattedDate.toString(),
+        time: formattedTime.toString(),
+        description: values.description,
+        // images: imageData,
+        service: item.id,
+        location: currentLocation,
+        phoneNumber: user.phoneNumber,
+        user:userData.id
       };
-
+      console.log("***********************")
+      console.log("user order will be su",formSubmitionData)
+      console.log("***********************")
       const data = await postOrder(formSubmitionData);
       if (data) {
         navigation.dispatch(

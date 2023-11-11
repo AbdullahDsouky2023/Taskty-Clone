@@ -34,21 +34,26 @@ const SigninScreen = ({ navigation }) => {
   const handleSendVerificationCode = async () => {
     try {
       setDisabled(true);
-      const phoneNumberValid = `+20${phoneNumber}`;
+      const phoneNumberValidToFirebase = `+20${phoneNumber}`;
+      const validPhone = `${phoneNumber.replace(/\s/g, "").trim()}`;
+      const PhoneNumberValidated = convertPhoneTovalid(validPhone)
+      // navigation.navigate("Register", {
+      //   verifiedPhone:PhoneNumberValidated
+      // });
 
       const result = await signInWithPhoneNumber(
         auth,
-        phoneNumberValid,
+        phoneNumberValidToFirebase,
         recaptchaVerifier.current
       );
-          console.log('this is the number from the sign page ',phoneNumberValid)
+          console.log('this is the number from the sign page ',PhoneNumberValidated)
       if (result.verificationId) {
         navigation.navigate("Verification", {
            result,
           handleSendVerificationCode,
-          phoneNumber:phoneNumberValid
+          phoneNumber:PhoneNumberValidated
         });
-        // setDisabled(false);
+        setDisabled(false);
       }
     } catch (error) {
       const errorMessage = errorMessages[error.message];
@@ -59,6 +64,13 @@ const SigninScreen = ({ navigation }) => {
       setDisabled(false);
     }
   };
+  const convertPhoneTovalid=(phone)=>{
+    const phoneNumberWithoutPlus = phone?.replace("+", "");
+              
+              // Convert the string to a number
+              const phoneNumber = Number(phoneNumberWithoutPlus);
+              return phoneNumber
+  }
 
   const { phoneNumber } = state;
 

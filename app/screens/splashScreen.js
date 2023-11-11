@@ -13,9 +13,9 @@ import { getLocationFromStorage } from "../../utils/location";
 import { auth } from "../../firebaseConfig";
 import {BASE_URL } from '@env'
 const SplashScreen = ({ navigation }) => {
-    const dispatch = useDispatch();
-    let user = useSelector((state) => state.user?.user?.phoneNumber);
-    const [locationModalVisible, setLocationModalVisible] = useState(false);
+  const dispatch = useDispatch();
+  let user = useSelector((state) => state.user?.user?.phoneNumber);
+  const [locationModalVisible, setLocationModalVisible] = useState(false);
   const [locationConfirmed, setLocationConfirmed] = useState(false);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const SplashScreen = ({ navigation }) => {
 
     useEffect(() => {
         async function checkUserAndNavigate() {
-try {
+      try {
   await getLocationFromStorage()
   console.log(BASE_URL)
     const userDataString = await AsyncStorage.getItem("userData");
@@ -57,59 +57,91 @@ try {
     } else {
         navigation.push("Auth");
     }
-    
-} catch (error) {
+  }
+    catch (error) {
     console.log(error);
-}
-
+}}})
+        
+  useEffect(() => {
+    async function checkUserAndNavigate() {
+      try {
+        await getLocationFromStorage()
+        const userDataString = await AsyncStorage.getItem("userData");
+        const userData = JSON.parse(userDataString);
+        const validPhone = `${userData?.phoneNumber?.replace(/\s/g, "").trim()}`;
+        const PhoneNumberValidated = convertPhoneTovalid(validPhone)
+        console.log(PhoneNumberValidated," this is the use data in loca")
+        if (userData?.phoneNumber ) {
+          const gottenuser = await getUserByPhoneNumber(PhoneNumberValidated )
+          dispatch(setUserData(gottenuser));
+          console.log("this function was called to app with user gooten from strapio ",gottenuser)
+          dispatch(userRegisterSuccess(userData));
+          navigation.push("App");
+        } else {
+          console.log("this function was called to auth ")
+          // navigation.push("App");
+          navigation.push("Auth");
         }
-      
-        checkUserAndNavigate();
-      }, [user,navigation]);
-      
+
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
+
+    checkUserAndNavigate();
+  }, []);
+
+  const convertPhoneTovalid=(phone)=>{
+    const phoneNumberWithoutPlus = phone?.replace("+", "");
+              
+              // Convert the string to a number
+              const phoneNumber = Number(phoneNumberWithoutPlus);
+              return phoneNumber
+  }
 
 
-    useFocusEffect(
-        useCallback(() => {
-            BackHandler.addEventListener("hardwareBackPress", backAction);
-            return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
-        }, [backAction])
-    );
+  useFocusEffect(
+    useCallback(() => {
+      BackHandler.addEventListener("hardwareBackPress", backAction);
+      return () => BackHandler.removeEventListener("hardwareBackPress", backAction);
+    }, [backAction])
+  );
 
-      
-    return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
-            <StatusBar backgroundColor={Colors.primaryColor} />
 
-            {
-              locationConfirmed ? (
-            <View style={{ flex: 1, justifyContent: 'center' }}>
-                <Logo/>
-                <CircleFade
-                    size={45}
-                    color={Colors.primaryColor}
-                    style={{ alignSelf: 'center' }}
-                />
-            </View>
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
+      <StatusBar backgroundColor={Colors.primaryColor} />
 
-              ):
-              (
-                <LocationModal visible={locationModalVisible} onConfirm={handleLocationConfirm} />
+      {
+        locationConfirmed ? (
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <Logo />
+            <CircleFade
+              size={45}
+              color={Colors.primaryColor}
+              style={{ alignSelf: 'center' }}
+            />
+          </View>
 
-              )
+        ) :
+          (
+            <LocationModal visible={locationModalVisible} onConfirm={handleLocationConfirm} />
 
-            }
-        </SafeAreaView>
-    )
+          )
+
+      }
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
-    appLogoStyle: {
-        width: 200.0,
-        height: 200.0,
-        alignSelf: 'center',
-        marginBottom: Sizes.fixPadding * 4.0,
-    },
+  appLogoStyle: {
+    width: 200.0,
+    height: 200.0,
+    alignSelf: 'center',
+    marginBottom: Sizes.fixPadding * 4.0,
+  },
 })
 
 export default SplashScreen;

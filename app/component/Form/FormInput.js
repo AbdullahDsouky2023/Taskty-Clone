@@ -27,6 +27,7 @@ function FormTextInput({ icon, width = "100%", ...otherProps }) {
           writingDirection: "rtl",
           fontSize: 15,
         }}
+        
         {...otherProps}
         placeholder={t(otherProps.placeholder)}
       />
