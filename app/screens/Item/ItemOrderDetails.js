@@ -62,21 +62,21 @@ export default function ItemOrderDetails({ route, navigation }) {
         // images: imageData,
         service: item?.id,
         location: currentLocation,
-        phoneNumber: user.phoneNumber,
+        phoneNumber:userData?.id,
         user:userData?.id
       };
       console.log("***********************");
       console.log("user order will be su", "d");
       console.log("***********************");
-      // const data = await postOrder(formSubmitionData);
-      // if (data) {
-      //   navigation.dispatch(
-      //     CommonActions.reset({
-      //       index: 0,
-      //       routes: [{ name: ORDER_SUCCESS_SCREEN }],
-      //     })
-      //   );
-      // }
+      const data = await postOrder(formSubmitionData);
+      if (data) {
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: ORDER_SUCCESS_SCREEN }],
+          })
+        );
+      }
     } catch (error) {
       Alert.alert("حدثت مشكله حاول مرة اخري");
       console.error("Error parsing date or time:", error);

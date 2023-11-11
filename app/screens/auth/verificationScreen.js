@@ -40,26 +40,27 @@ const VerificationScreen = ({ navigation, route }) => {
   const [secondsRemaining, setSecondsRemaining] = useState(30);
   const dispatch = useDispatch();
 
-  // const { result, handleSendVerificationCode, phoneNumber } = route.params;
+  const { result, handleSendVerificationCode, phoneNumber } = route.params;
 
 
   const confirmVerificationCode = async () => {
     try {
-      // const res = await result?.confirm(otpInput);
+      const res = await result?.confirm(otpInput);
       
       // Double-check the query and phone number
-      console.log("PhoneNumberValidated:", phoneNumber);
+      // console.log("PhoneNumberValidated:", phoneNumber);
       
         
         setResendDisabled(true);
         setSecondsRemaining(30);
-        // dispatch(userRegisterSuccess(auth?.currentUser));
-        // await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
+        dispatch(userRegisterSuccess(auth?.currentUser));
+        await AsyncStorage.setItem("userData", JSON.stringify(auth?.currentUser));
         const user = await getUserByPhoneNumber(phoneNumber)
+        console.log("userBeforeChecick",user)
       if (user) {
         console.log("User found verficICtion");
         return navigation.navigate("App")
-      } else {
+      } else if(!user) {
         console.log("User not found verficICtion");
         return navigation.navigate("Register", { phoneNumber })
 

@@ -17,6 +17,7 @@ export const postOrder = (values,images) =>
     .then((response) => {
       const orderId = response.data.id
       uploadImage(images,orderId)
+      return response.data
     })
     .catch((error) => {
       console.error("Error:", error.response.data); // Log the error response
