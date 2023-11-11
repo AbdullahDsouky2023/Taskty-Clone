@@ -31,6 +31,7 @@ import AppForm from "../../component/Form/Form";
 import AppFormField from "../../component/Form/FormField";
 import ErrorMessage from "../../component/Form/ErrorMessage";
 import SubmitButton from "../../component/Form/FormSubmitButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const { width } = Dimensions.get("screen");
 
 
@@ -38,11 +39,28 @@ const AddManualLocationScreen = ({ navigation }) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const [selectedLocation, setSelectedLocation] = useState();
-  const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "");
   const userData = useSelector((state) => state.user?.userData);
-  const [currentLocation, setCurrentLocation] = useState("");
+  const [newLocation, setNewLocation] = useState('');
+
+  const handleAddLocation = async (data) => {
+    if (data.location.trim() !== '') {
+      try {
+  
+        const storedLocations = await AsyncStorage.getItem('manualLocations');
+        const existingLocations = storedLocations ? JSON.parse(storedLocations) : [];
+        
+        const updatedLocations = [...existingLocations, data.location];
+        console.log("the new location ",updatedLocations)
+        await AsyncStorage.setItem('manualLocations', JSON.stringify(updatedLocations));
+        
+        // Navigate back to the Address screen
+        navigation.navigate("location-pin",{updatedLocations});
+      } catch (error) {
+        console.error('Error adding manual location:', error);
+      }
+    }
+  };
   // let user = useSelector((state) => state.user?.user?.phoneNumber);
   const validationSchema = yup.object().shape({
     
@@ -52,7 +70,8 @@ const AddManualLocationScreen = ({ navigation }) => {
      .required(t("Please add the location"))
       // .required(t("Email is required")),
   });
-
+ 
+ 
   const handleFormSubmit = async (values) => {
     try {
       setIsLoading(true);
@@ -86,12 +105,7 @@ const AddManualLocationScreen = ({ navigation }) => {
     //    console.log(location)
     setCurrentLocation(location);
   };
-  useEffect(() => {
-    getCurrentLocationFromStorage();
-  }, []);
-  console.log('====================================');
-  console.log(selectedLocation === "current");
-  console.log('====================================');
+
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
@@ -109,7 +123,7 @@ const AddManualLocationScreen = ({ navigation }) => {
               <AppForm
               enableReinitialize={true}
               initialValues={{ location:"" }}
-              onSubmit={(data) => handleFormSubmit(data)}
+              onSubmit={(data) =>handleAddLocation(data)}
               validationSchema={validationSchema}
             >
               <ErrorMessage error={error} visible={error} />
