@@ -71,8 +71,6 @@ const RegisterScreen = ({ navigation,route}) => {
         setItem("userData", auth?.currentUser);
         setUserData(res)
         navigation.navigate("App");
-      }else {
-        Alert.alert("Something goes wrong")
       }
 
     

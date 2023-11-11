@@ -11,6 +11,7 @@ export const createUser = async(data)=>{
             ...data,
             role:2,
         })
+        console.log(createUser,"this is the user will be created")
         return createdUser
     } catch (error) {
         console.log("Error creating the user ",error.message)
