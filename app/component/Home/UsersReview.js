@@ -6,11 +6,12 @@ import Carousel from 'react-native-snap-carousel-v4';
 import { userReviews } from '../../data/home'
 import PaginationComponent from './Pagination';
 import ReviewCard from './ReviewCard';
+import useReviews from '../../../utils/reviews';
 
 const { width } = Dimensions.get("window");
 
 export default   function UsersReviews() {
-
+    const { data} =useReviews()
     const [state, setState] = useState({
         reviews: userReviews,
         activeSlide: 0,
@@ -20,7 +21,7 @@ export default   function UsersReviews() {
     const updateState = (data) => {
         setState((state) => ({ ...state, ...data }))
     }
-
+   
     const {
         reviews,
         activeSlide,
@@ -29,14 +30,17 @@ export default   function UsersReviews() {
     return (
         <View style={styles.container}>
             <Carousel
-                data={reviews}
+                data={data?.data}
                 sliderWidth={width}
                 autoplay={true}
                 loop={true}
                 
                 autoplayInterval={4000}
                 itemWidth={width}
-                renderItem={({item})=><ReviewCard  username={item.userName}  review={item.review } userImage={item.userImage} />}
+                renderItem={({item})=><ReviewCard 
+                 username={item?.attributes?.username} 
+                 review={item?.attributes?.content[0]?.children[0]?.text}
+                  userImage={item?.attributes?.image?.data?.attributes?.url} />}
                 onSnapToItem={(index) => updateState({ activeSlide: index })}
             />
            <PaginationComponent activeSlide={activeSlide} length={reviews.length}/>

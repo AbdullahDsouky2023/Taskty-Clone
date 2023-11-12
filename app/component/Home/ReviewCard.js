@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     marginTop: 10,
-    gap: 10,
+    gap: 17,
   },
   image: {
     height: 50,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
       color: Colors.blackColor,
       flexWrap: 'wrap',
       maxWidth:width,
-      width: width * 0.68,
+      width: width * 0.60,
     
   }
 });

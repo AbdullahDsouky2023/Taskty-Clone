@@ -30,6 +30,7 @@ export const getUserByPhoneNumber = async(phone)=>{
             if(user?.data[0] && user?.data[0]?.phoneNumber) {
                 setUserData(user?.data[0])
                 console.log("userfound",user?.data)
+                
                 return user?.data[0]
             }
             else {

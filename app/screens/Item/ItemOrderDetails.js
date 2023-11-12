@@ -49,6 +49,8 @@ const [isLoading,setIsLoading]=useState(false)
   console.log(userData?.location);
   const handleFormSubmit = async (values) => {
     try {
+      setIsLoading(true)
+      await uploadImage(values.image)
       // Create valid Date objects
       const date = new Date(values?.Date);
       const time = new Date(values?.Time);
@@ -62,30 +64,26 @@ const [isLoading,setIsLoading]=useState(false)
       });
 
       const formSubmitionData = {
-        date: formattedDate.toString(),
-        time: formattedTime.toString(), 
+        date: formattedDate?.toString(),
+        time: formattedTime?.toString(), 
         description: values?.description,
-        // images: imageData,
         service: item?.id,
         phoneNumber:user?.phoneNumber,
         user:userData?.id
       };
       dispatch(setCurrentOrderProperties(formSubmitionData))
-const id = await uploadImage(values.image)
-      setIsLoading(true)
       console.log("***********************");
       console.log("user order will be su",currentOrderData);
       console.log("***********************");
 
-      dispatch(setCurrentOrderProperties(formSubmitionData))
       const ITEM_PRICE = Number(item?.attributes?.Price)
       const data = await postOrder(currentOrderData);
-      //uploading image
-    
-
+  
       if (data) {
-      if(ITEM_PRICE  > 0 ){
-        navigation.navigate("Payment")
+        dispatch(setCurrentOrderProperties({}))
+        if(ITEM_PRICE  > 0 ){
+          navigation.navigate("Payment")
+          console.log("navigaion hap");
 
       }else if (ITEM_PRICE  === 0) {
         
@@ -111,17 +109,16 @@ const id = await uploadImage(values.image)
     description: yup.string(),
   });
   const uploadImage = async (image,values) => {
-    // setIsLoading(true)
     const formData = new FormData();
-const uri = image // from any library, you just need file path
+    const uri = image // from any library, you just need file path
 
-formData.append('files', {
+    formData.append('files', {
    name: `Nijk_IMAGE_ORDER`,
    type: 'image/jpeg',
    uri: Platform.OS === 'ios' ? uri.replace('file://', '') : uri,
 });
 
-fetch(`http://192.168.1.7:1337/api/upload`, {
+fetch(`http://192.168.1.6:1337/api/upload`, {
   method: 'POST',
   body: formData,
 })

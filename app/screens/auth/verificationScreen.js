@@ -19,7 +19,7 @@ import AppText from "../../component/AppText";
 import LoadingModal from "../../component/Loading";
 import OtpFields from "../../component/OtpFields";
 import { errorMessages } from "../../data/signin";
-import { userRegisterSuccess } from "../../store/features/userSlice";
+import { setUserData, userRegisterSuccess } from "../../store/features/userSlice";
 import { auth, db } from "../../../firebaseConfig";
 import {
   collection,
@@ -59,6 +59,7 @@ const VerificationScreen = ({ navigation, route }) => {
         console.log("userBeforeChecick",user)
       if (user) {
         console.log("User found verficICtion");
+        dispatch(setUserData(user[0]))
         return navigation.navigate("App")
       } else if(!user) {
         console.log("User not found verficICtion");

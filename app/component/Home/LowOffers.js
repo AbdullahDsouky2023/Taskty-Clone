@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import HeaderTextComponent from './HeaderTextComponent'
 import AppCard from './AppCard'
@@ -6,6 +6,7 @@ import { FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { ITEM_DETAILS } from '../../navigation/routes'
 import { useSelector } from 'react-redux'
+import useServices from '../../../utils/services'
 
 export default function LowOffers() {
   const navigation = useNavigation()
