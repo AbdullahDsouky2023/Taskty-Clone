@@ -29,27 +29,26 @@ export default function OrderDetails({ navigation, route }) {
   
  
 const dispatch = useDispatch()
-  const handleOrderCancle = async (id) => {
-    try {
-      setIsLoading(true);
-      const res = await cancleOrder(id);
-      if (res) {
-        dispatch(setOrders(orders))
-        Alert.alert("تم الغاء الطلب بنجاح");
-        navigation.navigate(ORDERS)
-        
-      }else {
-
-        Alert.alert("حدثت مشكله حاول مرة اخري");
-      }
-    } catch (error) {
-      console.log(error,"error deleting the order")
-    } finally {
-      setIsLoading(false);
+const handleOrderCancle = async (id) => {
+  try {
+    setIsLoading(true);
+    const res = await cancleOrder(id);
+    if (res) {
+      // Update Redux store to remove the cancelled order
+      dispatch(setOrders(orders.filter(order => order.id !== id)));
+      Alert.alert("تم الغاء الطلب بنجاح");
+      navigation.navigate(ORDERS);
+    } else {
+      Alert.alert("حدثت مشكله حاول مرة اخري");
     }
-  };
+  } catch (error) {
+    console.log(error, "error deleting the order");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
-  if(loading) return <LoadingScreen/>
+  if(isLoading) return <LoadingScreen/>
   return (
     <ScrollView>
       <AppHeader subPage={true} />

@@ -38,13 +38,14 @@ import { storeUserInfo } from "../../utils/firebase/user";
 import { setItem } from "../../utils/secureStore";
 import { getUserByPhoneNumber, updateUserData } from "../../../utils/user";
 import { setUserData } from "../../store/features/userSlice";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const UserInfo = ({ navigation }) => {
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "");
-  const userData = useSelector((state)=>state.user?.userData)
+  const userData = useSelector((state)=>state?.user?.userData)
   // let user = useSelector((state) => state.user?.user?.phoneNumber);
   const validationSchema = yup.object().shape({
     fullName: yup
@@ -79,9 +80,9 @@ const UserInfo = ({ navigation }) => {
         dispatch(setUserData(gottenuser));
         // console.log("success",gottenuser)
         Alert.alert("تم التعديل بنجاح");
-        Updates.reloadAsync()
+        // Updates.reloadAsync()
 
-        navigation.navigate("Splash")
+        // navigation.navigate("Splash")
       } else {
         console.log(res)
         Alert.alert("Something goes wrong");
@@ -105,6 +106,37 @@ let phoneNumberWithoutFirstDigit = phoneNumberString.slice(1);
 let finalPhoneNumber =  phoneNumberWithoutFirstDigit;
 return finalPhoneNumber
   }
+  const getUserInfo =async()=>{
+    try {
+      const userDataString = await AsyncStorage.getItem("userData");
+      const userData = JSON.parse(userDataString);
+      const validPhone = `${userData?.phoneNumber?.replace(/\s/g, "").trim()}`;
+      const PhoneNumberValidated = convertPhoneTovalid(validPhone)
+      console.log(PhoneNumberValidated," this is the use data in loca")
+      if (userData?.phoneNumber ) {
+        const gottenuser = await getUserByPhoneNumber(PhoneNumberValidated )
+        dispatch(setUserData(gottenuser));
+        console.log("this function was called  ",gottenuser)
+      } else {
+        console.log("this function was called to auth ")
+        // navigation.push("App");
+      }
+      
+    } catch (error) {
+      console.log("error getting the user fo rthe fir",error)
+    }
+  }
+  const convertPhoneTovalid=(phone)=>{
+    const phoneNumberWithoutPlus = phone?.replace("+", "");
+              
+              // Convert the string to a number
+              const phoneNumber = Number(phoneNumberWithoutPlus);
+              return phoneNumber
+  }
+
+  useEffect(()=>{
+    getUserInfo()
+  },[dispatch])
   console.log("ths is from user info ",userData)
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>

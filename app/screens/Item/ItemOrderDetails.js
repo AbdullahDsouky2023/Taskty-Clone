@@ -30,7 +30,7 @@ import { postOrder } from "../../../utils/orders";
 import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
 import { CommonActions } from "@react-navigation/native";
 import { getLocationFromStorage } from "../../../utils/location";
-import { setCurrentOrderProperties } from "../../store/features/ordersSlice";
+import { clearCurrentOrder, setCurrentOrderProperties } from "../../store/features/ordersSlice";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import LoadingModal from "../../component/Loading";
 import axios from "axios";
@@ -49,12 +49,15 @@ const [isLoading,setIsLoading]=useState(false)
   console.log(userData?.location);
   const handleFormSubmit = async (values) => {
     try {
-      setIsLoading(true)
-      await uploadImage(values.image)
+      setIsLoading(true);
+  
+      // Wait for the image upload to complete
+      await uploadImage(values.image);
+  
       // Create valid Date objects
       const date = new Date(values?.Date);
       const time = new Date(values?.Time);
-
+  
       // Format the date and time
       const formattedDate = format(date, "dd MMMM yyyy", {
         locale: arDZ,
@@ -62,78 +65,89 @@ const [isLoading,setIsLoading]=useState(false)
       const formattedTime = format(time, "hh:mm a", {
         locale: arDZ,
       });
-
+  
       const formSubmitionData = {
         date: formattedDate?.toString(),
-        time: formattedTime?.toString(), 
+        time: formattedTime?.toString(),
         description: values?.description,
         service: item?.id,
-        phoneNumber:user?.phoneNumber,
-        user:userData?.id
+        phoneNumber: user?.phoneNumber,
+        user: userData?.id,
       };
-      dispatch(setCurrentOrderProperties(formSubmitionData))
+  
+      dispatch(setCurrentOrderProperties(formSubmitionData));
+  
       console.log("***********************");
-      console.log("user order will be su",currentOrderData);
+      console.log("user order will be su", currentOrderData);
       console.log("***********************");
-
-      const ITEM_PRICE = Number(item?.attributes?.Price)
+  
+      const ITEM_PRICE = Number(item?.attributes?.Price);
       const data = await postOrder(currentOrderData);
   
       if (data) {
-        dispatch(setCurrentOrderProperties({}))
-        if(ITEM_PRICE  > 0 ){
-          navigation.navigate("Payment")
-          console.log("navigaion hap");
-
-      }else if (ITEM_PRICE  === 0) {
-        
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: ORDER_SUCCESS_SCREEN}],
-          })
-        );  
-       }
+        dispatch(clearCurrentOrder());
+        console.log("current order DAta", currentOrderData);
   
+        if (ITEM_PRICE > 0) {
+          navigation.navigate("Payment");
+          console.log("navigaion hap");
+        } else if (ITEM_PRICE === 0) {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: ORDER_SUCCESS_SCREEN }],
+            })
+          );
+        }
       }
-      setIsLoading(false)
     } catch (error) {
       Alert.alert("حدثت مشكله حاول مرة اخري");
       console.error("Error parsing date or time:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
+  
 
   const validationSchema = yup.object().shape({
     Date: yup.date().required("من فضلك اختار يوم التنفيذ"),
     Time: yup.string().required("من فضلك اختار وقت التنفيذ"),
     description: yup.string(),
   });
-  const uploadImage = async (image,values) => {
-    const formData = new FormData();
-    const uri = image // from any library, you just need file path
-
-    formData.append('files', {
-   name: `Nijk_IMAGE_ORDER`,
-   type: 'image/jpeg',
-   uri: Platform.OS === 'ios' ? uri.replace('file://', '') : uri,
-});
-
-fetch(`http://192.168.1.6:1337/api/upload`, {
-  method: 'POST',
-  body: formData,
-})
-  .then(response => response.json())
-  .then(response => {
-    console.log('response', response[0].id);
-    dispatch(setCurrentOrderProperties({"images":response[0]?.id}))
-  })
-  .catch(error => {
-    console.log('error', error);
-  });
+  const uploadImage = async (image, values) => {
+    try {
+      const formData = new FormData();
+      const uri = image; // from any library, you just need the file path
   
-   
-
-  }
+      formData.append("files", {
+        name: `Nijk_IMAGE_ORDER`,
+        type: "image/jpeg",
+        uri: Platform.OS === "ios" ? uri.replace("file://", "") : uri,
+      });
+  
+      const response = await fetch(`http://192.168.1.6:1337/api/upload`, {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Image upload failed with status: ${response.status}`);
+      }
+  
+      const responseData = await response.json();
+      const imageId = responseData[0]?.id;
+  
+      if (!imageId) {
+        throw new Error("Image upload response did not contain an ID");
+      }
+  
+      dispatch(setCurrentOrderProperties({ images: imageId }));
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      // Handle the error, you might want to show a user-friendly message
+    }
+  };
+  
   return (
     <SafeAreaView
       style={{

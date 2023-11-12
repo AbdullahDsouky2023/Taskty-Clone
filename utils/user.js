@@ -43,6 +43,21 @@ export const getUserByPhoneNumber = async(phone)=>{
         console.log("Error creating the user ",error.message)
     }
 }
+export const getUserCurrentOrders= async(id)=>{
+    try {
+        // Remove the "+" symbol
+        // +201144254129
+        if(id){
+            console.log("user phone from user is ",typeof(phone))
+            
+            const user =    await api.get(`/api/users/${id}?populate=*`)
+            console.log("mom",user?.data?.orders)
+            return user?.data?.orders
+        } 
+    } catch (error) {
+        console.log("Error getting the user ",error.message)
+    }
+}
 export const updateUserData = async(id,data)=>{
 try {
    const updatedUser =  await api.put(`/api/users/${id}`,{

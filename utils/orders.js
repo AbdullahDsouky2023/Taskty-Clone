@@ -4,7 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.1.6:1337", // Set your base URL
+  baseURL: "http://192.168.1.6:1337",
+  headers: {
+    "Content-Type": "application/json",
+  }, // Set your base URL
 });
 
 export const postOrder = async(values) =>{
@@ -17,7 +20,7 @@ export const postOrder = async(values) =>{
       console.log("thih badbo",res.data.data.id)
       return res?.data?.data?.id ?res?.data?.data?.id : null
   } catch (error) {
-    console.error("Error:", error?.response); // Log the error response
+    console.error("Error:", error.message); // Log the error response
     
   }
 }
@@ -26,11 +29,11 @@ export const postOrder = async(values) =>{
 export const cancleOrder = async(id) => {
 try {
   const data = await axios.delete(`http://192.168.1.6:1337/api/orders/${id}`)
-  console.log(data)
-  if(data) return true
+  console.log("********************",data?.data)
+  if(data?.data?.id) return data?.data?.id
    return false
   } catch (error) {
-  console.error("Error deleting the item :", error); // Log the error response
+  console.error("Error deleting the item :", error.message); // Log the error response
   
 }
   }

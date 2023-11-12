@@ -17,11 +17,11 @@ export default function CurrentOrders({navigation}) {
   const ordersRedux = useSelector((state) => state?.orders?.orders);
   const [orders,setOrders] = useState([])
   const {data,isLoading} = useOrders()
-  
-  const currentOrders = orders?.data?.filter(
-    (order) => order?.attributes?.phoneNumber === user?.phoneNumber
-    );
-    useEffect(()=>{
+const [currentOrders,setCurrentData]=useState([])
+  useEffect(()=>{
+      const currentOrders = ordersRedux?.data?.filter(
+        (order) => order?.attributes?.phoneNumber === user?.phoneNumber
+        );
       setOrders(data)
       console.log("from the current order Screen", currentOrders?.length);
     },[data,navigation,ordersRedux])
