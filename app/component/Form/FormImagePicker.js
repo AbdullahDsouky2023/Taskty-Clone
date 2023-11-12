@@ -20,6 +20,7 @@ const FormImagePicker = ({ name, width, ...otherProps }) => {
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
+        base64: true,
       });
   
       if (!result.canceled) {

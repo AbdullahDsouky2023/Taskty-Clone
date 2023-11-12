@@ -6,22 +6,28 @@ import CurrentOrderCard from "../../component/orders/CurrentOrderCard";
 import { FlatList } from "react-native";
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
+import useOrders from "../../../utils/orders";
+import LoadingScreen from "../loading/LoadingScreen";
 const { width } = Dimensions.get("screen");
 
 
-export default function CurrentOrders() {
+export default function CurrentOrders({navigation}) {
   
   const user = useSelector((state) => state?.user?.user);
-  const orders = useSelector((state) => state?.orders?.orders);
-    
+  const ordersRedux = useSelector((state) => state?.orders?.orders);
+  const [orders,setOrders] = useState([])
+  const {data,isLoading} = useOrders()
+  
   const currentOrders = orders?.data?.filter(
     (order) => order?.attributes?.phoneNumber === user?.phoneNumber
     );
     useEffect(()=>{
-        
+      setOrders(data)
       console.log("from the current order Screen", currentOrders?.length);
-    },[orders,currentOrders])
+    },[data,navigation,ordersRedux])
 
+    if(isLoading) return <LoadingScreen/>
+    
   return (
     <>
     {currentOrders?.length === 0 ? 

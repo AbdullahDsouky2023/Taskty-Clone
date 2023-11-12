@@ -7,6 +7,7 @@ import {
   ScrollView,
   Dimensions,
   Alert,
+  Platform,
 } from "react-native";
 import * as yup from "yup";
 import { format } from "date-fns";
@@ -31,6 +32,8 @@ import { CommonActions } from "@react-navigation/native";
 import { getLocationFromStorage } from "../../../utils/location";
 import { setCurrentOrderProperties } from "../../store/features/ordersSlice";
 import PriceTextComponent from "../../component/PriceTextComponent";
+import LoadingModal from "../../component/Loading";
+import axios from "axios";
 
 const { width } = Dimensions.get("window");
 
@@ -39,13 +42,13 @@ export default function ItemOrderDetails({ route, navigation }) {
   const [error, setError] = useState();
   const dispatch = useDispatch()
   const [showSuccess, setShowSuccess] = useState(false);
-
+const [isLoading,setIsLoading]=useState(false)
   const user = useSelector((state) => state?.user?.user);
   const userData = useSelector((state) => state?.user?.userData);
+  const currentOrderData = useSelector((state) => state?.orders?.currentOrderData);
   console.log(userData?.location);
   const handleFormSubmit = async (values) => {
     try {
-      const currentLocation = await getLocationFromStorage();
       // Create valid Date objects
       const date = new Date(values?.Date);
       const time = new Date(values?.Time);
@@ -60,21 +63,27 @@ export default function ItemOrderDetails({ route, navigation }) {
 
       const formSubmitionData = {
         date: formattedDate.toString(),
-        time: formattedTime.toString(),
+        time: formattedTime.toString(), 
         description: values?.description,
         // images: imageData,
-        // service: item?.id,
-        // phoneNumber:user?.phoneNumber,
-        // user:userData?.id
+        service: item?.id,
+        phoneNumber:user?.phoneNumber,
+        user:userData?.id
       };
+      dispatch(setCurrentOrderProperties(formSubmitionData))
+const id = await uploadImage(values.image)
+      setIsLoading(true)
       console.log("***********************");
-      console.log("user order will be su");
+      console.log("user order will be su",currentOrderData);
       console.log("***********************");
 
       dispatch(setCurrentOrderProperties(formSubmitionData))
       const ITEM_PRICE = Number(item?.attributes?.Price)
-      // const data = await postOrder(formSubmitionData);
-      // if (data) {
+      const data = await postOrder(currentOrderData);
+      //uploading image
+    
+
+      if (data) {
       if(ITEM_PRICE  > 0 ){
         navigation.navigate("Payment")
 
@@ -88,7 +97,8 @@ export default function ItemOrderDetails({ route, navigation }) {
         );  
        }
   
-      // }
+      }
+      setIsLoading(false)
     } catch (error) {
       Alert.alert("حدثت مشكله حاول مرة اخري");
       console.error("Error parsing date or time:", error);
@@ -100,7 +110,33 @@ export default function ItemOrderDetails({ route, navigation }) {
     Time: yup.string().required("من فضلك اختار وقت التنفيذ"),
     description: yup.string(),
   });
+  const uploadImage = async (image,values) => {
+    // setIsLoading(true)
+    const formData = new FormData();
+const uri = image // from any library, you just need file path
 
+formData.append('files', {
+   name: `Nijk_IMAGE_ORDER`,
+   type: 'image/jpeg',
+   uri: Platform.OS === 'ios' ? uri.replace('file://', '') : uri,
+});
+
+fetch(`http://192.168.1.7:1337/api/upload`, {
+  method: 'POST',
+  body: formData,
+})
+  .then(response => response.json())
+  .then(response => {
+    console.log('response', response[0].id);
+    dispatch(setCurrentOrderProperties({"images":response[0]?.id}))
+  })
+  .catch(error => {
+    console.log('error', error);
+  });
+  
+   
+
+  }
   return (
     <SafeAreaView
       style={{
@@ -122,7 +158,7 @@ export default function ItemOrderDetails({ route, navigation }) {
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{ flex: 1, alignItems: "center" }}>
               <AppText
-                text={item.attributes.name}
+                text={item?.attributes?.name}
                 style={{
                   color: Colors.primaryColor,
                   marginBottom: 10,
@@ -172,10 +208,8 @@ export default function ItemOrderDetails({ route, navigation }) {
           </View>
         </AppForm>
 
-        <SuccessModel
-          visible={showSuccess}
-          onPress={() => setShowSuccess(false)}
-        />
+        <LoadingModal visible={isLoading} />
+
       </View>
     </SafeAreaView>
   );

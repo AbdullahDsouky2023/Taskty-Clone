@@ -17,36 +17,43 @@ import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
 import { ORDERS } from "../../navigation/routes";
 import PriceTextComponent from "../../component/PriceTextComponent";
+import { Image } from "react-native";
+import { ScrollView } from "react-native";
+import LoadingScreen from "../loading/LoadingScreen";
 
 const { width } = Dimensions.get("screen");
 export default function OrderDetails({ navigation, route }) {
   const { item } = route?.params;
   const [isLoading, setIsLoading] = useState(false);
-  const { data:orders } = useOrders()
+  const { data:orders,isLoading:loading,isError } = useOrders()
   
  
-
+const dispatch = useDispatch()
   const handleOrderCancle = async (id) => {
     try {
       setIsLoading(true);
       const res = await cancleOrder(id);
       if (res) {
         dispatch(setOrders(orders))
-            Alert.alert("تم الغاء الطلب بنجاح");
-        navigation.goBack()
-      }else {
+        Alert.alert("تم الغاء الطلب بنجاح");
+        navigation.navigate(ORDERS)
         
+      }else {
+
         Alert.alert("حدثت مشكله حاول مرة اخري");
       }
     } catch (error) {
+      console.log(error,"error deleting the order")
     } finally {
       setIsLoading(false);
     }
   };
+
+  if(loading) return <LoadingScreen/>
   return (
-    <View>
+    <ScrollView>
       <AppHeader subPage={true} />
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View>
           <AppText
             centered={false}
@@ -69,6 +76,22 @@ export default function OrderDetails({ navigation, route }) {
             style={styles.price}
           />
         </View>
+        <View style={styles.itemContainer}>
+          <AppText centered={false} text={" الوقت"} style={styles.title} />
+          <AppText
+            centered={false}
+            text={item?.attributes?.time}
+            style={styles.price}
+          />
+        </View>
+        <View style={styles.itemContainer}>
+          <AppText centered={false} text={" التاريخ"} style={styles.title} />
+          <AppText
+            centered={false}
+            text={item?.attributes?.date}
+            style={styles.price}
+          />
+        </View>
         <View style={styles.descriptionContainer}>
           <AppText centered={false} text={" ملاحظات"} style={styles.title} />
           <AppText
@@ -81,25 +104,34 @@ export default function OrderDetails({ navigation, route }) {
             style={styles.price}
           />
         </View>
-        <View style={styles.itemContainer}>
+        <View style={styles.descriptionContainer}>
           <AppText centered={false} text={" صور لطلبك"} style={styles.title} />
+         {
+           ( item?.attributes?.images?.data ) ? 
+           <Image 
+          //  resizeMethod="contain"
+           source={{
+            uri:item?.attributes?.images?.data[0]?.attributes?.url}} style={{
+             height:120,
+             width:200,
+             borderRadius:10
+           }}/> : 
           <AppText
             centered={false}
-            text={
-              item?.attributes?.images?.data
-                ? item?.attributes?.images?.data
-                : "لا يوجد"
-            }
+            text={ "لا يوجد"}
             style={styles.price}
           />
+         }
+         
+          
         </View>
         <AppButton
           title={"الغاء الطلب"}
           onPress={() => handleOrderCancle(item.id)}
         />
-      </View>
+      </ScrollView>
       <LoadingModal visible={isLoading} />
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
