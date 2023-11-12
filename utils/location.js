@@ -16,9 +16,9 @@ const reverseGeoCode = async (location) => {
 export const getLocationFromStorage = async () => {
     try {
       const location = await AsyncStorage.getItem('userLocation');
-      const Reable = await  reverseGeoCode(location)
-      console.log( `${Reable.city} - ${Reable.subregion} - ${Reable.country}`)
-      return  `${Reable.city} - ${Reable.subregion} - ${Reable.country}` 
+      const Readable = await  reverseGeoCode(location)
+    const res =  `${Readable?.city} - ${Readable?.subregion} - ${Readable?.country}`
+      if(Readable)  return res 
 
       
     } catch (error) {

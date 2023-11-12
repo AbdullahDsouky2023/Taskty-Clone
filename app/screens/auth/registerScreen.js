@@ -73,6 +73,7 @@ const RegisterScreen = ({ navigation,route}) => {
         navigation.navigate("App");
       }else {
         Alert.alert("الاسم او البريد الالكتروني مستخدم من قبل ")
+        console.log("the is the message befoe email and name is used befoer res",res)
       }
 
     

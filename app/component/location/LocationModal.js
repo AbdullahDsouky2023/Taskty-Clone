@@ -17,7 +17,7 @@ const { width } = Dimensions.get('screen')
         const location = await Location.getLastKnownPositionAsync({});
         
         // Save the location to storage
-        await AsyncStorage.setItem('userLocation', JSON.stringify(location.coords));
+        await AsyncStorage.setItem('userLocation', JSON.stringify(location?.coords));
         console.log("llllll",location)
         // Close the modal and notify the parent component
         onConfirm();

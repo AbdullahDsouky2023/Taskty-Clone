@@ -105,6 +105,7 @@ let phoneNumberWithoutFirstDigit = phoneNumberString.slice(1);
 let finalPhoneNumber =  phoneNumberWithoutFirstDigit;
 return finalPhoneNumber
   }
+  console.log("ths is from user info ",userData)
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />

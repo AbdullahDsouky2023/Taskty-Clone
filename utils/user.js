@@ -2,7 +2,7 @@ import { setUserData } from '../app/store/features/userSlice';
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.1.7:1337", // Set your base URL
+  baseURL: "http://192.168.1.6:1337", // Set your base URL
 });
 
 export const createUser = async(data)=>{

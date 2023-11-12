@@ -35,7 +35,7 @@ const SigninScreen = ({ navigation }) => {
     try {
       setDisabled(true);
       const phoneNumberValidToFirebase = `+20${phoneNumber}`;
-      const validPhone = `${phoneNumber.replace(/\s/g, "").trim()}`;
+      const validPhone = `${phoneNumberValidToFirebase.replace(/\s/g, "").trim()}`;
       const PhoneNumberValidated = convertPhoneTovalid(validPhone)
       // navigation.navigate("Register", {
       //   verifiedPhone:PhoneNumberValidated

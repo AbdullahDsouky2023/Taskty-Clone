@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.1.7:1337", // Set your base URL
+  baseURL: "http://192.168.1.6:1337", // Set your base URL
 });
 
 export const postOrder = (values) =>
@@ -24,7 +24,7 @@ export const postOrder = (values) =>
  
 export const cancleOrder = async(id) => {
 try {
-  const data = await axios.delete(`http://192.168.1.7:1337/api/orders/${id}`)
+  const data = await axios.delete(`http://192.168.1.6:1337/api/orders/${id}`)
   console.log(data)
   if(data) return true
    return false
