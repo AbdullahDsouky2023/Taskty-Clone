@@ -5,10 +5,15 @@ import Carousel from 'react-native-snap-carousel-v4';
 import { useState } from 'react';
 import PaginationComponent from './Pagination';
 import { Image } from 'react-native';
+import useBanners from '../../../utils/banners';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import { ITEM_DETAILS } from '../../navigation/routes';
+import SlideItem from '../SlideItem';
 const { width } = Dimensions.get("window");
 
 export default   function OffersBanner() {
-
+    const { data:banners} = useBanners()
     const [state, setState] = useState({
         offers: offersBannerList,
         activeSlide: 0,
@@ -16,7 +21,6 @@ export default   function OffersBanner() {
     })
 
     const updateState = (data) => setState((state) => ({ ...state, ...data }))
-
     const {
         offers,
         activeSlide,
@@ -25,26 +29,16 @@ export default   function OffersBanner() {
     return (
         <View>
             <Carousel
-                data={offersBannerList}
+                data={banners?.data}
                 sliderWidth={width}
                 autoplay={true}
                 loop={true}
                 autoplayInterval={10000}
                 itemWidth={width}
-                renderItem={_renderItem}
+                renderItem={(item)=><SlideItem item={item.item}/>}
                 onSnapToItem={(index) => updateState({ activeSlide: index })}
             />
            <PaginationComponent activeSlide={activeSlide} length={offers.length}/>
         </View>
-    )
-}
-
-function _renderItem({ item }) {
-    return (
-        <Image
-            source={item.image}
-            style={{ width: width, height: 180.0 }}
-            resizeMode="cover"
-        />
     )
 }
