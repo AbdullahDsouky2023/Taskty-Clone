@@ -22,7 +22,7 @@ import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationFromStorage } from "../../../utils/location";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD } from "../../navigation/routes";
+import { ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_REGION } from "../../navigation/routes";
 import SelectLocationItem from "../../component/location/SelectLocationItem";
 import AppButton from "../../component/AppButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -79,7 +79,7 @@ const SlectLocationOrderScreen = ({ navigation,route }) => {
 const handleSubmitLocation = ()=>{
   console.log("this is the location submiteed",selectedLocation)
   dispatch(setCurrentOrderProperties({"location":selectedLocation}))
-  navigation.navigate(ITEM_ORDER_DETAILS,{item:route?.params?.item})
+  navigation.navigate(ORDER_SELECT_REGION,{item:route?.params?.item})
 }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>

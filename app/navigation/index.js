@@ -9,7 +9,7 @@ import LoadingScreen from "../component/loadingScreen";
 import SplashScreen from "../screens/splashScreen";
 import AuthNavigator from "./AuthNavigator";
 import AppNavigator from "./AppNavigator";
-import { ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SUCCESS_SCREEN } from "./routes";
+import { ITEM_DETAILS, ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_LOCATION, ORDER_SELECT_REGION, ORDER_SUCCESS_SCREEN } from "./routes";
 import ItemScreen from "../screens/Item/ItemScreen";
 import OrderNavigator from "./orderNavigator";
 import ItemOrderDetails from "../screens/Item/ItemOrderDetails";
@@ -17,6 +17,7 @@ import OrderCreationSuccess from "../screens/OrderCreationSuccess";
 import SlectLocationOrderScreen from "../screens/location/SelectLocationOrderScreen";
 import AddManualLocationScreen from "../screens/location/AddManualLocationScreen";
 import PaymentScreen from "../screens/payment/paymentScreen";
+import SelectRegionScreen from "../screens/RegionScreen";
 
 LogBox.ignoreAllLogs();
 
@@ -54,6 +55,11 @@ const RootNavigator = () => {
         <Stack.Screen
           name={ORDER_SELECT_LOCATION}
           component={SlectLocationOrderScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={ORDER_SELECT_REGION}
+          component={SelectRegionScreen}
           options={{ headerShown: false }}
         />
              <Stack.Screen name={MANUAL_LOCATION_ADD} component={AddManualLocationScreen} />

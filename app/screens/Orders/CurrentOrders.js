@@ -22,9 +22,9 @@ const [currentOrders,setCurrentData]=useState([])
       const currentOrders = ordersRedux?.data?.filter(
         (order) => order?.attributes?.phoneNumber === user?.phoneNumber
         );
-      setOrders(data)
+        setCurrentData(currentOrders)
       console.log("from the current order Screen", currentOrders?.length);
-    },[data,navigation,ordersRedux])
+    },[])
 
     if(isLoading) return <LoadingScreen/>
     

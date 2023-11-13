@@ -12,7 +12,7 @@ const api = axios.create({
 
 export const postOrder = async(values) =>{
   try {
-    const res = await api.post("/api/orders", {
+    const res = await axios.post("http://192.168.1.6:1337/api/orders", {
           data:{
             ...values,
           }
