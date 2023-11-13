@@ -10,34 +10,31 @@ const api = axios.create({
   }, // Set your base URL
 });
 
-export const postOrder = async(values) =>{
+export const postOrder = async (values) => {
   try {
     const res = await axios.post("http://192.168.1.6:1337/api/orders", {
-          data:{
-            ...values,
-          }
-      })
-      console.log("thih badbo",res.data.data.id)
-      return res?.data?.data?.id ?res?.data?.data?.id : null
+      data: {
+        ...values,
+      },
+    });
+    console.log("thih badbo", res.data.data.id);
+    return res?.data?.data?.id ? res?.data?.data?.id : null;
   } catch (error) {
     console.error("Error:", error.message); // Log the error response
-    
   }
-}
-    
- 
-export const cancleOrder = async(id) => {
-try {
-  const data = await axios.delete(`http://192.168.1.6:1337/api/orders/${id}`)
-  console.log("********************",data?.data)
-  if(data?.data?.id) return data?.data?.id
-   return false
+};
+
+export const cancleOrder = async (id) => {
+  try {
+    const data = await axios.delete(`http://192.168.1.6:1337/api/orders/${id}`);
+    console.log("********************", data?.data);
+    if (data?.data?.id) return data?.data?.id;
+    return false;
   } catch (error) {
-  console.error("Error deleting the item :", error.message); // Log the error response
-  
-}
+    console.error("Error deleting the item :", error.message); // Log the error response
   }
-    
+};
+
 export default function useOrders() {
   const fetchOrders = async () => {
     try {

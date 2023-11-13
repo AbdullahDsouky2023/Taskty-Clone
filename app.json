@@ -3,6 +3,7 @@
     "name": "RN HomeService User App",
     "slug": "rn-HomeService",
     "version": "1.0.0",
+    "writingDirection": "ltr",
     "orientation": "portrait",
     "icon": "./app/assets/images/icon.png",
     "userInterfaceStyle": "light",

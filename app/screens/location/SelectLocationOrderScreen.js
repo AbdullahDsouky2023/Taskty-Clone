@@ -4,12 +4,11 @@ import {
   StatusBar,
   View,
   StyleSheet,
-  ScrollView,
   Alert,
   Dimensions,
   FlatList,
 } from "react-native";
-
+import { ScrollView } from "react-native-virtualized-view";
 import ArrowBack from "../../component/ArrowBack";
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";

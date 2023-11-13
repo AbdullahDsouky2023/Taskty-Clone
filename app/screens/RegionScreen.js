@@ -4,7 +4,6 @@ import {
   StatusBar,
   View,
   StyleSheet,
-  ScrollView,
   Alert,
   Dimensions,
   FlatList,
@@ -13,10 +12,8 @@ import {
 import ArrowBack from "../component/ArrowBack";
 import { Colors } from "../constant/styles";
 import AppText from "../component/AppText";
-
-import LoadingModal from "../component/Loading";
+import {  ScrollView} from 'react-native-virtualized-view'
 import { useDispatch, useSelector } from "react-redux";
-import { getLocationFromStorage } from "../../utils/location";
 import {
   ITEM_ORDER_DETAILS,
   
