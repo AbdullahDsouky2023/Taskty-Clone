@@ -15,11 +15,13 @@ import useOrders, { cancleOrder } from "../../../utils/orders";
 import { useDispatch } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
-import { ORDERS } from "../../navigation/routes";
+import { HOME, ORDERS } from "../../navigation/routes";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import { Image } from "react-native";
 import { ScrollView } from "react-native";
 import LoadingScreen from "../loading/LoadingScreen";
+import AppModal from "../../component/AppModal";
+import { CommonActions } from "@react-navigation/native";
 
 const { width } = Dimensions.get("screen");
 export default function OrderDetails({ navigation, route }) {
@@ -29,22 +31,28 @@ export default function OrderDetails({ navigation, route }) {
   
  
 const dispatch = useDispatch()
+const [isModalVisible, setModalVisible] = useState(false);
+
 const handleOrderCancle = async (id) => {
   try {
-    setIsLoading(true);
+    // setIsLoading(true);
     const res = await cancleOrder(id);
     if (res) {
       // Update Redux store to remove the cancelled order
-      dispatch(setOrders(orders.filter(order => order.id !== id)));
+      // dispatch(setOrders(orders?.filter(order => order?.id !== id)));
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name:HOME }],
+        }))
       Alert.alert("تم الغاء الطلب بنجاح");
-      navigation.navigate(ORDERS);
     } else {
       Alert.alert("حدثت مشكله حاول مرة اخري");
     }
   } catch (error) {
     console.log(error, "error deleting the order");
   } finally {
-    setIsLoading(false);
+    setModalVisible(false)
   }
 };
 
@@ -134,9 +142,12 @@ const handleOrderCancle = async (id) => {
         </View>
         <AppButton
           title={"الغاء الطلب"}
-          onPress={() => handleOrderCancle(item.id)}
+          onPress={() => setModalVisible(true)}
         />
       </ScrollView>
+      <AppModal isModalVisible={isModalVisible} 
+      message={"تأكيد الغاء الطلب"}
+      setModalVisible={setModalVisible} onPress={()=> handleOrderCancle(item.id)}/>
       <LoadingModal visible={isLoading} />
     </ScrollView>
   );
@@ -145,6 +156,8 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 10,
     paddingHorizontal: 18,
+    backgroundColor: Colors.whiteColor,
+
   },
   name: {
     fontSize: 17,
@@ -157,10 +170,18 @@ const styles = StyleSheet.create({
     height: "auto",
     width: width * 0.9,
     padding: 10,
-    borderWidth: 0.7,
+    // borderWidth: 0.7,
     borderRadius: 10,
     marginVertical: 10,
-    backgroundColor: Colors.piege,
+    backgroundColor: Colors.whiteColor,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 4,
     gap: 10,
   },
   descriptionContainer: {
@@ -170,11 +191,18 @@ const styles = StyleSheet.create({
     height: "auto",
     width: width * 0.9,
     padding: 10,
-    borderWidth: 0.7,
+    // borderWidth: 0.7,
     borderRadius: 10,
     marginVertical: 10,
-    backgroundColor: Colors.piege,
-    gap: 10,
+    backgroundColor: Colors.whiteColor,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 4,    gap: 10,
   },
   price: {
     fontSize: 17,

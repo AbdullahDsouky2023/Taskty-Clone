@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Dimensions, FlatList } from "react-native";
 import React from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
@@ -9,7 +9,7 @@ import AppText from "../AppText";
 import AppButton from "../AppButton";
 import { Colors } from "../../constant/styles";
 import SettingItem from "./SettingItem";
-import { FlatList } from "react-native-gesture-handler";
+import {  ScrollView} from "react-native-gesture-handler";
 import { settingsItemArray } from "../../data/account";
 import { auth } from "../../../firebaseConfig";
 const { width } = Dimensions.get("screen");

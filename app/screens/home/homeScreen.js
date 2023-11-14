@@ -42,9 +42,9 @@ const HomeScreen = ({ navigation }) => {
   const getData =async()=>{
     if (data) {
       // Dispatch the fetched categories to the Redux store
-       dispatch(setCategories(data));
-       dispatch(setServices(services));
-       dispatch(setOrders(orders));
+      await  dispatch(setCategories(data));
+      await  dispatch(setServices(services));
+      await dispatch(setOrders(orders));
     } else if (isError) {
       console.log(isError)
       // Handle the error
@@ -53,7 +53,7 @@ const HomeScreen = ({ navigation }) => {
 
   useEffect(() => {    
     getData()
-  }, [dispatch,data]);
+  }, [data]);
 
   if (isLoading) return <LoadingScreen/>
   if (isError) return <ErrorScreen hanleRetry={getData}/>

@@ -9,6 +9,7 @@ import AppText from "../../component/AppText";
 import useOrders from "../../../utils/orders";
 import LoadingScreen from "../loading/LoadingScreen";
 const { width } = Dimensions.get("screen");
+import { RefreshControl  } from 'react-native';
 
 
 export default function CurrentOrders({navigation}) {
@@ -17,23 +18,40 @@ export default function CurrentOrders({navigation}) {
   const ordersRedux = useSelector((state) => state?.orders?.orders);
   const [orders,setOrders] = useState([])
   const {data,isLoading} = useOrders()
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+  };
 const [currentOrders,setCurrentData]=useState([])
+const fetchData=()=>{
+  const currentOrders = data?.data?.filter(
+    (order) => order?.attributes?.phoneNumber === user?.phoneNumber
+    );
+    setCurrentData(currentOrders)
+  console.log("from the current order Screen", currentOrders?.length);
+  setRefreshing(false)
+}
   useEffect(()=>{
-      const currentOrders = ordersRedux?.data?.filter(
-        (order) => order?.attributes?.phoneNumber === user?.phoneNumber
-        );
-        setCurrentData(currentOrders)
-      console.log("from the current order Screen", currentOrders?.length);
-    },[])
+    fetchData()
+    },[data])
 
     if(isLoading) return <LoadingScreen/>
     
   return (
-    <>
+    <ScrollView 
+    style={{
+      backgroundColor:"white",
+      height:"100%"
+    }}
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+  }>
     {currentOrders?.length === 0 ? 
       <View style={styles.noItemContainer}>
-      
-      <AppText text={"لا يوجد طلبات لعرضها"} /> 
+
+      <AppText text={"لا يوجد طلبات لعرضها"} style={{marginTop:"50%"}}/> 
       </View>
       :
       <ScrollView style={styles.container}>
@@ -47,7 +65,7 @@ const [currentOrders,setCurrentData]=useState([])
       />
       </ScrollView>
     }
-        </>
+        </ScrollView>
   );
 }
 
@@ -70,6 +88,7 @@ const styles = StyleSheet.create({
   alignItems:'center',
   justifyContent:'center',
   height:"100%",
+  // marginVertical:50,
   width:width,
   backgroundColor:Colors.whiteColor
  }

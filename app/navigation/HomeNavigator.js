@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import { TransitionPresets } from "@react-navigation/stack";
 import HomeScreen from '../screens/home/homeScreen';
 import { useTranslation } from 'react-i18next';
+import { HOME } from './routes';
 
 export default function HomeNavigator() {
     const Stack = createStackNavigator()
@@ -16,7 +17,7 @@ export default function HomeNavigator() {
       }}
     >
         <Stack.Screen
-                    name={t('Home')}
+                    name={HOME}
                     component={HomeScreen}
                    
                 />

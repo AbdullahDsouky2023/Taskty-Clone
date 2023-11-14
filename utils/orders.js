@@ -27,8 +27,8 @@ export const postOrder = async (values) => {
 export const cancleOrder = async (id) => {
   try {
     const data = await axios.delete(`http://192.168.1.6:1337/api/orders/${id}`);
-    console.log("********************", data?.data);
-    if (data?.data?.id) return data?.data?.id;
+    console.log("********************", data?.data?.data?.id);
+    if (data?.data?.data?.id) return data?.data?.data?.id;
     return false;
   } catch (error) {
     console.error("Error deleting the item :", error.message); // Log the error response

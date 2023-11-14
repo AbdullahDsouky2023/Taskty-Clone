@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
@@ -15,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ORDERS_DETAILS } from "../../navigation/routes";
 import PriceTextComponent from "../PriceTextComponent";
 const { width } = Dimensions.get("screen");
+import { Ionicons } from '@expo/vector-icons';
 export default function CurrentOrderCard({ item }) {
   const navigation = useNavigation();
   return (
@@ -48,19 +48,20 @@ export default function CurrentOrderCard({ item }) {
         <View style={styles.date}>
           <FontAwesome name="calendar" size={24} color="black" />
           <AppText
-            text={item?.attributes?.date}
+            text={`${item?.attributes?.date }  - ${item?.attributes?.time}`}
             centered={false}
             style={styles.title}
           />
         </View>
         <View style={styles.date}>
-          <Ionicons name="time-outline" size={24} color="black" />
-          <AppText
-            text={item?.attributes?.time}
+        <Ionicons name="person-outline" size={24} color="black" />     
+             <AppText
+            text={item?.attributes?.provider?.data?.attributes?.name  || "في انتظار العامل "}
             centered={false}
             style={styles.title}
           />
         </View>
+        
         {/*time */}
         {/*time */}
       </View>
@@ -84,8 +85,15 @@ const styles = StyleSheet.create({
     marginTop: 12,
     flex: 1,
     gap: 5,
-    backgroundColor: Colors.piege,
-    // elevation:1,
+    backgroundColor: Colors.whiteColor,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
     borderColor: Colors.blackColor,
     borderWidth: 0.4,
     borderRadius: 8,
