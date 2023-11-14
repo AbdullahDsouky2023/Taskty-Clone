@@ -27,7 +27,7 @@ import FormTimePicker from "../../component/Form/FormTimePicker";
 import SuccessModel from "../../component/SuccessModal";
 import FormImagePicker from "../../component/Form/FormImagePicker";
 import { postOrder } from "../../../utils/orders";
-import { ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
+import { ORDER_COMFIRM_DETAILS, ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
 import { CommonActions } from "@react-navigation/native";
 import { getLocationFromStorage } from "../../../utils/location";
 import { clearCurrentOrder, setCurrentOrderProperties } from "../../store/features/ordersSlice";
@@ -81,25 +81,7 @@ const [isLoading,setIsLoading]=useState(false)
       console.log("user order will be su", currentOrderData);
       console.log("***********************");
   
-      const ITEM_PRICE = Number(item?.attributes?.Price);
-      const data = await postOrder(currentOrderData);
-  
-      if (data) {
-        dispatch(clearCurrentOrder());
-        console.log("current order DAta", currentOrderData);
-  
-        if (ITEM_PRICE > 0) {
-          navigation.navigate("Payment");
-          console.log("navigaion hap");
-        } else if (ITEM_PRICE === 0) {
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{ name: ORDER_SUCCESS_SCREEN }],
-            })
-          );
-        }
-      }
+      navigation.navigate(ORDER_COMFIRM_DETAILS,{item})
     } catch (error) {
       Alert.alert("حدثت مشكله حاول مرة اخري");
       console.error("Error parsing date or time:", error);
