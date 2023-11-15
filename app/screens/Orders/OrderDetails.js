@@ -145,7 +145,7 @@ const handleOrderCancle = async (id) => {
           <AppButton
             title={" دفع"}
             style={{backgroundColor:Colors.success}}
-            onPress={() => setModalVisible(true)}
+            onPress={() => console.log("pay")}
           />:
         <AppButton
         title={"الغاء الطلب"}

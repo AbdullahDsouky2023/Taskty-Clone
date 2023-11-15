@@ -60,6 +60,7 @@ function FormDatePicker({ name, width, ...otherProps }) {
           mode={mode}
           is24Hour={true}
           display="default"
+          minimumDate={new Date()}
           onChange={onChange}
         />)
       }

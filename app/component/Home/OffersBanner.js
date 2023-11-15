@@ -1,19 +1,17 @@
 import { View, Text, Dimensions } from 'react-native'
-import React from 'react'
-import { offersBannerList } from '../../data/home'
-import Carousel from 'react-native-snap-carousel-v4';
 import { useState } from 'react';
+import Carousel from 'react-native-snap-carousel-v4';
+import React from 'react'
+
+import { offersBannerList } from '../../data/home'
 import PaginationComponent from './Pagination';
-import { Image } from 'react-native';
 import useBanners from '../../../utils/banners';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
-import { ITEM_DETAILS } from '../../navigation/routes';
 import SlideItem from '../SlideItem';
+import LoadingScreen from '../../screens/loading/LoadingScreen';
 const { width } = Dimensions.get("window");
 
 export default   function OffersBanner() {
-    const { data:banners} = useBanners()
+    const { data:banners,isLoading} = useBanners()
     const [state, setState] = useState({
         offers: offersBannerList,
         activeSlide: 0,
@@ -26,6 +24,7 @@ export default   function OffersBanner() {
         activeSlide,
         days,
     } = state;
+    if(isLoading) return <LoadingScreen/>
     return (
         <View>
             <Carousel

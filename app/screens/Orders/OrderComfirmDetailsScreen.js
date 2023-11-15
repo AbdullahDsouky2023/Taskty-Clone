@@ -20,6 +20,7 @@ import {
   import LoadingScreen from "../loading/LoadingScreen";
   import AppModal from "../../component/AppModal";
   import { CommonActions } from "@react-navigation/native";
+import useRegions from "../../../utils/region";
   
   const { width } = Dimensions.get("screen");
   export default function OrderComfirmDetailsScreen({ navigation, route }) {
@@ -27,9 +28,9 @@ import {
     const [isLoading, setIsLoading] = useState(false);
     const { data:orders,isLoading:loading,isError } = useOrders()
     const currentOrderData = useSelector((state) => state?.orders?.currentOrderData);
-
-//    console.log("comfirm",currentOrderData)
-  const dispatch = useDispatch()
+    const {data} = useRegions()
+    const region = data?.data?.filter((item)=>item?.id === currentOrderData.region)[0]?.attributes?.name
+    const dispatch = useDispatch()
   const [isModalVisible, setModalVisible] = useState(false);
   const { item ,image} = route?.params
   const handleComfirmOrder = async () => {
@@ -62,7 +63,7 @@ import {
   
     if(isLoading) return <LoadingScreen/>
     return (
-      <ScrollView>
+      <>
         <AppHeader subPage={true} />
        <ScrollView style={styles.container}>
           <View>
@@ -91,7 +92,7 @@ import {
             <AppText centered={false} text={" المنطقه"} style={styles.title} />
             <AppText
               centered={false}
-              text={currentOrderData?.region}
+              text={region}
               style={styles.price}
             />
           </View>
@@ -124,44 +125,27 @@ import {
             />
           </View>
           <Image 
-            //  resizeMethod="contain"
              source={{
               uri:image}} style={{
                height:120,
                width:200,
                borderRadius:10
              }}/> 
-          {/* <View style={styles.descriptionContainer}>
-            <AppText centered={false} text={" صور لطلبك"} style={styles.title} />
-           {
-             ( item?.attributes?.images?.data ) ? 
-             <Image 
-            //  resizeMethod="contain"
-             source={{
-              uri:item?.attributes?.images?.data[0]?.attributes?.url}} style={{
-               height:120,
-               width:200,
-               borderRadius:10
-             }}/> : 
-            <AppText
-              centered={false}
-              text={ "لا يوجد"}
-              style={styles.price}
-            />
-           }
-           
-            
-          </View> */}
+
+        </ScrollView> 
+        <View style={styles.ButtonContainer}>
+
           <AppButton
             title={"تأكيد الطلب"}
+            style={{marginBottom:19,paddingVertical:15,paddingHorizontal:50}}
             onPress={() => setModalVisible(true)}
-          />
-        </ScrollView> 
+            />
+            </View>
         <AppModal isModalVisible={isModalVisible} 
         message={"تأكيد الطلب"}
         setModalVisible={setModalVisible} onPress={()=> handleComfirmOrder()}/>
         <LoadingModal visible={isLoading} />
-      </ScrollView>
+      </>
     );
   }
   const styles = StyleSheet.create({
@@ -225,5 +209,9 @@ import {
       fontSize: 21,
       color: Colors.primaryColor,
     },
+    ButtonContainer :{
+      display:'flex',
+      alignItems:'center'
+    }
   });
   

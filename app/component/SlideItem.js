@@ -15,6 +15,7 @@ export default function SlideItem({ item }) {
       onPress={() => {
         navigation.navigate(ITEM_DETAILS, { item: item?.attributes?.service?.data });
       }}
+      style={{ width: width, height: 180.0 }}
     >
       <View 
         style={{ width: width, height: 180.0 }}
@@ -22,7 +23,7 @@ export default function SlideItem({ item }) {
 
       <Image
         style={{ width: width, height: 180.0 }}
-      {...{uri}}
+      {...{ uri}}
       resizeMode="cover"
       />
       </View>
