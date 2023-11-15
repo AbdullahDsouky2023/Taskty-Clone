@@ -2,8 +2,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { TransitionPresets } from "@react-navigation/stack";
 import CurrentOrdersTabNavigator from "../../navigation/CurrentOrdersTabNavigator";
-import { ORDERS_DETAILS } from "../../navigation/routes";
+import { COMPLETE_ORDER_DETAILS, ORDERS_DETAILS } from "../../navigation/routes";
 import OrderDetails from "./OrderDetails";
+import CompleteOrderDetails from "./CompleteOrderDetails";
 
 
 function OrderScreen() {
@@ -24,6 +25,11 @@ function OrderScreen() {
         <Stack.Screen
                     name={ORDERS_DETAILS}
                     component={OrderDetails}
+                   
+                />
+        <Stack.Screen
+                    name={COMPLETE_ORDER_DETAILS}
+                    component={CompleteOrderDetails}
                    
                 />
     </Stack.Navigator>

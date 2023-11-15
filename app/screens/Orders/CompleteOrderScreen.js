@@ -10,10 +10,10 @@ import useOrders from "../../../utils/orders";
 import LoadingScreen from "../loading/LoadingScreen";
 const { width } = Dimensions.get("screen");
 import { RefreshControl  } from 'react-native';
-import { ORDERS_DETAILS } from "../../navigation/routes";
+import { COMPLETE_ORDER_DETAILS, ORDERS_DETAILS } from "../../navigation/routes";
 
 
-export default function CurrentOrders({navigation}) {
+export default function CompleteOrderScreen({navigation}) {
   
   const user = useSelector((state) => state?.user?.user);
   const ordersRedux = useSelector((state) => state?.orders?.orders);
@@ -28,10 +28,10 @@ export default function CurrentOrders({navigation}) {
 const [currentOrders,setCurrentData]=useState([])
 const fetchData=()=>{
   const currentOrders = data?.data?.filter(
-    (order) => order?.attributes?.phoneNumber === user?.phoneNumber && order?.attributes?.PaymentStatus !== "payed"
+    (order) => order?.attributes?.phoneNumber === user?.phoneNumber && order?.attributes?.PaymentStatus === "payed"
     );
     setCurrentData(currentOrders)
-  console.log("from the current order Screen", currentOrders);
+  console.log("from the complete order Screen", currentOrders);
   setRefreshing(false)
 }
   useEffect(()=>{
@@ -60,7 +60,7 @@ const fetchData=()=>{
       data={currentOrders}
       style={styles.listContainer}
       renderItem={({item})=>{
-        return <CurrentOrderCard item={item} onPress={() => navigation.navigate(ORDERS_DETAILS, { item })} />
+        return <CurrentOrderCard item={item} onPress={() => navigation.navigate(COMPLETE_ORDER_DETAILS, { item })} />
       }}
       keyExtractor={(item)=>item?.id}
       />

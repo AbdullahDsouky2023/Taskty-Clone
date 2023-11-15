@@ -15,11 +15,11 @@ import { ORDERS_DETAILS } from "../../navigation/routes";
 import PriceTextComponent from "../PriceTextComponent";
 const { width } = Dimensions.get("screen");
 import { Ionicons } from '@expo/vector-icons';
-export default function CurrentOrderCard({ item }) {
+export default function CurrentOrderCard({ item,onPress }) {
   const navigation = useNavigation();
   return (
     <TouchableWithoutFeedback
-      onPress={() => navigation.navigate(ORDERS_DETAILS, { item })}
+      onPress={onPress}
     >
       <View style={styles.orderCardContainer}>
         {/* name */}
