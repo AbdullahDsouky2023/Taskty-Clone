@@ -81,7 +81,7 @@ const [isLoading,setIsLoading]=useState(false)
       console.log("user order will be su", currentOrderData);
       console.log("***********************");
   
-      navigation.navigate(ORDER_COMFIRM_DETAILS,{item})
+      navigation.navigate(ORDER_COMFIRM_DETAILS,{item,image:values.images})
     } catch (error) {
       Alert.alert("حدثت مشكله حاول مرة اخري");
       console.error("Error parsing date or time:", error);
@@ -107,7 +107,7 @@ const [isLoading,setIsLoading]=useState(false)
         uri: Platform.OS === "ios" ? uri.replace("file://", "") : uri,
       });
   
-      const response = await fetch(`http://192.168.1.6:1337/api/upload`, {
+      const response = await fetch(`http://192.168.1.5:1337/api/upload`, {
         method: "POST",
         body: formData,
       });

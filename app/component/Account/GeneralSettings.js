@@ -4,12 +4,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { CommonActions } from "@react-navigation/native";
+import {  ScrollView} from "react-native-virtualized-view";
 
 import AppText from "../AppText";
 import AppButton from "../AppButton";
 import { Colors } from "../../constant/styles";
 import SettingItem from "./SettingItem";
-import {  ScrollView} from "react-native-gesture-handler";
 import { settingsItemArray } from "../../data/account";
 import { auth } from "../../../firebaseConfig";
 const { width } = Dimensions.get("screen");

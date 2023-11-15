@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://192.168.1.6:1337",
+  baseURL: "http://192.168.1.5:1337",
   headers: {
     "Content-Type": "application/json",
   }, // Set your base URL
@@ -12,9 +12,10 @@ const api = axios.create({
 
 export const postOrder = async (values) => {
   try {
-    const res = await axios.post("http://192.168.1.6:1337/api/orders", {
+    const res = await axios.post("http://192.168.1.5:1337/api/orders", {
       data: {
         ...values,
+        status:"pending"
       },
     });
     console.log("thih badbo", res.data.data.id);
@@ -26,7 +27,7 @@ export const postOrder = async (values) => {
 
 export const cancleOrder = async (id) => {
   try {
-    const data = await axios.delete(`http://192.168.1.6:1337/api/orders/${id}`);
+    const data = await axios.delete(`http://192.168.1.5:1337/api/orders/${id}`);
     console.log("********************", data?.data?.data?.id);
     if (data?.data?.data?.id) return data?.data?.data?.id;
     return false;
@@ -38,7 +39,7 @@ export const cancleOrder = async (id) => {
 export default function useOrders() {
   const fetchOrders = async () => {
     try {
-      const response = await api.get(`/api/orders?populate=*`);
+      const response = await axios.get(`http://192.168.1.5:1337/api/orders?populate=*`);
 
       return response.data;
     } catch (error) {

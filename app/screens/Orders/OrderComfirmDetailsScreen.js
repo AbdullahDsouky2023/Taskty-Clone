@@ -13,7 +13,7 @@ import {
   import { useDispatch, useSelector } from "react-redux";
   import { clearCurrentOrder, setOrders } from "../../store/features/ordersSlice";
   import LoadingModal from "../../component/Loading";
-  import { HOME, ORDERS } from "../../navigation/routes";
+  import { HOME, ORDERS, ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
   import PriceTextComponent from "../../component/PriceTextComponent";
   import { Image } from "react-native";
   import { ScrollView } from "react-native";
@@ -31,7 +31,7 @@ import {
 //    console.log("comfirm",currentOrderData)
   const dispatch = useDispatch()
   const [isModalVisible, setModalVisible] = useState(false);
-  const { item } = route?.params
+  const { item ,image} = route?.params
   const handleComfirmOrder = async () => {
     try {
         const ITEM_PRICE = Number(item?.attributes?.Price);
@@ -123,6 +123,14 @@ import {
               style={styles.price}
             />
           </View>
+          <Image 
+            //  resizeMethod="contain"
+             source={{
+              uri:image}} style={{
+               height:120,
+               width:200,
+               borderRadius:10
+             }}/> 
           {/* <View style={styles.descriptionContainer}>
             <AppText centered={false} text={" صور لطلبك"} style={styles.title} />
            {
@@ -150,7 +158,7 @@ import {
           />
         </ScrollView> 
         <AppModal isModalVisible={isModalVisible} 
-        message={"تأكيد الغاء الطلب"}
+        message={"تأكيد الطلب"}
         setModalVisible={setModalVisible} onPress={()=> handleComfirmOrder()}/>
         <LoadingModal visible={isLoading} />
       </ScrollView>

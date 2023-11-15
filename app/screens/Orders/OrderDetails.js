@@ -140,10 +140,18 @@ const handleOrderCancle = async (id) => {
          
           
         </View>
+        {
+          item?.attributes?.status !== "pending" ?
+          <AppButton
+            title={" دفع"}
+            style={{backgroundColor:Colors.success}}
+            onPress={() => setModalVisible(true)}
+          />:
         <AppButton
-          title={"الغاء الطلب"}
+        title={"الغاء الطلب"}
           onPress={() => setModalVisible(true)}
-        />
+          />
+        }
       </ScrollView>
       <AppModal isModalVisible={isModalVisible} 
       message={"تأكيد الغاء الطلب"}
