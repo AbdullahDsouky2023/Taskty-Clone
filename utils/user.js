@@ -1,9 +1,6 @@
 import { setUserData } from '../app/store/features/userSlice';
-import axios from "axios";
+import api from './index'
 
-const api = axios.create({
-  baseURL: "http://192.168.1.5:1337", // Set your base URL
-});
 
 export const createUser = async(data)=>{
     try {
@@ -50,7 +47,7 @@ export const getUserCurrentOrders= async(id)=>{
         if(id){
             console.log("user phone from user is ",typeof(phone))
             
-            const user =    await api.get(`/api/users/${id}?populate=*`)
+            const user = await api.get(`/api/users/${id}?populate=*`)
             console.log("mom",user?.data?.orders)
             return user?.data?.orders
         } 

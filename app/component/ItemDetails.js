@@ -57,7 +57,11 @@ const styles = StyleSheet.create({
   descriptionText: {
     color: Colors.blackColor,
     fontSize: 15,
-    padding:20,
-    minWidth:'100%',
+    width: width,
+    padding:10,
+    paddingHorizontal:20,
+    // backgroundColor: Colors.redColor,
+
+    minWidth:'95%',
   },
 });

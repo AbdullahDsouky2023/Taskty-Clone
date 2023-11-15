@@ -24,16 +24,12 @@ import FormField from "../../component/Form/FormField";
 import FormDatePicker from "../../component/Form/FormDatePicker";
 import SubmitButton from "../../component/Form/FormSubmitButton";
 import FormTimePicker from "../../component/Form/FormTimePicker";
-import SuccessModel from "../../component/SuccessModal";
 import FormImagePicker from "../../component/Form/FormImagePicker";
-import { postOrder } from "../../../utils/orders";
 import { ORDER_COMFIRM_DETAILS, ORDER_SUCCESS_SCREEN } from "../../navigation/routes";
-import { CommonActions } from "@react-navigation/native";
-import { getLocationFromStorage } from "../../../utils/location";
 import { clearCurrentOrder, setCurrentOrderProperties } from "../../store/features/ordersSlice";
 import PriceTextComponent from "../../component/PriceTextComponent";
 import LoadingModal from "../../component/Loading";
-import axios from "axios";
+import { BASE_URL} from "@env"
 
 const { width } = Dimensions.get("window");
 
@@ -107,7 +103,7 @@ const [isLoading,setIsLoading]=useState(false)
         uri: Platform.OS === "ios" ? uri.replace("file://", "") : uri,
       });
   
-      const response = await fetch(`http://192.168.1.5:1337/api/upload`, {
+      const response = await fetch(`${BASE_URL}/api/upload`, {
         method: "POST",
         body: formData,
       });

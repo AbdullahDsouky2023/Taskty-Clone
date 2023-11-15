@@ -11,7 +11,7 @@ import AppButton from "../../component/AppButton";
 import AppText from "../../component/AppText";
 import { Colors } from "../../constant/styles";
 import AppHeader from "../../component/AppHeader";
-import useOrders, { cancleOrder } from "../../../utils/orders";
+import useOrders, { PayOrder, cancleOrder, requestPayment } from "../../../utils/orders";
 import { useDispatch } from "react-redux";
 import { setOrders } from "../../store/features/ordersSlice";
 import LoadingModal from "../../component/Loading";
@@ -35,11 +35,8 @@ const [isModalVisible, setModalVisible] = useState(false);
 
 const handleOrderCancle = async (id) => {
   try {
-    // setIsLoading(true);
     const res = await cancleOrder(id);
     if (res) {
-      // Update Redux store to remove the cancelled order
-      // dispatch(setOrders(orders?.filter(order => order?.id !== id)));
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
@@ -51,6 +48,26 @@ const handleOrderCancle = async (id) => {
     }
   } catch (error) {
     console.log(error, "error deleting the order");
+  } finally {
+    setModalVisible(false)
+  }
+};
+
+const handlePayOrder = async (id) => {
+  try {
+    const res = await PayOrder(id);
+    if (res) {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name:HOME }],
+        }))
+      Alert.alert("تم دفع الطلب بنجاح");
+    } else {
+      Alert.alert("حدثت مشكله حاول مرة اخري");
+    }
+  } catch (error) {
+    console.log(error, "error paying the order");
   } finally {
     setModalVisible(false)
   }
@@ -145,7 +162,7 @@ const handleOrderCancle = async (id) => {
           <AppButton
             title={" دفع"}
             style={{backgroundColor:Colors.success}}
-            onPress={() => console.log("pay")}
+            onPress={() => handlePayOrder(item?.id)}
           />:
         <AppButton
         title={"الغاء الطلب"}

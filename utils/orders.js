@@ -1,18 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 // import api from './index';
 
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "http://192.168.1.5:1337",
-  headers: {
-    "Content-Type": "application/json",
-  }, // Set your base URL
-});
+import api from './index'
 
 export const postOrder = async (values) => {
   try {
-    const res = await axios.post("http://192.168.1.5:1337/api/orders", {
+    const res = await api.post("/api/orders", {
       data: {
         ...values,
         status:"pending"
@@ -27,7 +20,7 @@ export const postOrder = async (values) => {
 
 export const cancleOrder = async (id) => {
   try {
-    const data = await axios.delete(`http://192.168.1.5:1337/api/orders/${id}`);
+    const data = await api.delete(`/api/orders/${id}`);
     console.log("********************", data?.data?.data?.id);
     if (data?.data?.data?.id) return data?.data?.data?.id;
     return false;
@@ -35,11 +28,24 @@ export const cancleOrder = async (id) => {
     console.error("Error deleting the item :", error.message); // Log the error response
   }
 };
-
+export const PayOrder = async (id) => {
+  try {
+    const data = await api.put(`/api/orders/${id}`,{
+      data:{
+        PaymentStatus:"payed"
+      }
+    });
+    console.log("******************** was finsihed", data?.data?.data?.id);
+    if ( data?.data?.data?.id) return true
+    return false;
+  } catch (error) {
+    console.error("Error accepting order   :", error.message); // Log the error response
+  }
+};
 export default function useOrders() {
   const fetchOrders = async () => {
     try {
-      const response = await axios.get(`http://192.168.1.5:1337/api/orders?populate=*`);
+      const response = await api.get(`/api/orders?populate=*`);
 
       return response.data;
     } catch (error) {

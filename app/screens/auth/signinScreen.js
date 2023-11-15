@@ -37,16 +37,12 @@ const SigninScreen = ({ navigation }) => {
       const phoneNumberValidToFirebase = `+20${phoneNumber}`;
       const validPhone = `${phoneNumberValidToFirebase.replace(/\s/g, "").trim()}`;
       const PhoneNumberValidated = convertPhoneTovalid(validPhone)
-      // navigation.navigate("Register", {
-      //   verifiedPhone:PhoneNumberValidated
-      // });
 
       const result = await signInWithPhoneNumber(
         auth,
         phoneNumberValidToFirebase,
         recaptchaVerifier.current
       );
-          console.log('this is the number from the sign page ',PhoneNumberValidated)
       if (result.verificationId) {
         navigation.navigate("Verification", {
            result,
@@ -66,10 +62,8 @@ const SigninScreen = ({ navigation }) => {
   };
   const convertPhoneTovalid=(phone)=>{
     const phoneNumberWithoutPlus = phone?.replace("+", "");
-              
-              // Convert the string to a number
-              const phoneNumber = Number(phoneNumberWithoutPlus);
-              return phoneNumber
+    const phoneNumber = Number(phoneNumberWithoutPlus);
+    return phoneNumber
   }
 
   const { phoneNumber } = state;

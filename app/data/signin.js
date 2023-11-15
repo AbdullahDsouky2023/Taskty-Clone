@@ -8,7 +8,4 @@ export const errorMessages = {
     "session-expired": "انتهت صلاحية الجلسة. الرجاء المحاولة مرة أخرى.",
     "unauthorized-domain": "نطاق غير مصرح به. الرجاء التحقق من النطاق المستخدم.",
     "unknown-error": "حدث خطأ غير معروف. الرجاء المحاولة مرة أخرى.",
-    
-   
-    // You can add more error codes and messages here
   };
