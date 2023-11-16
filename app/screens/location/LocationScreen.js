@@ -18,7 +18,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import LoadingModal from "../../component/Loading";
 import { getLocationFromStorage } from "../../../utils/location";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import { MANUAL_LOCATION_ADD } from "../../navigation/routes";
 import { FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";

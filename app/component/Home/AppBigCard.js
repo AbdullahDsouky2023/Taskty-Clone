@@ -3,7 +3,7 @@ import React from "react";
 import { Image } from "react-native";
 import AppText from "../AppText";
 import { Colors } from "../../constant/styles";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { TouchableWithoutFeedback } from "react-native";
 import PriceTextComponent from "../PriceTextComponent";
 
 export default function AppBigCard({image,name,price,category='',onPress}) {

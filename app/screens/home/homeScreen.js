@@ -69,7 +69,7 @@ const HomeScreen = ({ navigation }) => {
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
         <AppHeader />
-        {/* <FlatList
+        <FlatList
           ListHeaderComponent={
             <>
               <OffersBanner />
@@ -87,8 +87,8 @@ const HomeScreen = ({ navigation }) => {
           keyExtractor={(item) => `${item.id}`}
           // renderItem={renderItem}
           ListFooterComponent={<UsersReviews />}
-        /> */}
-               <AppButton onPress={()=>navigation.navigate("Chat")} />
+        />
+               {/* <AppButton onPress={()=>navigation.navigate("Chat")} /> */}
 
       </View>
     </SafeAreaView>

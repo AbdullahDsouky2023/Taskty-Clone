@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 
 import AppText from "../AppText";
 import { Colors, Sizes, Fonts } from "../../constant/styles";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { TouchableWithoutFeedback } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { OFFERS } from "../../navigation/routes";

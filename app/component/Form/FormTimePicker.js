@@ -8,7 +8,7 @@ import ErrorMessage from "./ErrorMessage";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Button, Dimensions, StyleSheet, Text, TextInput } from "react-native";
 import { View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("screen");

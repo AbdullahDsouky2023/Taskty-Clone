@@ -20,7 +20,7 @@ import { Ionicons } from '@expo/vector-icons';
 import LoadingModal from "../../component/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationFromStorage } from "../../../utils/location";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import { ITEM_ORDER_DETAILS, MANUAL_LOCATION_ADD, ORDER_SELECT_REGION } from "../../navigation/routes";
 import SelectLocationItem from "../../component/location/SelectLocationItem";
 import AppButton from "../../component/AppButton";

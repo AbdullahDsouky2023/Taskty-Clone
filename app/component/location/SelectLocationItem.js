@@ -10,7 +10,7 @@ import { Colors } from "../../constant/styles";
 import AppText from "../../component/AppText";
 
 import { CheckBox, Icon } from "@rneui/themed";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 
 const { width } = Dimensions.get("screen");
 

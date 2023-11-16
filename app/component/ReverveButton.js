@@ -3,7 +3,7 @@ import React from 'react'
 import AppButton from './AppButton'
 import AppText from './AppText'
 import { Colors } from '../constant/styles'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native'
 import PriceTextComponent from './PriceTextComponent'
 const { width } = Dimensions.get("screen");
 
