@@ -19,6 +19,7 @@ import AddManualLocationScreen from "../screens/location/AddManualLocationScreen
 import PaymentScreen from "../screens/payment/paymentScreen";
 import SelectRegionScreen from "../screens/RegionScreen";
 import OrderComfirmDetailsScreen from "../screens/Orders/OrderComfirmDetailsScreen";
+import ChatNavigator from "./ChatNavigator";
 
 LogBox.ignoreAllLogs();
 
@@ -37,6 +38,8 @@ const RootNavigator = () => {
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="App" component={AppNavigator} />
         <Stack.Screen name="Auth" component={AuthNavigator} />
+        <Stack.Screen name="Chat" component={ChatNavigator} />
+
         <Stack.Screen
           name={ITEM_DETAILS}
           component={ItemScreen}

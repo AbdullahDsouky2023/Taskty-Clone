@@ -22,7 +22,7 @@ import CleaningServices from "../../component/Home/CleaningServices";
 import AskWorker from "../../component/Home/AskWorker";
 import UsersReviews from "../../component/Home/UsersReview";
 import AppHeader from "../../component/AppHeader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useCategories from "../../../utils/categories";
 import { setCategories } from "../../store/features/categorySlice";
 import { setServices } from "../../store/features/serviceSlice";
@@ -31,6 +31,9 @@ import useServices from "../../../utils/services";
 import LoadingScreen from "../loading/LoadingScreen";
 import { ErrorScreen } from "../Error/ErrorScreen";
 import useOrders from "../../../utils/orders";
+import AppButton from "../../component/AppButton";
+import { generateUserToken } from "../chat/chatconfig";
+import { setUserStreamData } from "../../store/features/userSlice";
 const { width } = Dimensions.get("window");
 
 const HomeScreen = ({ navigation }) => {
@@ -39,12 +42,16 @@ const HomeScreen = ({ navigation }) => {
   const { data, isLoading, isError } = useCategories()
   const { data:services } = useServices()
   const { data:orders } = useOrders()
+  const user = useSelector((state)=>state?.user?.userData)
+
   const getData =async()=>{
     if (data) {
       // Dispatch the fetched categories to the Redux store
-      await  dispatch(setCategories(data));
-      await  dispatch(setServices(services));
-      await dispatch(setOrders(orders));
+        dispatch(setCategories(data));
+        dispatch(setServices(services));
+       dispatch(setOrders(orders));
+      const chat = generateUserToken(user)
+      dispatch(setUserStreamData(chat));
     } else if (isError) {
       console.log(isError)
       // Handle the error
@@ -62,7 +69,7 @@ const HomeScreen = ({ navigation }) => {
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
         <AppHeader />
-        <FlatList
+        {/* <FlatList
           ListHeaderComponent={
             <>
               <OffersBanner />
@@ -80,7 +87,9 @@ const HomeScreen = ({ navigation }) => {
           keyExtractor={(item) => `${item.id}`}
           // renderItem={renderItem}
           ListFooterComponent={<UsersReviews />}
-        />
+        /> */}
+               <AppButton onPress={()=>navigation.navigate("Chat")} />
+
       </View>
     </SafeAreaView>
   );
