@@ -27,8 +27,8 @@ export default function ChatNavigator() {
         ...TransitionPresets.SlideFromRightIOS,
       }}
     >
-       <Stack.Screen name="chatScreen" component={ChatScreen} options={{ ...TransitionPresets.DefaultTransition }} />
        <Stack.Screen name={CHAT_ROOM} component={ChatRoom} options={{ ...TransitionPresets.DefaultTransition }} />
+       <Stack.Screen name="chatScreen" component={ChatScreen} options={{ ...TransitionPresets.DefaultTransition }} />
      
     </Stack.Navigator>
       </ChatProvider>

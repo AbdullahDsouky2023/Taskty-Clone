@@ -47,7 +47,6 @@ const CurrentOffersScreen = ({route, navigation }) => {
  // Use useEffect to monitor changes in route.params.name
  useEffect(() => {
   if (route.params?.name) {
-    console.log("setting the item ",route.params.name)
     setSelectedItem(route.params.name);
   }
 }, [route.params?.name]);
@@ -60,7 +59,6 @@ useEffect(() => {
 
   if (isLoading) return <LoadingScreen />;
   if (isError) return <ErrorScreen />;
-  // console.log(services.length,"abdul")
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />

@@ -42,7 +42,6 @@ const [isLoading,setIsLoading]=useState(false)
   const user = useSelector((state) => state?.user?.user);
   const userData = useSelector((state) => state?.user?.userData);
   const currentOrderData = useSelector((state) => state?.orders?.currentOrderData);
-  console.log(userData?.location);
   const handleFormSubmit = async (values) => {
     try {
       setIsLoading(true);
@@ -72,10 +71,6 @@ const [isLoading,setIsLoading]=useState(false)
       };
   
       dispatch(setCurrentOrderProperties(formSubmitionData));
-  
-      console.log("***********************");
-      console.log("user order will be su", currentOrderData);
-      console.log("***********************");
   
       navigation.navigate(ORDER_COMFIRM_DETAILS,{item,image:values.images})
     } catch (error) {

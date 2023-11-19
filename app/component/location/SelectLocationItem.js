@@ -19,7 +19,6 @@ export default function SelectLocationItem({selectedLocation,item,setSelectedLoc
     if(!item) return;
   return (
     <TouchableOpacity onPress={() =>{
-        console.log("ite mseleceted",item)
         setSelectedLocation(item)
                 }}>
     {/* currentLocation primary */}

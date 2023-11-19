@@ -53,7 +53,6 @@ export const deleteLocation = async (locationToDelete) => {
     const currentLocations = await getManualLocations();
     const updatedLocations = currentLocations.filter(location => location !== locationToDelete);
     await updateManualLocations(updatedLocations);
-    console.log('Location deleted:', locationToDelete);
   } catch (error) {
     console.error('Error deleting location:', error);
   }

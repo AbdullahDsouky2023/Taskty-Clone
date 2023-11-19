@@ -11,7 +11,6 @@ export const postOrder = async (values) => {
         status:"pending"
       },
     });
-    console.log("thih badbo", res.data.data.id);
     return res?.data?.data?.id ? res?.data?.data?.id : null;
   } catch (error) {
     console.error("Error:", error.message); // Log the error response
@@ -21,7 +20,6 @@ export const postOrder = async (values) => {
 export const cancleOrder = async (id) => {
   try {
     const data = await api.delete(`/api/orders/${id}`);
-    console.log("********************", data?.data?.data?.id);
     if (data?.data?.data?.id) return data?.data?.data?.id;
     return false;
   } catch (error) {
@@ -36,7 +34,6 @@ export const PayOrder = async (id) => {
         status:"finished"
       }
     });
-    console.log("******************** was finsihed", data?.data?.data?.id);
     if ( data?.data?.data?.id) return true
     return false;
   } catch (error) {

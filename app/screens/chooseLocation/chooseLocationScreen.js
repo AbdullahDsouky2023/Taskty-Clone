@@ -5,15 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('screen');
 
-const savedAddressesList = [
-    {
-        id: '1',
-        type: 'home',
-        deliveredTo: 'Allison Perry',
-        address: '91, Opera Street, Newyork,',
-        pinCode: '10001',
-    },
-];
+
 
 const ChooseLocationScreen = ({ navigation }) => {
     return (

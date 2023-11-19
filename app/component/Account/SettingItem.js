@@ -12,7 +12,9 @@ export default function SettingItem({item }) {
     const { icon, name, desc } = item
     const navigation = useNavigation()
     return (
-      <TouchableWithoutFeedback style={styles.item} onPress={()=>navigation.navigate(icon)}>
+      <TouchableWithoutFeedback  onPress={()=>navigation.navigate(icon)}>
+       
+        <View  style={styles.item}>
         <View style={styles.itemHeader}>
           <SimpleLineIcons name={icon} size={24} color={Colors.primaryColor} />
           <View style={{
@@ -28,6 +30,7 @@ export default function SettingItem({item }) {
           </View>
         </View>
         <MaterialIcons name="arrow-back-ios" size={24} color={Colors.grayColor} />
+        </View>
       </TouchableWithoutFeedback>)
 }
 

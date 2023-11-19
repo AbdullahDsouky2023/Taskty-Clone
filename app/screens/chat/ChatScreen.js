@@ -10,7 +10,6 @@ export default function ChatScreen({children}) {
   const navigation = useNavigation()
   const { clientIsReady } = useChatClient();
   const { setChannel,channel } = useChatContext();
-console.log(channel?.id)
 
 if (!clientIsReady) {
   return <Text>Loading chat ...</Text>

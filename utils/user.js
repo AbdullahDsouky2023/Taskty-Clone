@@ -8,7 +8,6 @@ export const createUser = async(data)=>{
             ...data,
             role:2,
         })
-        console.log(createdUser,"this is the user will be created")
             return createdUser
 
     } catch (error) {
@@ -20,18 +19,14 @@ export const getUserByPhoneNumber = async(phone)=>{
         // Remove the "+" symbol
         // +201144254129
         if(phone){
-            console.log("user phone from user is ",typeof(phone))
             
             const user =    await api.get(`/api/users?filters[$and][0][phoneNumber][$eq]=`+phone)
-            console.log("usus",user?.data)
             if(user?.data[0] && user?.data[0]?.phoneNumber) {
                 setUserData(user?.data[0])
-                console.log("userfound",user?.data)
                 
                 return user?.data[0]
             }
             else {
-                console.log("userfound abdullah not ",user?.data)
                 return null
 
             } 
@@ -45,10 +40,8 @@ export const getUserCurrentOrders= async(id)=>{
         // Remove the "+" symbol
         // +201144254129
         if(id){
-            console.log("user phone from user is ",typeof(phone))
             
             const user = await api.get(`/api/users/${id}?populate=*`)
-            console.log("mom",user?.data?.orders)
             return user?.data?.orders
         } 
     } catch (error) {
@@ -60,9 +53,6 @@ try {
    const updatedUser =  await api.put(`/api/users/${id}`,{
         ...data
     })
-    console.log('====================================');
-    console.log("update user",updatedUser);
-    console.log('====================================');
     if(updateUserData) return true
     return false
 } catch (error) {

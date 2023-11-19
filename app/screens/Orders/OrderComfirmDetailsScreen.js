@@ -40,11 +40,9 @@ import useRegions from "../../../utils/region";
     
         if (data) {
           dispatch(clearCurrentOrder());
-          console.log("current order DAta", currentOrderData);
     
           if (ITEM_PRICE > 0) {
             navigation.navigate("Payment");
-            console.log("navigaion hap");
           } else if (ITEM_PRICE === 0) {
             navigation.dispatch(
               CommonActions.reset({

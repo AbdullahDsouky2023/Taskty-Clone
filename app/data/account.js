@@ -20,15 +20,5 @@ export const settingsItemArray = [
     icon:"share",
     desc:"شير وأكسب 50 جنيه داخل محفظتك "
 },
-    {
-    name:"أتصل بنا ",
-    icon:"call-end",
-    desc:""
-},
-    {
-    name:"الشكاوي والأ قتراحات",
-    icon:"speech",
-    desc:""
-},
    
 ]

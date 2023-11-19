@@ -31,7 +31,6 @@ const fetchData=()=>{
     (order) => order?.attributes?.phoneNumber === user?.phoneNumber && order?.attributes?.PaymentStatus === "payed"
     );
     setCurrentData(currentOrders)
-  console.log("from the complete order Screen", currentOrders);
   setRefreshing(false)
 }
   useEffect(()=>{

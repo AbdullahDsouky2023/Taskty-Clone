@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ScrollView } from "react-native-virtualized-view";
 import CurrentOrderCard from "../../component/orders/CurrentOrderCard";
 import { FlatList } from "react-native";
@@ -11,6 +11,7 @@ import LoadingScreen from "../loading/LoadingScreen";
 const { width } = Dimensions.get("screen");
 import { RefreshControl  } from 'react-native';
 import { ORDERS_DETAILS } from "../../navigation/routes";
+import { setcurrentChatChannel } from "../../store/features/ordersSlice";
 
 
 export default function CurrentOrders({navigation}) {
@@ -20,7 +21,7 @@ export default function CurrentOrders({navigation}) {
   const [orders,setOrders] = useState([])
   const {data,isLoading} = useOrders()
   const [refreshing, setRefreshing] = useState(false);
-
+  const dispatch = useDispatch()
   const onRefresh = () => {
     setRefreshing(true);
     fetchData();
@@ -31,7 +32,6 @@ const fetchData=()=>{
     (order) => order?.attributes?.phoneNumber === user?.phoneNumber && order?.attributes?.PaymentStatus !== "payed"
     );
     setCurrentData(currentOrders)
-  console.log("from the current order Screen", currentOrders);
   setRefreshing(false)
 }
   useEffect(()=>{
@@ -60,7 +60,12 @@ const fetchData=()=>{
       data={currentOrders}
       style={styles.listContainer}
       renderItem={({item})=>{
-        return <CurrentOrderCard item={item} onPress={() => navigation.navigate(ORDERS_DETAILS, { item })} />
+        
+        return <CurrentOrderCard item={item} onPress={() => {
+          navigation.navigate(ORDERS_DETAILS, { item })
+          dispatch(setcurrentChatChannel(item?.attributes?.chat_channel_id))
+
+        }} />
       }}
       keyExtractor={(item)=>item?.id}
       />

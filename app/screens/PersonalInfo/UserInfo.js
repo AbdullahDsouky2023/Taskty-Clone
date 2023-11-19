@@ -63,12 +63,6 @@ const UserInfo = ({ navigation }) => {
   const handleFormSubmit = async (values) => {
     try {
       setIsLoading(true);
-      console.log("this is the use data will be submite", {
-        email: values.emailAddress || userData?.email,
-        username: values.fullName || userData?.username,
-        location: values.location,
-        phoneNumber: Number(validPhone),
-      });
       const res = await updateUserData(userData?.id,{
         email: values.emailAddress || userData?.email,
         username: values.fullName || userData?.username,
@@ -78,13 +72,9 @@ const UserInfo = ({ navigation }) => {
       if (res) {
         const gottenuser = await getUserByPhoneNumber(Number(validPhone))
         dispatch(setUserData(gottenuser));
-        // console.log("success",gottenuser)
         Alert.alert("تم التعديل بنجاح");
-        // Updates.reloadAsync()
 
-        // navigation.navigate("Splash")
       } else {
-        console.log(res)
         Alert.alert("Something goes wrong");
       }}
      catch (err) {
@@ -112,14 +102,10 @@ return finalPhoneNumber
       const userData = JSON.parse(userDataString);
       const validPhone = `${userData?.phoneNumber?.replace(/\s/g, "").trim()}`;
       const PhoneNumberValidated = convertPhoneTovalid(validPhone)
-      console.log(PhoneNumberValidated," this is the use data in loca")
       if (userData?.phoneNumber ) {
         const gottenuser = await getUserByPhoneNumber(PhoneNumberValidated )
         dispatch(setUserData(gottenuser));
-        console.log("this function was called  ",gottenuser)
       } else {
-        console.log("this function was called to auth ")
-        // navigation.push("App");
       }
       
     } catch (error) {
@@ -137,7 +123,6 @@ return finalPhoneNumber
   useEffect(()=>{
     getUserInfo()
   },[dispatch])
-  console.log("ths is from user info ",userData)
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar backgroundColor={Colors.primaryColor} />

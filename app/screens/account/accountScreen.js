@@ -22,7 +22,6 @@ const AccountScreen = ({ navigation }) => {
       <StatusBar backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
         <Logo />
-        <AppText text={user?.phoneNumber}/>
         <GeneralSettings/>
       </View>
     </SafeAreaView>

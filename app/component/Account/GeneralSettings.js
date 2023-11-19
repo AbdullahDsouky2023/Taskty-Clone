@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { CommonActions } from "@react-navigation/native";
-import {  ScrollView} from "react-native-virtualized-view";
+import { ScrollView } from "react-native-virtualized-view";
 
 import AppText from "../AppText";
 import AppButton from "../AppButton";
@@ -40,6 +40,10 @@ export default function GeneralSettings() {
       <View>
         <FlatList
           data={settingsItemArray}
+          style={{
+            display: "flex",
+            gap: 15,
+          }}
           renderItem={({ item }) => {
             return <SettingItem item={item} />;
           }}
@@ -47,8 +51,8 @@ export default function GeneralSettings() {
         />
       </View>
       <AppButton
-        title={'signOut'}
-        style={{ marginVertical: 20 }}
+        title={"signOut"}
+        style={{ marginVertical: 20, marginTop: 80 }}
         onPress={handleSignOut}
       />
     </ScrollView>

@@ -51,13 +51,6 @@ const RegisterScreen = ({ navigation,route}) => {
       const userLocation = await getLocationFromStorage()
       // const validPhone = auth?.currentUser?.phoneNumber?.replace("+", "")
       setIsLoading(true);
-      console.log("this is the use data will be submite",{
-        email:values.emailAddress,
-        username:values.fullName,
-        password:SECRET_PASSWORD,
-        location:"lkjkln",
-        phoneNumber:phoneNumber
-      });
       const res = await createUser({
         email:values.emailAddress,
         username:values.fullName,
@@ -73,7 +66,6 @@ const RegisterScreen = ({ navigation,route}) => {
         navigation.navigate("App");
       }else {
         Alert.alert("الاسم او البريد الالكتروني مستخدم من قبل ")
-        console.log("the is the message befoe email and name is used befoer res",res)
       }
 
     

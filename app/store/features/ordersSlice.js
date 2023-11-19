@@ -3,19 +3,18 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const orderSlice = createSlice({
   name: "orders",
-  initialState: { orders: [] , currentOrderData:{} },
+  initialState: { orders: [] , completedOrders:0 ,currentChatChannel:""},
   reducers: {
     setOrders: (state, action) => {
-      console.log('====================================');
-      console.log("Orders Was Called and cahnged");
-      console.log('====================================');
       state.orders = action.payload;
     },
     setCurrentOrderProperties: (state, action) => {
       
       const propertiesToUpdate = action.payload;
       state.currentOrderData = { ...state.currentOrderData, ...propertiesToUpdate };
-      console.log("setCurrentOrderProperties Was Called and cahnged",state.currentOrderData);
+    },
+    setcurrentChatChannel: (state, action) => {
+      state.currentChatChannel = action.payload
     },
     clearCurrentOrder: (state) => {
       state.currentOrderData = {};
@@ -24,5 +23,5 @@ const orderSlice = createSlice({
  
 });
 
-export const { setOrders,setCurrentOrderProperties,clearCurrentOrder } = orderSlice.actions;
+export const { setOrders,setCurrentOrderProperties,clearCurrentOrder,setcurrentChatChannel } = orderSlice.actions;
 export default orderSlice.reducer;

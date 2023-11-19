@@ -157,10 +157,15 @@ const handlePayOrder = async (id) => {
          
           
         </View>
+        <AppButton
+          title={"Chat"}
+          style={{ backgroundColor: Colors.success }}
+          onPress={() => navigation.navigate("Chat")}
+        />
         {
           item?.attributes?.status !== "pending" ?
           <AppButton
-            title={" دفع"}
+            title={"finish work"}
             style={{backgroundColor:Colors.success}}
             onPress={() => handlePayOrder(item?.id)}
           />:
