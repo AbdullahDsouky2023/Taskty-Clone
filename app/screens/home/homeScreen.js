@@ -40,7 +40,7 @@ const HomeScreen = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const { data, isLoading, isError } = useCategories()
-  const { data:services } = useServices()
+  const { data:services ,isLoadin:serviceLoading} = useServices()
   const { data:orders } = useOrders()
   const user = useSelector((state)=>state?.user?.userData)
 
@@ -62,7 +62,7 @@ const HomeScreen = ({ navigation }) => {
     getData()
   }, [data]);
 
-  if (isLoading) return <LoadingScreen/>
+  if (isLoading || serviceLoading) return <LoadingScreen/>
   if (isError) return <ErrorScreen hanleRetry={getData}/>
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>

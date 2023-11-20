@@ -40,6 +40,21 @@ export const PayOrder = async (id) => {
     console.error("Error accepting order   :", error.message); // Log the error response
   }
 };
+export const AddOrderReview = async (id,review) => {
+  try {
+    console.log(review)
+    const data = await api.put(`/api/orders/${id}`,{
+      data:{
+       userOrderRating:review.rating || "",
+       userOrderReview:review.content || ""
+      }
+    });
+    if ( data?.data?.data?.id) return true
+    return false;
+  } catch (error) {
+    console.error("Error accepting order   :", error.message); // Log the error response
+  }
+};
 export default function useOrders() {
   const fetchOrders = async () => {
     try {

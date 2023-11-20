@@ -22,16 +22,18 @@ import { ScrollView } from "react-native";
 import LoadingScreen from "../loading/LoadingScreen";
 import AppModal from "../../component/AppModal";
 import { CommonActions } from "@react-navigation/native";
+import StarsComponent from "../../component/StarsComponent";
 
 const { width } = Dimensions.get("screen");
 export default function OrderDetails({ navigation, route }) {
   const { item } = route?.params;
   const [isLoading, setIsLoading] = useState(false);
   const { data:orders,isLoading:loading,isError } = useOrders()
-  
+  const [orderID,setOrderID]=useState(false)
  
 const dispatch = useDispatch()
 const [isModalVisible, setModalVisible] = useState(false);
+const [isReviewVisble, setIsReviewVisble] = useState(false);
 
 const handleOrderCancle = async (id) => {
   try {
@@ -57,12 +59,11 @@ const handlePayOrder = async (id) => {
   try {
     const res = await PayOrder(id);
     if (res) {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name:HOME }],
-        }))
-      Alert.alert("تم دفع الطلب بنجاح");
+      setIsReviewVisble(true)
+      
+        setOrderID(id)
+        // Alert.alert("تم بنجاح");
+      
     } else {
       Alert.alert("حدثت مشكله حاول مرة اخري");
     }
@@ -179,6 +180,7 @@ const handlePayOrder = async (id) => {
       message={"تأكيد الغاء الطلب"}
       setModalVisible={setModalVisible} onPress={()=> handleOrderCancle(item.id)}/>
       <LoadingModal visible={isLoading} />
+      <StarsComponent isModalVisible={isReviewVisble} orderID={orderID} setIsModalVisible={setIsReviewVisble}/>
     </ScrollView>
   );
 }

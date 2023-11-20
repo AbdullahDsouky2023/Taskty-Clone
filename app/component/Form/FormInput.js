@@ -17,7 +17,7 @@ function FormTextInput({ icon, width = "100%", ...otherProps }) {
         selectionColor={Colors.primaryColor}
         textAlign="right"
         placeholderTextColor={Colors.grayColor}
-        style={{
+        style={[{
           borderWidth: 1,
           width: "100%",
           padding: 10,
@@ -26,7 +26,7 @@ function FormTextInput({ icon, width = "100%", ...otherProps }) {
           borderColor: Colors.blackColor,
           writingDirection: "rtl",
           fontSize: 15,
-        }}
+        },otherProps.styles]}
         
         {...otherProps}
         placeholder={t(otherProps.placeholder)}
