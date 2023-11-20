@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RN HomeService User App",
-    "slug": "rn-HomeService",
+    "name": "Nijk",
+    "slug": "Nijk",
     "version": "1.0.0",
     "writingDirection": "ltr",
     "orientation": "portrait",
@@ -21,8 +21,10 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.render.rnhomeserviceuser",
-      "versionCode": 3,
+      "package": "com.NijkDevelopment.Nijk",
+        "googleServicesFile": "./google-services.json"
+      ,
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/images/icon.png",
         "backgroundColor": "#FFFFFF"
@@ -31,17 +33,21 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "plugins":[
+    "plugins": [
       "@react-native-firebase/app",
       [
         "expo-build-properties",
         {
-
-          "ios":{
-            "useFrameworks":"static"
+          "ios": {
+            "useFrameworks": "static"
           }
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "bdc4a3b5-0c21-417c-b746-f439e22621a8"
+      }
+    }
   }
 }
